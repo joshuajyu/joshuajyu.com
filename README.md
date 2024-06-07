@@ -19,8 +19,8 @@ These are some of the more important technologies I used to make this.
 
 | Technologies | Name & Purpose |
 |:------------:|---------|
-|<img src="https://github.com/joshuajyu/jWeb/blob/fc8b0946493d3380abf9c76a244a1481640878ce/img/HTML5_logo_and_wordmark.svg.png" alt="Image of HTML Logo" width="100" height="100" />| HTML for stucture |
-|<img src="https://github.com/joshuajyu/jWeb/blob/fc8b0946493d3380abf9c76a244a1481640878ce/img/CSS3_logo_and_wordmark.svg.png" alt="Image of CSS Logo" width="71" height="100"/>| CSS for styling |
+|<img src="https://github.com/joshuajyu/jWeb/blob/fc8b0946493d3380abf9c76a244a1481640878ce/img/HTML5_logo_and_wordmark.svg.png" alt="Image of HTML Logo" width="100" height="100" />| HTML5 for stucture |
+|<img src="https://github.com/joshuajyu/jWeb/blob/fc8b0946493d3380abf9c76a244a1481640878ce/img/CSS3_logo_and_wordmark.svg.png" alt="Image of CSS Logo" width="71" height="100"/>| CSS3 for styling |
 
 
 ## Resources I Used[^4]
