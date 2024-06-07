@@ -33,7 +33,7 @@ These are some of the more important technologies I used to make this.
 
 ### Footnotes
 
-[^1]: This section last updated June 7 2024.\
-[^2]: This section last updated June 7 2024.\
-[^3]: This section last updated June 7 2024.\
+[^1]: This section last updated June 7 2024.
+[^2]: This section last updated June 7 2024.
+[^3]: This section last updated June 7 2024.
 [^4]: This section last updated June 7 2024.
