@@ -19,8 +19,8 @@ These are some of the more important technologies I used to make this.
 
 | Technologies | Purpose |
 |:------------:|---------|
-|![HTML Logo](files/Users/jzhang/Desktop/Isolated.png)| Stucture |
-|![CSS Logo](files/Users/jzhang/Desktop/Isolated.png)| Styling |
+|![HTML Logo](img/CSS3_logo_and_wordmark.svg.png)| Stucture |
+|![CSS Logo](img/HTML5_logo.png)| Styling |
 
 
 ## Resources I Used[^4]
