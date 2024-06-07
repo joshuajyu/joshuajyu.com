@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Cambay
+- Font Author: Copyright (c) 2014 Pooja Saxena (www.poojasaxena.in)
+- Font Source: https://fonts.gstatic.com/s/cambay/v12/SLXJc1rY6H0_ZDsGbrSIz9JsaA.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
