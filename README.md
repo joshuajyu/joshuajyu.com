@@ -11,6 +11,7 @@ Thanks for visiting! I hope you enjoy your stay.
 | Date Modified | Description |
 |---------------|-------------|
 | June 6 2024 | Created this repository.<br> Hello World! |
+| June 8 2024 | Updated index.html |
 | Tomorrow | Who knows? |
 
 ## Technologies Used[^3]
@@ -31,7 +32,7 @@ These are some of the more important technologies I used to make this.
 
 <hr>
 
-### Footnotes
+## Footnotes
 
 [^1]: This section last updated June 7 2024.
 [^2]: This section last updated June 7 2024.
