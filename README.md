@@ -2,7 +2,7 @@
 
 ## Welcome[^1]
 
-This is the GitHub repository for my personal webpage. For now, it's just a static webpage with a little bit of HTML and CSS, but I plan on making incremental improvements over time, and eventually turning it into a full-stack web app.
+This is the GitHub repository for my personal webpage. For now, it's just a static webpage with a little bit of HTML and CSS, but I plan on making incremental improvements over time, and eventually turning it into something special.
 
 Thanks for visiting! I hope you enjoy your stay.
 
@@ -12,7 +12,7 @@ Thanks for visiting! I hope you enjoy your stay.
 |---------------|-------------|
 | June 6 2024 | Created this repository.<br> Hello World! |
 | June 8 2024 | Updated index.html |
-| Sep 15 2024 | Updated index.html |
+| Sep 15 2024 | Updated index.html, css overhaul, general improvements |
 | Tomorrow | Who knows? |
 
 ## Technologies Used[^3]
@@ -30,13 +30,13 @@ These are some of the more important technologies I used to make this.
 
 | Resource | Description |
 |---------------|-------------|
-| <a href="https://developer.mozilla.org/en-US/" target="_blank">MDN Web Docs</a> | The best. Thank you, Mozilla. |
+| <a href="https://developer.mozilla.org/en-US/" target="_blank">MDN Web Docs</a> | The best. |
 
 <hr>
 
 ## Footnotes
 
-[^1]: This section last updated June 7 2024.
-[^2]: This section last updated June 7 2024.
-[^3]: This section last updated June 7 2024.
-[^4]: This section last updated June 7 2024.
+[^1]: This section last updated Sep 15 2024.
+[^2]: This section last updated Sep 15 2024.
+[^3]: This section last updated Sep 15 2024.
+[^4]: This section last updated Sep 15 2024.
