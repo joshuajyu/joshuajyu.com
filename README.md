@@ -12,23 +12,25 @@ Thanks for visiting! I hope you enjoy your stay.
 |---------------|-------------|
 | June 6 2024 | Created this repository.<br> Hello World! |
 | June 8 2024 | Updated index.html |
+| Sep 15 2024 | Updated index.html |
 | Tomorrow | Who knows? |
 
 ## Technologies Used[^3]
 
 These are some of the more important technologies I used to make this.
 
-| Technologies | Name & Purpose |
+| Technologies | Purpose |
 |:------------:|---------|
-|<img src="https://github.com/joshuajyu/jWeb/blob/fc8b0946493d3380abf9c76a244a1481640878ce/img/HTML5_logo_and_wordmark.svg.png" alt="Image of HTML Logo" width="100" height="100" />| HTML5 for stucture |
-|<img src="https://github.com/joshuajyu/jWeb/blob/fc8b0946493d3380abf9c76a244a1481640878ce/img/CSS3_logo_and_wordmark.svg.png" alt="Image of CSS Logo" width="71" height="100"/>| CSS3 for styling |
+| HTML5 | HTML5 for stucture |
+| CSS3 | CSS3 for styling |
+| <a href="https://fonts.google.com/">Google Fonts</a> | Open source fonts |
 
 
 ## Resources I Used[^4]
 
 | Resource | Description |
 |---------------|-------------|
-| [MDN Web Docs](https://developer.mozilla.org/en-US/) | The best. Thank you, Mozilla. |
+| <a href="https://developer.mozilla.org/en-US/" target="_blank">MDN Web Docs</a> | The best. Thank you, Mozilla. |
 
 <hr>
 
