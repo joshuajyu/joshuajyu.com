@@ -185,7 +185,7 @@ ul {
   border-color: #095db7;
 }
 
-li {
+.header-container li, .footer-container li {
   font-family: "Moderustic", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -196,10 +196,15 @@ li {
   margin-left: 16px;
   margin-bottom: 4px;
   text-transform: uppercase;
+  border-bottom: 1px solid transparent; /* add invisible border to avoid vertical spacing issues*/
 }
 
 .container {
-  padding: 20px 200px;
+  padding: 20px 15%;
+}
+
+section {
+  padding: 1em 0em;
 }
 
 .section-heading {
