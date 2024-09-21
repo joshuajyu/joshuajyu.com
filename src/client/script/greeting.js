@@ -1,18 +1,24 @@
 // Heavily inspired by https://css-tricks.com/snippets/css/typewriter-effect/
-
 document.addEventListener("DOMContentLoaded", function (event) {
-  // type one text in the typwriter
-  // keeps calling itself until the text is finished
   function typeWriter(text, i) {
+    const greeting = document.querySelector(".greeting");
     // check if text isn't finished yet
     if (i < text.length) {
       // add next character to h1
-      document.querySelector(".greeting").innerHTML = text.substring(0, i + 1);
+      greeting.textContent = text.substring(0, i + 1);
 
       // wait for a while and call this function again for next character
       setTimeout(function () {
         typeWriter(text, i + 1);
       }, 200);
+    } else {
+      // remove caret animation after 3 seconds
+      setTimeout(function () {
+        // this code doesn't seem to work right now, trying to remove the blink-caret animation
+        // TODO: investigate
+        greeting.style.removeProperty("border-right");
+        greeting.style.removeProperty("animation"); 
+      }, 3000);
     }
   }
 
@@ -36,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 
   let greeting;
+
   if (currentTimeBetween("00:00:00", "4:59:59")) {
     greeting = "Good evening!";
   } else if (currentTimeBetween("5:00:00", "11:59:59")) {
@@ -47,5 +54,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
   } else {
     greeting = "Hello there!";
   }
+  
   typeWriter(greeting, 0);
 });

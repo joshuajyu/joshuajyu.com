@@ -89,6 +89,7 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
+  color: #2f2f2f;
   font: inherit;
   vertical-align: baseline;
 }
@@ -146,20 +147,20 @@ table {
   font-style: normal;
 } */
 
-a {
-  color: #2c2622;
+.header-container a {
   text-decoration: none;
 }
-a:hover {
+.header-container a:hover {
+  font-weight: 600;
   color: #095db7;
 }
 
 .header-container {
   display: flex;
+  background-color: white;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  padding: 20px 200px;
 }
 
 .site-name {
@@ -171,19 +172,20 @@ a:hover {
   letter-spacing: 0.01em;
 }
 
-header ul {
+ul {
   display: flex;
   justify-content: space-between;
 }
 
-.current {
+.header-container .current {
   border-bottom: 1px solid #2c2622;
 }
-.current:hover {
-  border-bottom: 1px solid #095db7;
+.header-container .current:hover {
+  color: #095db7;
+  border-color: #095db7;
 }
 
-header li {
+li {
   font-family: "Moderustic", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -196,43 +198,44 @@ header li {
   text-transform: uppercase;
 }
 
-main {
-  padding: 0px 200px;
+.container {
+  padding: 20px 200px;
 }
 
-.greeting {
-  margin-bottom: 20px;
+.section-heading {
   font-family: "Moderustic", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 300;
+  font-weight: 500;
   font-style: normal;
   font-size: 32px;
   width: fit-content;
   line-height: normal;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: 0.15em solid #095db7; /* The typewriter cursor */
-  animation: blink-caret 0.75s step-end infinite;
+  margin-bottom: 18px;
 }
 
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #095db7;
-  }
+footer {
+  background-color: #2f2f2f;
 }
 
-.intro-container {
-  padding: 20px 0px;
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
-.intro-blurb {
-  font-family: "Moderustic", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-  font-size: 16px;
+.footer-container a {
+  color: white;
+  text-decoration: none;
+}
+.footer-container a:hover {
+  font-weight: 600;
+  color: #095db7;
+}
+
+.footer-container .current {
+  border-bottom: 1px solid white;
+}
+.footer-container .current:hover {
+  border-bottom: 1px solid #095db7;
 }
