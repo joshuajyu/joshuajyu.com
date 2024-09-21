@@ -38,6 +38,6 @@ These are some of the more important technologies I used to make this.
 ## Footnotes
 
 [^1]: This section last updated Sep 15 2024.
-[^2]: This section last updated Sep 15 2024.
+[^2]: This section last updated Sep 21 2024.
 [^3]: This section last updated Sep 15 2024.
 [^4]: This section last updated Sep 15 2024.
