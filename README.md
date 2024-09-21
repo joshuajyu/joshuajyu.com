@@ -12,7 +12,8 @@ Thanks for visiting! I hope you enjoy your stay.
 |---------------|-------------|
 | June 6 2024 | Created this repository.<br> Hello World! |
 | June 8 2024 | Updated index.html |
-| Sep 15 2024 | Updated index.html, css overhaul, general improvements |
+| Sep 15 2024 | Updated index.html, CSS overhaul, general improvements |
+| Sep 21 2024 | Updated index.html, CSS adjustments, added boilerplates |
 | Tomorrow | Who knows? |
 
 ## Technologies Used[^3]
@@ -21,7 +22,7 @@ These are some of the more important technologies I used to make this.
 
 | Technologies | Purpose |
 |:------------:|---------|
-| HTML5 | HTML5 for stucture |
+| HTML5 | HTML5 for structure |
 | CSS3 | CSS3 for styling |
 | <a href="https://fonts.google.com/">Google Fonts</a> | Open source fonts |
 
