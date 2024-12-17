@@ -1,9 +1,10 @@
+// Based on https://github.com/shadcn-ui/ui/blob/main/apps/www/components/mode-switcher.tsx
 "use client";
 
 import * as React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 
 export function ModeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
