@@ -11,31 +11,33 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Hammer, Home, MessagesSquare } from "lucide-react";
+import { Hammer, Home, MessagesSquare, type LucideProps } from "lucide-react";
 
 const components: {
   title: string;
   href: string;
   description: string;
-  icon: React.RefAttributes<SVGSVGElement>;
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
 }[] = [
   {
     title: "Home",
     href: "/",
     description: "About me.",
-    icon: <Home />,
+    icon: Home,
   },
   {
     title: "Work",
     href: "/work",
     description: "What I've been working on.",
-    icon: <Hammer />,
+    icon: Hammer,
   },
   {
     title: "Contact",
     href: "/contact",
     description: "Get in touch with me.",
-    icon: <MessagesSquare />,
+    icon: MessagesSquare,
   },
 ];
 
@@ -69,8 +71,12 @@ export function NavMenu() {
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & {
+    icon: React.ForwardRefExoticComponent<
+      Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+    >;
+  }
+>(({ className, title, children, icon: Icon, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -82,7 +88,9 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="flex flex-row gap-1 items-center text-sm font-medium leading-none">
+            <Icon className="inline" size={14} aria-hidden="true" /> {title}
+          </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
