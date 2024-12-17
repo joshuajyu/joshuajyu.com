@@ -34,7 +34,7 @@ const components: {
     icon: Hammer,
   },
   {
-    title: "Contact",
+    title: "Contact Me",
     href: "/contact",
     description: "Get in touch with me.",
     icon: MessagesSquare,
