@@ -46,7 +46,7 @@ export function NavMenu() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>
+          <NavigationMenuTrigger className="text-lg">
             <SiteTitle />
           </NavigationMenuTrigger>
           <NavigationMenuContent>
