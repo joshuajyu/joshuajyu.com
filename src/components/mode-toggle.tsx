@@ -11,6 +11,15 @@ export function ModeToggle() {
 
   const toggleTheme = React.useCallback(() => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    if (resolvedTheme === "dark") {
+      console.log(
+        "We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light.” ―Plato"
+      );
+    } else {
+      console.log(
+        "“But I know, somehow, that only when it is dark enough can you see the stars.” ―Martin Luther King, Jr."
+      );
+    }
   }, [resolvedTheme, setTheme]);
 
   return (
