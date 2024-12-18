@@ -9,7 +9,7 @@ export default function NotFound() {
           Not Found 😔
         </h2>
         <p className="leading-7">
-          Oops! The page you're looking for doesn't exist.
+          Oops! The page you&apos;re looking for doesn&apos;t exist.
         </p>
         <Button className="p-0" variant="link" asChild>
           <Link href="/">← Return Home</Link>
