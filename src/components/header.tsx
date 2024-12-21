@@ -16,7 +16,7 @@ export function Header() {
           <HoverCardTrigger asChild>
             <Button
               variant="link"
-              className="p-0 hidden md:flex md:flex-row"
+              className="p-0 hidden md:flex md:flex-row items-center"
               asChild
             >
               <Link
@@ -56,7 +56,7 @@ export function Header() {
           <HoverCardTrigger asChild>
             <Button
               variant="link"
-              className="p-0 hidden md:flex md:flex-row"
+              className="p-0 hidden md:flex md:flex-row items-center"
               asChild
             >
               <Link
