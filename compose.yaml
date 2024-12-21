@@ -35,6 +35,6 @@ services:
       - "3000"
     environment:
       VIRTUAL_PORT: 3000
-      VIRTUAL_HOST: joshuajyu.com
+      VIRTUAL_HOST: joshuajyu.com,www.joshuajyu.com
       LETSENCRYPT_HOST: joshuajyu.com
       
