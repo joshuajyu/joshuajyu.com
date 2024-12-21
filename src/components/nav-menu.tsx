@@ -88,7 +88,7 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="flex flex-row gap-1 items-center text-sm font-medium leading-none">
+          <div className={cn("flex flex-row gap-1 items-center text-sm font-medium leading-none")}>
             <Icon className="inline" size={14} aria-hidden="true" /> {title}
           </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
