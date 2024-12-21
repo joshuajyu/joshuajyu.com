@@ -40,7 +40,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col min-h-screen">
             <Header />
-            <div className="px-14 sm:px-14 md:px-28 lg:px-40 xl:px-80 flex-1">
+            <div className="px-14 md:px-28 lg:px-40 xl:px-80 flex-1 text-left">
               {children}
             </div>
             <Footer />
