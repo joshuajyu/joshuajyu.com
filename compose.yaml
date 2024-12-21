@@ -1,0 +1,40 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginxproxy/nginx-proxy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /var/docker/nginx/html:/usr/share/nginx/html
+      - /var/docker/nginx/certs:/etc/nginx/certs
+      - /var/docker/nginx/vhost:/etc/nginx/vhost.d
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  letsencrypt-companion:
+    container_name: letsencrypt-companion
+    image: nginxproxy/acme-companion
+    restart: unless-stopped
+    volumes_from:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/docker/nginx/acme:/etc/acme.sh
+    environment:
+      DEFAULT_EMAIL: jo2004yu@gmail.com
+
+  joshuajyu.com:
+    container_name: joshuajyu.com
+    image: joshuajyu.com:latest
+    expose:
+      - "3000"
+    environment:
+      VIRTUAL_PORT: 3000
+      VIRTUAL_HOST: joshuajyu.com
+      LETSENCRYPT_HOST: joshuajyu.com
+      
