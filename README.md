@@ -32,6 +32,7 @@ These are some of the more important technologies I used to make/deploy the webs
 | :----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | <a href="https://pnpm.io" target="_blank">pnpm</a>                                         | Package manager                                                             |
 | <a href="https://nextjs.org" target="_blank">Next.js w/ TypeScript</a>                     | React-based full-stack framework which the website is built in              |
+| <a href="https://tailwindcss.com" target="_blank">Tailwind CSS</a>                         | CSS framework/preprocessor                                                  |
 | <a href="https://ui.shadcn.com" target="_blank">shadcn/ui</a>                              | React UI library based on Radix UI                                          |
 | <a href="https://www.cloudflare.com/en-ca/" target="_blank">Cloudflare</a>                 | DNS provider and domain registry; proxy for DDOS protection                 |
 | <a href="https://aws.amazon.com/ec2/" target="_blank">Amazon EC2</a>                       | Amazon's elastic cloud compute to host web server                           |
