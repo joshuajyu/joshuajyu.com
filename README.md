@@ -16,7 +16,7 @@ The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running
 
 | Date Modified | Description                                             |
 | ------------- | ------------------------------------------------------- |
-| Jun 6 2024    | Created this repository.<br> Hello World!               |
+| Jun 6 2024    | Created this repository. Hello World!                   |
 | Jun 8 2024    | Updated index.html                                      |
 | Sep 15 2024   | Updated index.html, CSS overhaul, general improvements  |
 | Sep 21 2024   | Updated index.html, CSS adjustments, added boilerplates |
