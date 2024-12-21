@@ -8,7 +8,7 @@ This is the GitHub repository for my <a href="https://joshuajyu.com" target="_bl
 
 The application is fully <a href="https://www.docker.com" target="_blank">Docker</a>-ized with an <a href="https://github.com/nginx-proxy/nginx-proxy" target="_blank">nginx</a> reverse proxy in front of it, secured with <a href="https://github.com/nginx-proxy/acme-companion" target="_blank">Let's Encrypt</a>. These (the application, reverse proxy, and nginx-letsencrypt) containers are orchestrated together with <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a>.
 
-I use <a href="https://www.cloudflare.com/en-ca/" target="_blank">Cloudflare</a> as a DNS provider and domain name registry, and I also use their proxy service for DDOS protection.
+I use <a href="https://www.cloudflare.com/en-ca/" target="_blank">Cloudflare</a> as a DNS provider and domain name registry, and I also use their proxy service for DDoS protection.
 
 The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running Debian, which costs around $2 CAD a month.
 
