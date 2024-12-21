@@ -50,7 +50,7 @@ export function NavMenu() {
             <SiteTitle />
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[150px] lg:w-[230px] lg:grid-cols-[1fr]">
+            <ul className="grid gap-3 p-4 w-[230px] lg:grid-cols-[1fr]">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
