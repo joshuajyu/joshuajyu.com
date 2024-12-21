@@ -1,10 +1,10 @@
 # Hello!
 
-## [^1] Welcome
+## Welcome [^1]
 
 This is the GitHub repository for my <a href="https://joshuajyu.com" target="_blank">personal webpage</a>. It started off as just a static GitHub pages deployment with a little bit of HTML and CSS, but is now a <a href="https://nextjs.org" target="_blank">Next.js</a> app. The development of this website is essentially my excuse to spend time learning about the latest in web development.
 
-## [^2] Deployment
+## Deployment [^2]
 
 The application is fully <a href="https://www.docker.com" target="_blank">Docker</a>-ized with an <a href="https://github.com/nginx-proxy/nginx-proxy" target="_blank">nginx</a> reverse proxy in front of it, secured with <a href="https://github.com/nginx-proxy/acme-companion" target="_blank">Let's Encrypt</a>. These (the application, reverse proxy, and nginx-letsencrypt) containers are orchestrated together with <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a>.
 
@@ -12,7 +12,7 @@ I use <a href="https://www.cloudflare.com/en-ca/" target="_blank">Cloudflare</a>
 
 The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running Debian, which costs around $2 CAD a month.
 
-## [^3] Changelog
+## Changelog [^3]
 
 | Date Modified | Description                                             |
 | ------------- | ------------------------------------------------------- |
@@ -24,7 +24,7 @@ The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running
 | Dec 21 2024   | Ported application to Next.js                           |
 | Tomorrow      | Who knows?                                              |
 
-## [^4] Technologies Used
+## Technologies Used [^4]
 
 These are some of the more important technologies I used to make/deploy the website.
 
@@ -42,9 +42,9 @@ These are some of the more important technologies I used to make/deploy the webs
 | <a href="https://letsencrypt.org" target="_blank">Let's Encrypt</a>                        | Certificate authority for TLS certificates                                  |
 | <a href="https://favicon.io" target="_blank">favicon.io</a>                                | Generate favicons                                                           |
 
-## [^5] Resources I Used
+## Resources I Used [^5]
 
-Outside of the documentation for the things listed above[^4], I found these resources helpful:
+Outside of the documentation for the things listed above, I found these resources helpful:
 
 | Resource                                                                        | Description                   |
 | ------------------------------------------------------------------------------- | ----------------------------- |
