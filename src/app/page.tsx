@@ -9,16 +9,12 @@ export default function Home() {
       </h2>
       <p>
         Nice to meet you! My name is Joshua (or Josh; if you prefer that), and
-        I&apos;m in my third year of studies towards a Bachelors of Computer Science
-        at the University of Toronto at Scarborough.
+        I&apos;m in my third year of studies towards a Bachelors of Computer
+        Science at the University of Toronto at Scarborough.
       </p>
       <p>
         I&apos;m also currently working as a Software Engineering Intern at{" "}
-        <a
-          href="https://github.com/joshuajyu/joshuajyu.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <a href="https://www.ada.cx" rel="noopener noreferrer" target="_blank">
           <span className="underline-offset-2 hover:underline">Ada</span>{" "}
           <ExternalLink size={14} className="inline" />
         </a>
@@ -57,8 +53,8 @@ export default function Home() {
         <br />
         In the beginning the Universe was created.
         <br />
-        This has
-        made a lot of people very angry and been widely regarded as a bad move.”
+        This has made a lot of people very angry and been widely regarded as a
+        bad move.”
         <br />
         ―Douglas Adams, The Restaurant at the End of the Universe
       </blockquote>
