@@ -7,8 +7,7 @@ export default function Work() {
         Work
       </h2>
       <p>
-        Looks like this page is still under construction!{" "}
-        <span aria-hidden="true">🛠️</span>
+        Here is a collection of some of my work, with links to their GitHub repositories.
       </p>
       <CardTable />
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
