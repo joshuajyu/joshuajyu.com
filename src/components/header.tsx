@@ -23,10 +23,8 @@ export function Header() {
                 href="https://github.com/joshuajyu"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="flex flex-row items-center gap-1"
               >
                 GitHub
-                <ExternalLink size={14} />
               </Link>
             </Button>
           </HoverCardTrigger>
@@ -63,10 +61,8 @@ export function Header() {
                 href="https://www.linkedin.com/in/joshua-j-yu/"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="flex flex-row items-center gap-1"
               >
                 LinkedIn
-                <ExternalLink size={14} />
               </Link>
             </Button>
           </HoverCardTrigger>
