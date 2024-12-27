@@ -4,7 +4,6 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { ExternalLink } from "lucide-react";
 import { CalendarIcon } from "lucide-react";
 
 export function Header() {
@@ -16,7 +15,7 @@ export function Header() {
           <HoverCardTrigger asChild>
             <Button
               variant="link"
-              className="p-0 hidden md:flex md:flex-row items-center"
+              className="p-0 hidden md:flex md:flex-row items-center text-sm"
               asChild
             >
               <Link
@@ -54,7 +53,7 @@ export function Header() {
           <HoverCardTrigger asChild>
             <Button
               variant="link"
-              className="p-0 hidden md:flex md:flex-row items-center"
+              className="p-0 hidden md:flex md:flex-row items-center text-sm"
               asChild
             >
               <Link

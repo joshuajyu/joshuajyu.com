@@ -9,8 +9,8 @@ export default function Contact() {
         Contact Me
       </h2>
       <p>
-        Thanks for wanting to contact me! I&apos;ll do my best to try to get back to
-        you as soon as possible.
+        Thanks for wanting to contact me! I&apos;ll do my best to try to get
+        back to you as soon as possible.
       </p>
       <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
         Contact Methods & Socials

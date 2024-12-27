@@ -89,7 +89,7 @@ const works: {
         from predefined templates.
       </p>
     ),
-    link: "https://github.com/joshuajyu/utscdle",
+    link: "https://github.com/UofT-UTSC-CS-sandbox/pactify",
   },
   {
     name: "Discribe",
@@ -104,7 +104,7 @@ const works: {
         Developed in 36 hours @ Hack the Valley 7.
       </p>
     ),
-    link: "https://github.com/joshuajyu/utscdle",
+    link: "https://github.com/alwaysingame/discribe",
   },
 ];
 
