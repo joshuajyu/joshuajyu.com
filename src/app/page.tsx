@@ -49,14 +49,10 @@ export default function Home() {
         <span className="italic">j</span>yu.
       </p>
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
-        “The story so far:
+        “The fool doth think he is wise, but the wise man knows himself to be a
+        fool.”
         <br />
-        In the beginning the Universe was created.
-        <br />
-        This has made a lot of people very angry and been widely regarded as a
-        bad move.”
-        <br />
-        ―Douglas Adams, The Restaurant at the End of the Universe
+        ― William Shakespeare, As You Like It
       </blockquote>
     </div>
   );
