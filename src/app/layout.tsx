@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Joshua Yu | Computer Science Student @ UofT Scarborough",
   description:
-    "Joshua Yu is a Computer Science student at the University of Toronto Scarborough, passionate about building software and exploring new technologies.",
+    "Joshua Yu is a Computer Science student at the University of Toronto Scarborough.",
   icons: {
     icon: [
       {
