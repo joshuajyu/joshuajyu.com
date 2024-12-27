@@ -16,7 +16,7 @@ export function Footer() {
         <ExternalLink size={14} className="inline" />.
       </a>
       <Separator className="my-2" />
-      © 2024 <SiteTitle className="inline" />.
+      © {new Date().getFullYear()} <SiteTitle className="inline" />.
     </div>
   );
 }
