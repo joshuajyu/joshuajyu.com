@@ -29,7 +29,7 @@ const contactMethods: {
     emoji: "🔗",
     value: (
       <a
-        href="https://linkedin.com/in/joshuajyu/"
+        href="https://linkedin.com/in/joshua-j-yu/"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -68,7 +68,7 @@ const contactMethods: {
   },
 ];
 
-export function ContactTable() {
+export async function ContactTable() {
   return (
     <div className="w-full overflow-y-auto">
       <table className="w-full">
