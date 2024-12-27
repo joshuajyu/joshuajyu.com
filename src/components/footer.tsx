@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { SiteTitle } from "./site-title";
 import { Separator } from "./ui/separator";
@@ -15,8 +16,25 @@ export function Footer() {
         <span className="underline-offset-2 hover:underline">GitHub</span>{" "}
         <ExternalLink size={14} className="inline" />.
       </a>
-      <Separator className="my-2" />
-      © {new Date().getFullYear()} <SiteTitle className="inline" />.
+      <Separator className="my-4" />
+      <div className="flex flex-row items-center justify-between">
+        <div aria-hidden="true">
+          © {new Date().getFullYear()} <SiteTitle className="inline" />.
+        </div>
+        <div className="flex h-5 items-center space-x-4">
+          <Link href="/" className="hover:underline">
+            Home
+          </Link>
+          <Separator orientation="vertical" />
+          <Link href="/work" className="hover:underline">
+            Work
+          </Link>
+          <Separator orientation="vertical" />
+          <Link href="/contact" className="hover:underline">
+            Contact
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
