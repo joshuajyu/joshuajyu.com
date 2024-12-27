@@ -13,8 +13,7 @@ export default function Work() {
         <TriangleAlert size={16} />
         <AlertTitle className="font-bold">Tip:</AlertTitle>
         <AlertDescription>
-          If you don&apos;t know what a particular icon is, hover over it for a
-          clarification.
+          If you hover over a particular icon, it should let you know a little more about it!
         </AlertDescription>
       </Alert>
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
