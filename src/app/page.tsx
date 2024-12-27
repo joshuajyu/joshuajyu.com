@@ -10,7 +10,18 @@ export default function Home() {
       <p>
         Nice to meet you! My name is Joshua (or Josh; if you prefer that), and
         I&apos;m in my third year of studies towards a Bachelors of Computer
-        Science at the University of Toronto at Scarborough.
+        Science at the{" "}
+        <a
+          href="https://www.utoronto.ca"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <span className="underline-offset-2 hover:underline">
+            University of Toronto in Scarborough
+          </span>{" "}
+          <ExternalLink size={14} className="inline" />
+        </a>
+        .
       </p>
       <p>
         I&apos;m also currently working as a Software Engineering Intern at{" "}
@@ -51,8 +62,7 @@ export default function Home() {
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
         “The fool doth think he is wise, but the wise man knows himself to be a
         fool.”
-        <br />
-        ― William Shakespeare, As You Like It
+        <br />― William Shakespeare, As You Like It
       </blockquote>
     </div>
   );
