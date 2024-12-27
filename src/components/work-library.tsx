@@ -57,7 +57,7 @@ const works: {
       { icon: <AWS />, tooltip: "Amazon EC2" },
     ],
     description: (
-      <p>My personal website&mdash;the one you're reading this on!</p>
+      <p>My personal website&mdash;the one you&apos;re reading this on!</p>
     ),
     link: "https://github.com/joshuajyu/joshuajyu.com",
   },
@@ -154,8 +154,8 @@ const WorkCard = React.forwardRef<
         <CardContent>{description}</CardContent>
       </div>
       <CardFooter className="flex flex-row items-center gap-2">
-        {icons.map((element) => (
-          <TooltipProvider>
+        {icons.map((element, index) => (
+          <TooltipProvider key={index}>
             <Tooltip>
               <TooltipTrigger>
                 {React.cloneElement(element.icon, { width: 20, height: 20 })}

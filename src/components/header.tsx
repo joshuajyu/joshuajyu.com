@@ -36,7 +36,7 @@ export function Header() {
               <div className="space-y-1">
                 <h4 className="text-sm font-semibold">@joshuajyu</h4>
                 <p className="text-sm">
-                  I'm Joshua Yu, a Computer Science student at the University of
+                  I&apos;m Joshua Yu, a Computer Science student at the University of
                   Toronto Scarborough. Nice to meet you!
                 </p>
                 <div className="flex items-center pt-2">
