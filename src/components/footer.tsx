@@ -16,7 +16,7 @@ export function Footer() {
         <span className="underline-offset-2 hover:underline">GitHub</span>{" "}
         <ExternalLink size={14} className="inline" />.
       </a>
-      <Separator className="my-4" />
+      <Separator className="my-3" />
       <div className="flex flex-row items-center justify-between">
         <div aria-hidden="true">
           © {new Date().getFullYear()} <SiteTitle className="inline" />.
