@@ -158,7 +158,7 @@ const WorkCard = React.forwardRef<
           <TooltipProvider key={index}>
             <Tooltip>
               <TooltipTrigger>
-                {React.cloneElement(element.icon, { width: 20, height: 20 })}
+                {React.cloneElement(element.icon, { width: 20, height: 20, className: "fill-muted-foreground hover:fill-accent-foreground" })}
               </TooltipTrigger>
               <TooltipContent>
                 <p>{element.tooltip}</p>
