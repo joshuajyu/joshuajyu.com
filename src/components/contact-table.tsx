@@ -25,6 +25,20 @@ const contactMethods: {
     ),
   },
   {
+    name: "GitHub",
+    emoji: "💻",
+    value: (
+      <a
+        href="https://www.github.com/joshuajyu/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span className="underline-offset-2 underline">joshuajyu</span>{" "}
+        <ExternalLink size={14} className="inline" />
+      </a>
+    ),
+  },
+  {
     name: "LinkedIn",
     emoji: "🔗",
     value: (
@@ -48,20 +62,6 @@ const contactMethods: {
         target="_blank"
       >
         <span className="underline-offset-2 underline">joshiejx</span>{" "}
-        <ExternalLink size={14} className="inline" />
-      </a>
-    ),
-  },
-  {
-    name: "GitHub",
-    emoji: "💻",
-    value: (
-      <a
-        href="https://www.github.com/joshuajyu/"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <span className="underline-offset-2 underline">joshuajyu</span>{" "}
         <ExternalLink size={14} className="inline" />
       </a>
     ),

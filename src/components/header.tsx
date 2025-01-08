@@ -15,45 +15,7 @@ export function Header() {
           <HoverCardTrigger asChild>
             <Button
               variant="link"
-              className="p-0 hidden md:flex md:flex-row items-center text-sm"
-              asChild
-            >
-              <Link
-                href="https://github.com/joshuajyu"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                GitHub
-              </Link>
-            </Button>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-72">
-            <div className="flex justify-between space-x-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/joshuajyu.png" />
-                <AvatarFallback>JY</AvatarFallback>
-              </Avatar>
-              <div className="space-y-1">
-                <h4 className="text-sm font-semibold">@joshuajyu</h4>
-                <p className="text-sm">
-                  I&apos;m Joshua Yu, a Computer Science student at the University of
-                  Toronto Scarborough. Nice to meet you!
-                </p>
-                <div className="flex items-center pt-2">
-                  <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
-                  <span className="text-xs text-muted-foreground">
-                    Joined March 2020
-                  </span>
-                </div>
-              </div>
-            </div>
-          </HoverCardContent>
-        </HoverCard>
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <Button
-              variant="link"
-              className="p-0 hidden md:flex md:flex-row items-center text-sm"
+              className="p-0 hidden md:flex md:flex-row items-center"
               asChild
             >
               <Link
@@ -76,6 +38,44 @@ export function Header() {
                 <p className="text-sm">
                   Computer Science Student at University of Toronto Scarborough
                 </p>
+              </div>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <Button
+              variant="link"
+              className="p-0 hidden md:flex md:flex-row items-center"
+              asChild
+            >
+              <Link
+                href="https://github.com/joshuajyu"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                GitHub
+              </Link>
+            </Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-72">
+            <div className="flex justify-between space-x-4">
+              <Avatar>
+                <AvatarImage src="https://github.com/joshuajyu.png" />
+                <AvatarFallback>JY</AvatarFallback>
+              </Avatar>
+              <div className="space-y-1">
+                <h4 className="text-sm font-semibold">@joshuajyu</h4>
+                <p className="text-sm">
+                  I&apos;m Joshua Yu, a Computer Science student at the
+                  University of Toronto Scarborough. Nice to meet you!
+                </p>
+                <div className="flex items-center pt-2">
+                  <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
+                  <span className="text-xs text-muted-foreground">
+                    Joined March 2020
+                  </span>
+                </div>
               </div>
             </div>
           </HoverCardContent>

@@ -37,3 +37,4 @@ services:
       VIRTUAL_PORT: 3000
       VIRTUAL_HOST: joshuajyu.com,www.joshuajyu.com
       LETSENCRYPT_HOST: joshuajyu.com,www.joshuajyu.com
+      

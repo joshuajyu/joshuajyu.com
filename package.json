@@ -19,19 +19,19 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
-    "next": "15.1.2",
+    "next": "15.1.4",
     "next-themes": "^0.4.4",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1",
-    "tailwind-merge": "^2.5.5",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20.17.10",
+    "@types/node": "^20.17.12",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.1.2",
+    "eslint-config-next": "15.1.4",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
   }

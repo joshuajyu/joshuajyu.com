@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Joshua Yu | Computer Science Student @ UofT Scarborough",
   description:
-    "Joshua Yu is a Computer Science student at the University of Toronto Scarborough, passionate about building software and exploring new technologies.",
+    "Joshua Yu is a Computer Science student at the University of Toronto Scarborough.",
   icons: {
     icon: [
       {
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-CA" suppressHydrationWarning>
       <body className="antialiased">
         <ThemeProvider
           attribute="class"

@@ -32,6 +32,18 @@ export default function Home() {
         .
       </p>
       <p>
+        Previously, I was at{" "}
+        <a
+          href="https://www.questrade.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <span className="underline-offset-2 hover:underline">Questrade</span>{" "}
+          <ExternalLink size={14} className="inline" />
+        </a>
+        , where I also worked as a Software Engineering Intern.
+      </p>
+      <p>
         When I&apos;m not working or studying, you can find me playing the piano{" "}
         <span aria-hidden="true">🎹</span>, watching basketball{" "}
         <span aria-hidden="true">🏀</span> (go Raps!), gaming with friends{" "}
@@ -62,7 +74,8 @@ export default function Home() {
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
         “The fool doth think he is wise, but the wise man knows himself to be a
         fool.”
-        <br />―William Shakespeare, As You Like It
+        <br />
+        ―William Shakespeare, As You Like It
       </blockquote>
     </div>
   );
