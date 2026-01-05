@@ -22,6 +22,7 @@ The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running
 | Sep 21 2024   | Updated index.html, CSS adjustments, added boilerplates |
 | Oct 3 2024    | Added contact info and home page                        |
 | Dec 21 2024   | Ported application to Next.js                           |
+| Jan 4 2024    | Minor updates                                           |
 | Tomorrow      | Who knows?                                              |
 
 ## Technologies Used [^4]
@@ -58,6 +59,6 @@ Outside of the documentation for the things listed above, I found these resource
 
 [^1]: This section last updated Dec 21 2024.
 [^2]: This section last updated Dec 21 2024.
-[^3]: This section last updated Dec 21 2024.
+[^3]: This section last updated Jan 4 2024.
 [^4]: This section last updated Dec 21 2024.
 [^5]: This section last updated Dec 21 2024.
