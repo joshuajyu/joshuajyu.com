@@ -1,5 +1,3 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { TriangleAlert } from "lucide-react";
 import { CardTable } from "@/components/work-library";
 
 export default function Work() {
@@ -9,13 +7,6 @@ export default function Work() {
         Work
       </h2>
       <CardTable />
-      <Alert className="hidden sm:block">
-        <TriangleAlert size={16} />
-        <AlertTitle className="font-bold">Tip:</AlertTitle>
-        <AlertDescription>
-          If you hover over a particular icon, it should let you know a little more about it!
-        </AlertDescription>
-      </Alert>
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
         “Far and away the best prize that life has to offer is the chance to
         work hard at work worth doing.”

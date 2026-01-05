@@ -8,9 +8,9 @@ export default function Home() {
         Hello! <span aria-hidden="true">👋</span>
       </h2>
       <p>
-        Nice to meet you! My name is Joshua (or Josh; if you prefer that), and
-        I&apos;m in my third year of studies towards a Bachelors of Computer
-        Science at the{" "}
+        Nice to meet you! My name is Josh, and
+        I&apos;m currently in my fourth year of studies towards a Bachelors of Computer
+        Science with a Minor in Statstics at the{" "}
         <a
           href="https://www.utoronto.ca"
           rel="noopener noreferrer"
@@ -21,18 +21,15 @@ export default function Home() {
           </span>{" "}
           <ExternalLink size={14} className="inline" />
         </a>
-        .
+        . I will be graduating in Fall 2026.
       </p>
       <p>
-        I&apos;m also currently working as a Software Engineering Intern at{" "}
+        I&apos;ve previously worked as a Software Engineering Intern at both{" "}
         <a href="https://www.ada.cx" rel="noopener noreferrer" target="_blank">
           <span className="underline-offset-2 hover:underline">Ada</span>{" "}
           <ExternalLink size={14} className="inline" />
-        </a>
-        .
-      </p>
-      <p>
-        Previously, I was at{" "}
+        </a>{" "}
+        and{" "}
         <a
           href="https://www.questrade.com"
           rel="noopener noreferrer"
@@ -41,12 +38,12 @@ export default function Home() {
           <span className="underline-offset-2 hover:underline">Questrade</span>{" "}
           <ExternalLink size={14} className="inline" />
         </a>
-        , where I also worked as a Software Engineering Intern.
+        .
       </p>
       <p>
         When I&apos;m not working or studying, you can find me playing the piano{" "}
         <span aria-hidden="true">🎹</span>, watching basketball{" "}
-        <span aria-hidden="true">🏀</span> (go Raps!), gaming with friends{" "}
+        <span aria-hidden="true">🏀</span> (go Raptors!), gaming with friends{" "}
         <span aria-hidden="true">🎮</span>, working on personal projects{" "}
         <span aria-hidden="true">🛠️</span> (like this website),{" "}
         <span aria-hidden="true"></span>
