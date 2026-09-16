@@ -2,7 +2,7 @@
 
 ## Welcome [^1]
 
-This is the GitHub repository for my <a href="https://joshuajyu.com" target="_blank">personal webpage</a>. It started off as just a static GitHub pages deployment with a little bit of HTML and CSS, but is now a <a href="https://nextjs.org" target="_blank">Next.js</a> app. The development of this website is essentially my excuse to spend time learning about the latest in web development.
+This is the GitHub repository for my <a href="https://joshuajyu.com" target="_blank">personal webpage</a>. It started off as just a static GitHub pages deployment with a little bit of HTML and CSS, but is now a <a href="https://nextjs.org" target="_blank">Next.js</a> app. The development of this website is essentially my excuse to spend time learning about web development.
 
 ## Deployment [^2]
 
@@ -10,7 +10,7 @@ The application is fully <a href="https://www.docker.com" target="_blank">Docker
 
 I use <a href="https://www.cloudflare.com/en-ca/" target="_blank">Cloudflare</a> as a DNS provider and domain name registry, and I also use their proxy service for DDoS protection.
 
-The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running Debian, which costs around $2 CAD a month.
+The entire web application is hosted on a Amazon EC2 `t4g.nano` instance running Debian, which costs around $5 CAD a month.
 
 ## Changelog [^3]
 
@@ -44,21 +44,11 @@ These are some of the more important technologies I used to make/deploy the webs
 | <a href="https://letsencrypt.org" target="_blank">Let's Encrypt</a>                        | Certificate authority for TLS certificates                                  |
 | <a href="https://favicon.io" target="_blank">favicon.io</a>                                | Generate favicons                                                           |
 
-## Resources I Used [^5]
-
-Outside of the documentation for the things listed above, I found these resources helpful:
-
-| Resource                                                                        | Description                   |
-| ------------------------------------------------------------------------------- | ----------------------------- |
-| <a href="https://developer.mozilla.org/en-US/" target="_blank">MDN Web Docs</a> | The best.                     |
-| <a href="https://stackoverflow.com" target="_blank">Stack Overflow</a>          | Good for any questions I had. |
-
 <hr>
 
 ## Footnotes
 
-[^1]: This section last updated Dec 21 2024.
-[^2]: This section last updated Dec 21 2024.
+[^1]: This section last updated Sep 15 2026.
+[^2]: This section last updated Sep 15 2026.
 [^3]: This section last updated Jan 4 2024.
 [^4]: This section last updated Dec 21 2024.
-[^5]: This section last updated Dec 21 2024.
