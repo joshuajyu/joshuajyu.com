@@ -8,46 +8,21 @@ export default function Home() {
         Hello! <span aria-hidden="true">👋</span>
       </h2>
       <p>
-        Nice to meet you! My name is Josh, and
-        I&apos;m currently in my fourth year of studies towards a Bachelors of Computer
-        Science with a Minor in Statstics at the{" "}
-        <a
-          href="https://www.utoronto.ca"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <span className="underline-offset-2 hover:underline">
-            University of Toronto in Scarborough
-          </span>{" "}
-          <ExternalLink size={14} className="inline" />
-        </a>
-        . I will be graduating in Fall 2026.
-      </p>
-      <p>
-        I&apos;ve previously worked as a Software Engineering Intern at both{" "}
+        Nice to meet you! My name is Josh, and I&apos;m currently a software
+        engineer at{" "}
         <a href="https://www.ada.cx" rel="noopener noreferrer" target="_blank">
           <span className="underline-offset-2 hover:underline">Ada</span>{" "}
           <ExternalLink size={14} className="inline" />
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://www.questrade.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <span className="underline-offset-2 hover:underline">Questrade</span>{" "}
-          <ExternalLink size={14} className="inline" />
-        </a>
-        .
+        </a>.
       </p>
       <p>
-        When I&apos;m not working or studying, you can find me playing the piano{" "}
-        <span aria-hidden="true">🎹</span>, watching basketball{" "}
+        When I&apos;m not working or studying, you can find me working out{" "}
+        <span aria-hidden="true">🏋️</span>, watching basketball{" "}
         <span aria-hidden="true">🏀</span> (go Raptors!), gaming with friends{" "}
         <span aria-hidden="true">🎮</span>, working on personal projects{" "}
-        <span aria-hidden="true">🛠️</span> (like this website),{" "}
+        <span aria-hidden="true">🛠️</span>,{" "}
         <span aria-hidden="true"></span>
-        or a number of other things.
+        or (most likely) eating food <span aria-hidden="true">🍜</span> .
       </p>
       <p>
         I invite you to{" "}
@@ -58,11 +33,11 @@ export default function Home() {
         <Link href="/contact">
           <span className="underline-offset-2 underline">contact me</span>
         </Link>
-        . Thanks so much for visiting my website, and I hope you have a nice
+        . Thank you for visiting my website, and I hope you have a nice
         day!
       </p>
-      <p className="mt-[1vh]">Kind regards,</p>
-      <p className="mt-[2vh]">Joshua Yu</p>
+      <p className="mt-[1vh]">All the best,</p>
+      <p className="mt-[1vh]">Joshua Yu</p>
       <p className="mt-[1vh]">
         P.S. If you were wondering, my middle/chinese name is Junxiao/浚潇,
         hence the <span className="italic">j</span> in joshua

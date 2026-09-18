@@ -19,7 +19,7 @@ export function Header() {
               asChild
             >
               <Link
-                href="https://www.linkedin.com/in/joshua-j-yu/"
+                href="https://www.linkedin.com/in/joshuajyu/"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -27,16 +27,16 @@ export function Header() {
               </Link>
             </Button>
           </HoverCardTrigger>
-          <HoverCardContent className="w-72">
+          <HoverCardContent className="w-60">
             <div className="flex justify-between space-x-4">
               <Avatar>
-                <AvatarImage src="https://media.licdn.com/dms/image/v2/D5603AQEjcGS6XFywGA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1689113558666?e=1740009600&v=beta&t=44NwxOJDvyN_pZzjKClo3y6-qxOcTqMeliOA7_f87ZE" />
+                <AvatarImage src="https://media.licdn.com/dms/image/v2/D5603AQGkTje6cbtOOA/profile-displayphoto-scale_100_100/B56aCRusFqGwAY-/0/1789151331285?e=1791417600&v=beta&t=F60uni-ytIK0efa86BbmUouNqZITjUGK0Fx1UZqFCNM" />
                 <AvatarFallback>JY</AvatarFallback>
               </Avatar>
               <div className="space-y-1">
                 <h4 className="text-sm font-semibold">Joshua Yu</h4>
                 <p className="text-sm">
-                  Computer Science Student at University of Toronto Scarborough
+                  SWE @ ada | UofT CS
                 </p>
               </div>
             </div>
@@ -67,8 +67,7 @@ export function Header() {
               <div className="space-y-1">
                 <h4 className="text-sm font-semibold">@joshuajyu</h4>
                 <p className="text-sm">
-                  I&apos;m Joshua Yu, a Computer Science student at the
-                  University of Toronto Scarborough. Nice to meet you!
+                  I&apos;m Joshua Yu, a Software Engineer at Ada. Nice to meet you!
                 </p>
                 <div className="flex items-center pt-2">
                   <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}

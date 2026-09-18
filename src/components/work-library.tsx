@@ -85,7 +85,7 @@ const works: {
     ],
     description: (
       <p>
-        A free AI contract generator that allows users to generate contracts
+        An AI contract generator that allows users to generate contracts
         from predefined templates.
       </p>
     ),
@@ -108,7 +108,7 @@ const works: {
   },
 ];
 
-export function CardTable() {
+export function WorkTable() {
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {works.map((component, index) => (

@@ -1,5 +1,3 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { TriangleAlert } from "lucide-react";
 import { ContactTable } from "@/components/contact-table";
 
 export default function Contact() {
@@ -16,15 +14,6 @@ export default function Contact() {
         Contact Methods & Socials
       </h4>
       <ContactTable />
-      <Alert>
-        <TriangleAlert size={16} />
-        <AlertTitle className="font-bold">Disclaimer:</AlertTitle>
-        <AlertDescription>
-          I am terrible at regularly checking my personal email. If you really{" "}
-          <span className="italic">must</span> reach me, try my school email or
-          social media(s).
-        </AlertDescription>
-      </Alert>
       <blockquote className="mt-6 border-l-2 pl-6 italic text-muted-foreground">
         “Taking a new step, uttering a new word, is what people fear most.”
         <br />

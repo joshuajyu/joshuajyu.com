@@ -16,15 +16,6 @@ const contactMethods: {
     ),
   },
   {
-    name: "School Email",
-    emoji: "📧",
-    value: (
-      <a href="mailto:joshua.yu@mail.utoronto.ca" className="underline">
-        joshua.yu@mail.utoronto.ca
-      </a>
-    ),
-  },
-  {
     name: "GitHub",
     emoji: "💻",
     value: (
@@ -43,7 +34,7 @@ const contactMethods: {
     emoji: "🔗",
     value: (
       <a
-        href="https://linkedin.com/in/joshua-j-yu/"
+        href="https://linkedin.com/in/joshuajyu/"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -57,11 +48,11 @@ const contactMethods: {
     emoji: "📸",
     value: (
       <a
-        href="https://www.instagram.com/joshiejx/"
+        href="https://www.instagram.com/yujun4__/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        <span className="underline-offset-2 underline">joshiejx</span>{" "}
+        <span className="underline-offset-2 underline">yujun04</span>{" "}
         <ExternalLink size={14} className="inline" />
       </a>
     ),
