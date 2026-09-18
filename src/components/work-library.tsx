@@ -31,8 +31,8 @@ import { Link } from "lucide-react";
 
 const works: {
   name: string;
-  icons: { icon: JSX.Element; tooltip: string }[];
-  description: JSX.Element;
+  icons: { icon: React.JSX.Element; tooltip: string }[];
+  description: React.JSX.Element;
   link: string;
 }[] = [
   {
@@ -128,8 +128,8 @@ const WorkCard = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div"> & {
     name: string;
-    icons: { icon: JSX.Element; tooltip: string }[];
-    description: JSX.Element;
+    icons: { icon: React.JSX.Element; tooltip: string }[];
+    description: React.JSX.Element;
     link: string;
   }
 >(({ name, icons, description, link }, ref) => {

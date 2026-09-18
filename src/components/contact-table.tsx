@@ -4,7 +4,7 @@ import { ExternalLink } from "lucide-react";
 const contactMethods: {
   name: string;
   emoji: string;
-  value: JSX.Element;
+  value: React.JSX.Element;
 }[] = [
   {
     name: "Personal Email",
@@ -83,7 +83,7 @@ const TableRow = React.forwardRef<
   React.ComponentPropsWithoutRef<"td"> & {
     name: string;
     emoji: string;
-    value: JSX.Element;
+    value: React.JSX.Element;
   }
 >(({ name, emoji, value }) => {
   return (
