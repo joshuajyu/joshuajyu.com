@@ -5,9 +5,9 @@ import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Joshua Yu | Computer Science Student @ UofT Scarborough",
+  title: "Joshua Yu | SWE @ Ada",
   description:
-    "Joshua Yu is a Computer Science student at the University of Toronto Scarborough.",
+    "I am a software engineer at Ada.",
   icons: {
     icon: [
       {
