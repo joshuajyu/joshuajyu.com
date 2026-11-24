@@ -19,26 +19,35 @@
   --color-accent: var(--accent);
 }
 
+/*
+ * Colours: Kanagawa.
+ * Light — "Canvas" from kanagawa-paper (thesimonho/kanagawa-paper, MIT) with
+ *   Lotus's pink accent. Text is canvasGray3 (#616569) darkened slightly and
+ *   muted text sits between it and canvasGray2, so both pass WCAG AA (4.5:1)
+ *   on the background, cards and tag chips.
+ * Dark — "Dragon" from kanagawa.nvim (rebelot/kanagawa.nvim, MIT). Muted text
+ *   is dragonAsh (#737c73) moved halfway toward dragonWhite for the same reason.
+ */
 :root {
   color-scheme: light;
-  --bg: oklch(0.99 0 0);
-  --fg: oklch(0.2 0.02 265);
-  --muted: oklch(0.5 0.02 265);
-  --subtle: oklch(0.96 0.005 265);
-  --border: oklch(0.91 0.01 265);
-  --card: oklch(1 0 0);
-  --accent: oklch(0.55 0.17 255);
+  --bg: #e1e1de; /* canvasWhite4 */
+  --fg: #4e5154; /* canvasGray3, darkened */
+  --muted: #5c5d5c;
+  --subtle: #d8d8d2; /* canvasWhite3 */
+  --border: #d1cfc5; /* canvasWhite2 */
+  --card: #ecece8; /* canvasWhite6 */
+  --accent: #b35b79; /* lotusPink */
 }
 
 :root.dark {
   color-scheme: dark;
-  --bg: oklch(0.16 0.015 265);
-  --fg: oklch(0.96 0.005 265);
-  --muted: oklch(0.7 0.02 265);
-  --subtle: oklch(0.22 0.02 265);
-  --border: oklch(0.3 0.02 265);
-  --card: oklch(0.19 0.017 265);
-  --accent: oklch(0.75 0.13 250);
+  --bg: #181616; /* dragonBlack3 */
+  --fg: #c5c9c5; /* dragonWhite */
+  --muted: #9ca39c;
+  --subtle: #393836; /* dragonBlack5 */
+  --border: #393836; /* dragonBlack5 */
+  --card: #282727; /* dragonBlack4 */
+  --accent: #a292a3; /* dragonPink */
 }
 
 @layer base {
