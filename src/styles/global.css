@@ -425,15 +425,22 @@ html:has(.page) {
  *   .reel        the window: a recessed, bezelled opening ~2.3 lines tall,
  *                showing the facets above and below the current one. The
  *                slot's vertical margin makes room for it in the line.
- *   .reel-drum   a 10-sided drum (preserve-3d), rolled by --angle. Pushed back
+ *   .reel-drum   an 8-sided drum (preserve-3d), rolled by --angle (a
+ *                registered <angle>, so it animates and inherits). Pushed back
  *                by its radius so the front facet renders at true size.
- *   .reel-face   one facet per word, in the accent colour with a bevel.
- *   ::before     curvature shading (darker toward the drum's top and bottom).
- *   .reel-glass  a cartoon glass pane: hard-edged gloss, diagonal glints, rim.
- * Facet height is 1lh, so the drum radius is 1lh / (2·tan(18°)) ≈ 1.539lh.
+ *   .reel-face   one flat facet per word in the accent colour, darkened by how
+ *                far it's turned from the viewer (1 − cos θ) — flat shading,
+ *                so the drum reads angular, not bulged. Crisp dark seams.
+ * Facet height is 1lh, so the drum radius is 1lh / (2·tan(22.5°)) ≈ 1.207lh.
  */
+@property --angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
 .slot {
-  --reel-r: calc(1lh * 1.539);
+  --reel-step: 45deg;
+  --reel-r: calc(1lh * 1.207);
   --reel-bezel: color-mix(in srgb, var(--accent) 55%, black);
   position: relative;
   display: inline-block;
@@ -489,52 +496,17 @@ html:has(.page) {
   font-weight: 600;
   color: var(--bg);
   background-color: var(--accent);
-  background-image: linear-gradient(rgb(255 255 255 / 0.14), transparent 55%, rgb(0 0 0 / 0.12));
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.35),
-    inset 0 -1px 0 rgb(0 0 0 / 0.35);
-  backface-visibility: hidden;
-  transform: rotateX(calc(var(--i) * 36deg)) translateZ(var(--reel-r));
-}
-/* Curvature shading over the drum. */
-.reel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    rgb(0 0 0 / 0.7),
-    rgb(0 0 0 / 0.25) 22%,
-    transparent 34%,
-    transparent 66%,
-    rgb(0 0 0 / 0.25) 78%,
-    rgb(0 0 0 / 0.7)
+  /* Flat shading: 0% darker facing the viewer, more as the facet turns away. */
+  background-color: color-mix(
+    in srgb,
+    var(--accent),
+    black min(100%, calc((1 - cos(var(--angle) + var(--i) * var(--reel-step))) * 85%))
   );
-  pointer-events: none;
-}
-/* Cartoon glass pane. */
-.reel-glass {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  background:
-    linear-gradient(
-      115deg,
-      transparent 0 57%,
-      rgb(255 255 255 / 0.5) 57% 62%,
-      transparent 62% 66%,
-      rgb(255 255 255 / 0.4) 66% 68.5%,
-      transparent 68.5%
-    ),
-    radial-gradient(130% 34% at 50% -4%, rgb(255 255 255 / 0.5) 0 60%, transparent 61%);
   box-shadow:
-    inset 0 0 0 2px rgb(255 255 255 / 0.5),
-    inset 0 -3px 6px rgb(0 0 0 / 0.35);
-  pointer-events: none;
-}
-.dark .reel-glass {
-  opacity: 0.7;
+    inset 0 1px 0 rgb(0 0 0 / 0.45),
+    inset 0 -1px 0 rgb(0 0 0 / 0.45);
+  backface-visibility: hidden;
+  transform: rotateX(calc(var(--i) * var(--reel-step))) translateZ(var(--reel-r));
 }
 /* "Spin again" hint: a small accent badge on hover / keyboard focus. */
 .slot-hint {

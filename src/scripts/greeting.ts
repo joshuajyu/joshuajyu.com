@@ -3,11 +3,13 @@
 //   • Part of day — from the viewer's local clock (morning / afternoon /
 //     evening / night).
 //   • Adjective — a faceted slot reel (Greeting.astro; "Greeting slot reel"
-//     in global.css): a 10-sided drum, one word per facet. A spin reshuffles
+//     in global.css): an 8-sided drum, one word per facet. A spin reshuffles
 //     the words on the facets out of view, puts the result on the facet that
 //     will land at the front, and rolls the drum a few turns with an
-//     overshooting ease — transform only. It spins the first time the Intro
-//     becomes active (`page:active` from pages.ts) and on every press.
+//     overshooting ease. The roll animates the registered `--angle`, which
+//     drives both the drum's rotation and each facet's flat shading. It spins
+//     the first time the Intro becomes active (`page:active` from pages.ts)
+//     and on every press.
 //   • Reduced motion: the front facet's word is swapped instantly, no roll.
 
 import { adjectives, partOfDay } from "../data/greeting";
@@ -82,18 +84,17 @@ if (slot && drum && faces.length) {
     faces[landing].textContent = target;
 
     angle -= turns * 360 + advance * STEP; // roll so facets move upward
-    setDrum(angle, `transform ${ms}ms cubic-bezier(0.15, 0.7, 0.22, 1.05)`);
-    drum.addEventListener(
-      "transitionend",
-      () => {
-        front = landing;
-        current = target;
-        label(target);
-        slot.classList.remove("is-spinning");
-        spinning = false;
-      },
-      { once: true },
-    );
+    setDrum(angle, `--angle ${ms}ms cubic-bezier(0.15, 0.7, 0.22, 1.05)`);
+    const done = (e: TransitionEvent) => {
+      if (e.target !== drum) return;
+      drum.removeEventListener("transitionend", done);
+      front = landing;
+      current = target;
+      label(target);
+      slot.classList.remove("is-spinning");
+      spinning = false;
+    };
+    drum.addEventListener("transitionend", done);
   };
 
   fill(new Set([0]));

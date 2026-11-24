@@ -1,12 +1,11 @@
 ---
 // "…and I hope you have a [nice] [day]!" — the adjective sits on a small
-// slot-machine reel set into the line: a faceted 3D drum in the accent colour
-// behind a cartoon glass pane. It rolls on arrival; click / tap / Enter rolls
-// it again. The time word follows the viewer's local clock. Behaviour lives
+// slot-machine reel set into the line: an 8-sided, flat-shaded 3D drum in the
+// accent colour. It rolls on arrival; click / tap / Enter rolls it again. The time word follows the viewer's local clock. Behaviour lives
 // in src/scripts/greeting.ts (styles: "Greeting slot reel" in global.css).
 // Without JavaScript the reel simply shows "nice".
 import { adjectives } from "../data/greeting";
-const FACES = 10;
+const FACES = 8;
 ---
 
 I hope you have a <button
@@ -24,7 +23,7 @@ I hope you have a <button
           </span>
         ))
       }</span
-    ><span class="reel-glass"></span></span
+    ></span
   ><svg
     class="slot-hint"
     viewBox="0 0 24 24"
