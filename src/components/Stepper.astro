@@ -1,38 +1,40 @@
 ---
-// Vertical section stepper. `src/scripts/pages.ts` keeps `--step` and each
-// step's `data-state` (complete | current | upcoming) in sync with the page in
-// view. Only shown on the desktop rail (≥ lg).
+// Vertical section stepper on the desktop rail (≥ lg). `src/scripts/pages.ts`
+// keeps each step's `data-state` (complete | current | upcoming) in sync with
+// the page in view. The current step expands to show its blurb; the line
+// segment below each completed step fills with the accent colour.
 const steps = [
-  { id: "intro", label: "Intro" },
-  { id: "work", label: "Work" },
-  { id: "contact", label: "Contact" },
+  { id: "intro", label: "Intro", blurb: "A little about me." },
+  { id: "work", label: "Work", blurb: "Projects I've built." },
+  { id: "contact", label: "Contact", blurb: "Ways to reach me." },
 ];
 ---
 
-<nav aria-label="Sections" class="stepper" data-stepper style={`--steps: ${steps.length}; --step: 0`}>
-  <div class="relative">
-    <span class="stepper-track" aria-hidden="true"></span>
-    <span class="stepper-fill" aria-hidden="true"></span>
-    <ol class="relative flex flex-col gap-9">
-      {
-        steps.map((s, i) => (
-          <li data-step={s.id} data-state={i === 0 ? "current" : "upcoming"}>
-            <a
-              href={`#${s.id}`}
-              class="stepper-link flex h-6 items-center gap-3"
-              aria-current={i === 0 ? "step" : undefined}
-            >
-              <span class="grid size-6 flex-none place-items-center" aria-hidden="true">
-                <span class="stepper-dot" />
-              </span>
-              <span class="stepper-label">
-                <span class="stepper-num">{String(i + 1).padStart(2, "0")}</span>
-                {s.label}
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ol>
-  </div>
+<nav aria-label="Sections" data-stepper>
+  <ol>
+    {
+      steps.map((s, i) => (
+        <li class="stepper-step" data-step={s.id} data-state={i === 0 ? "current" : "upcoming"}>
+          <a
+            href={`#${s.id}`}
+            class="stepper-link flex h-6 items-center gap-3"
+            aria-current={i === 0 ? "step" : undefined}
+          >
+            <span class="stepper-dot-box grid size-6 flex-none place-items-center" aria-hidden="true">
+              <span class="stepper-dot" />
+            </span>
+            <span class="stepper-label">
+              <span class="stepper-num">{String(i + 1).padStart(2, "0")}</span>
+              {s.label}
+            </span>
+          </a>
+          <div class="stepper-blurb">
+            <div>
+              <p class="pt-1 pl-9 text-xs leading-snug text-muted">{s.blurb}</p>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
 </nav>

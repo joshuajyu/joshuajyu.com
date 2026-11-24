@@ -134,26 +134,42 @@ html:has(.page) {
 /* ---------- Section stepper ---------- */
 
 /*
- * Each step is a 1.5rem-tall row whose dot sits in a 1.5rem box, so the rail
- * line runs from the first dot's centre to the last's (0.75rem in from each
- * end). The accent fill scales to `--step / (--steps - 1)` of that length.
+ * Each step draws the line segment from its own dot down to the next step's
+ * dot (::before = track, ::after = accent fill), so the line stays attached
+ * while blurbs expand and collapse. Dots are 0.75rem from the top of their
+ * 1.5rem row; the segment runs from there to 0.75rem past the step's bottom.
  */
-.stepper-track,
-.stepper-fill {
+.stepper-step {
+  position: relative;
+}
+.stepper-step:not(:last-child) {
+  padding-bottom: 1.75rem;
+}
+.stepper-step:not(:last-child)::before,
+.stepper-step:not(:last-child)::after {
+  content: "";
   position: absolute;
   top: 0.75rem;
-  bottom: 0.75rem;
+  bottom: -0.75rem;
   left: calc(0.75rem - 1px);
   width: 2px;
   border-radius: 1px;
 }
-.stepper-track {
+.stepper-step::before {
   background: var(--border);
 }
-.stepper-fill {
+.stepper-step::after {
   background: var(--accent);
   transform-origin: top;
-  transform: scaleY(calc(var(--step, 0) / (var(--steps, 2) - 1)));
+  transform: scaleY(0);
+}
+.stepper-step[data-state="complete"]::after {
+  transform: scaleY(1);
+}
+
+.stepper-dot-box {
+  position: relative;
+  z-index: 1; /* above the line segments */
 }
 .stepper-dot {
   display: block;
@@ -175,10 +191,10 @@ html:has(.page) {
   background: var(--accent);
   box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 25%, transparent);
 }
+
 .stepper-label {
   font-size: 0.875rem;
   color: var(--muted);
-  transition: color 200ms;
 }
 .stepper-num {
   margin-right: 0.375rem;
@@ -192,6 +208,24 @@ html:has(.page) {
 }
 [data-state="current"] .stepper-label {
   font-weight: 500;
+}
+
+/* Blurb: collapsed (0fr) unless the step is current. `visibility` keeps
+   collapsed blurbs out of the accessibility tree. */
+.stepper-blurb {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+.stepper-blurb > div {
+  min-height: 0;
+  overflow: hidden;
+}
+[data-state="current"] .stepper-blurb {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ---------- Motion (only when the visitor hasn't asked for less) ---------- */
@@ -236,14 +270,31 @@ html:has(.page) {
     animation: wave 4s ease-in-out 1s infinite;
   }
 
-  .stepper-fill {
-    transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
   .stepper-dot {
     transition:
       background-color 300ms,
       border-color 300ms,
       box-shadow 300ms;
+  }
+  .stepper-label {
+    transition: color 200ms;
+  }
+  .stepper-step::after {
+    transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  /* Collapse: fade out, then shrink, then hide. */
+  .stepper-blurb {
+    transition:
+      opacity 200ms ease-in,
+      grid-template-rows 400ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      visibility 0s linear 400ms;
+  }
+  /* Expand: grow, with the text fading in slightly behind it. */
+  [data-state="current"] .stepper-blurb {
+    transition:
+      grid-template-rows 450ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 350ms ease-out 150ms,
+      visibility 0s;
   }
 }
 

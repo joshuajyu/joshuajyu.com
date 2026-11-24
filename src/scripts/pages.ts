@@ -1,10 +1,10 @@
 // The home page is a stack of full-screen "pages" (`section.page`) that the
 // browser scroll-snaps between. Whichever page crosses the middle of the
 // viewport is the active one: it gets `.is-active` (its `[data-reveal]`
-// children animate in — see global.css), and the section stepper moves to it.
+// children animate in — see global.css), and the section stepper moves to it
+// (step `data-state` drives the dot, line fill and blurb expansion).
 // Leaving a page removes the class so it animates again on return.
 const pages = [...document.querySelectorAll<HTMLElement>("section.page")];
-const stepper = document.querySelector<HTMLElement>("[data-stepper]");
 const steps = [...document.querySelectorAll<HTMLElement>("[data-stepper] li[data-step]")];
 
 const activate = (page: HTMLElement) => {
@@ -12,7 +12,6 @@ const activate = (page: HTMLElement) => {
 
   const current = steps.findIndex((li) => li.dataset.step === page.id);
   if (current === -1) return;
-  stepper?.style.setProperty("--step", String(current));
   steps.forEach((li, i) => {
     li.dataset.state = i < current ? "complete" : i === current ? "current" : "upcoming";
     const link = li.querySelector("a");
