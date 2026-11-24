@@ -2,8 +2,9 @@
 // Ambient "lava lamp" background: soft, slightly lumpy colour blobs that
 // *bubble* in place behind the page. Purely decorative.
 //
-// Each blob stays near its anchor and the main motion is size: it swells from
-// small and faint to full size and bright, then sinks back (`bubble`, 9–16s),
+// Blobs are large and placed so neighbours overlap. Each stays near its
+// anchor and the main motion is size: it swells from ~55–60% to full size
+// and brightens, then sinks back (`bubble`, 9–16s),
 // with staggered phases so at any moment some blobs are rising while others
 // recede. On top of that: a small wobble around the anchor (mostly upward,
 // like rising lava) and a very slow turn so the lumpy shape never reads as a
@@ -24,8 +25,9 @@ interface Blob {
   /** Strength relative to --lava-opacity (≤ 1 keeps the contrast budget). */
   o: number;
   size: string;
-  top: string;
-  left: string;
+  /** Centre of the blob (it swells around this point). */
+  x: string;
+  y: string;
   /** Swell cycle: smallest → largest scale, height/width ratio at the peak, period, phase. */
   bubble: { min: number; max: number; aspect: number; s: number; delay: number };
   /** Small drift around the anchor (alternating), period, phase. */
@@ -36,25 +38,25 @@ interface Blob {
 
 const blobs: Blob[] = [
   // large, background
-  { colour: 1, shape: "a", o: 0.8, size: "55vmax", top: "45vh", left: "-18vw", bubble: { min: 0.45, max: 1.1, aspect: 0.9, s: 15, delay: -2 }, wobble: { x: "3vw", y: "-6vh", s: 11, delay: -4 }, spin: { s: 180, start: 20 } },
-  { colour: 2, shape: "b", o: 0.8, size: "50vmax", top: "-18vh", left: "58vw", bubble: { min: 0.4, max: 1.05, aspect: 1.1, s: 16, delay: -9 }, wobble: { x: "-3vw", y: "-5vh", s: 12, delay: -1 }, spin: { s: -200, start: 140 } },
+  { colour: 1, shape: "a", o: 0.8, size: "80vmax", x: "15vw", y: "70vh", bubble: { min: 0.6, max: 1.1, aspect: 0.9, s: 15, delay: -2 }, wobble: { x: "3vw", y: "-6vh", s: 11, delay: -4 }, spin: { s: 180, start: 20 } },
+  { colour: 2, shape: "b", o: 0.8, size: "75vmax", x: "80vw", y: "25vh", bubble: { min: 0.6, max: 1.05, aspect: 1.1, s: 16, delay: -9 }, wobble: { x: "-3vw", y: "-5vh", s: 12, delay: -1 }, spin: { s: -200, start: 140 } },
   // medium
-  { colour: 3, shape: "c", o: 0.9, size: "34vmax", top: "52vh", left: "44vw", bubble: { min: 0.35, max: 1.15, aspect: 0.85, s: 11, delay: -4 }, wobble: { x: "-2vw", y: "-7vh", s: 9, delay: -6 }, spin: { s: 150, start: 260 } },
-  { colour: 4, shape: "a", o: 0.9, size: "30vmax", top: "2vh", left: "18vw", bubble: { min: 0.4, max: 1.1, aspect: 1.15, s: 12, delay: -7 }, wobble: { x: "2vw", y: "-5vh", s: 10, delay: -2 }, spin: { s: -170, start: 75 } },
+  { colour: 3, shape: "c", o: 0.9, size: "55vmax", x: "50vw", y: "65vh", bubble: { min: 0.55, max: 1.15, aspect: 0.85, s: 11, delay: -4 }, wobble: { x: "-2vw", y: "-7vh", s: 9, delay: -6 }, spin: { s: 150, start: 260 } },
+  { colour: 4, shape: "a", o: 0.9, size: "50vmax", x: "35vw", y: "20vh", bubble: { min: 0.6, max: 1.1, aspect: 1.15, s: 12, delay: -7 }, wobble: { x: "2vw", y: "-5vh", s: 10, delay: -2 }, spin: { s: -170, start: 75 } },
   // small, foreground
-  { colour: 1, shape: "b", o: 1, size: "22vmax", top: "68vh", left: "76vw", bubble: { min: 0.3, max: 1.2, aspect: 0.9, s: 9, delay: -3 }, wobble: { x: "-2vw", y: "-8vh", s: 8, delay: -5 }, spin: { s: 140, start: 200 } },
-  { colour: 2, shape: "c", o: 1, size: "20vmax", top: "28vh", left: "70vw", bubble: { min: 0.35, max: 1.15, aspect: 1.1, s: 10, delay: -6 }, wobble: { x: "2vw", y: "-6vh", s: 9, delay: -3 }, spin: { s: -160, start: 320 } },
-  { colour: 3, shape: "a", o: 1, size: "24vmax", top: "72vh", left: "8vw", bubble: { min: 0.3, max: 1.2, aspect: 1, s: 13, delay: -10 }, wobble: { x: "3vw", y: "-7vh", s: 10, delay: -7 }, spin: { s: 190, start: 110 } },
-  { colour: 4, shape: "b", o: 1, size: "18vmax", top: "14vh", left: "44vw", bubble: { min: 0.3, max: 1.25, aspect: 0.95, s: 9.5, delay: -1 }, wobble: { x: "-2vw", y: "-6vh", s: 8, delay: -2 }, spin: { s: -150, start: 30 } },
+  { colour: 1, shape: "b", o: 1, size: "38vmax", x: "75vw", y: "80vh", bubble: { min: 0.55, max: 1.15, aspect: 0.9, s: 9, delay: -3 }, wobble: { x: "-2vw", y: "-8vh", s: 8, delay: -5 }, spin: { s: 140, start: 200 } },
+  { colour: 2, shape: "c", o: 1, size: "34vmax", x: "60vw", y: "40vh", bubble: { min: 0.55, max: 1.15, aspect: 1.1, s: 10, delay: -6 }, wobble: { x: "2vw", y: "-6vh", s: 9, delay: -3 }, spin: { s: -160, start: 320 } },
+  { colour: 3, shape: "a", o: 1, size: "40vmax", x: "10vw", y: "30vh", bubble: { min: 0.55, max: 1.15, aspect: 1, s: 13, delay: -10 }, wobble: { x: "3vw", y: "-7vh", s: 10, delay: -7 }, spin: { s: 190, start: 110 } },
+  { colour: 4, shape: "b", o: 1, size: "32vmax", x: "90vw", y: "60vh", bubble: { min: 0.55, max: 1.2, aspect: 0.95, s: 9.5, delay: -1 }, wobble: { x: "-2vw", y: "-6vh", s: 8, delay: -2 }, spin: { s: -150, start: 30 } },
 ];
 
 const style = (b: Blob) =>
   [
     `--c: var(--lava-${b.colour})`,
     `--o: ${b.o}`,
-    `width: ${b.size}`,
-    `top: ${b.top}`,
-    `left: ${b.left}`,
+    `--size: ${b.size}`,
+    `left: ${b.x}`,
+    `top: ${b.y}`,
     `--s-min: ${b.bubble.min}`,
     `--s-max: ${b.bubble.max}`,
     `--aspect: ${b.bubble.aspect}`,

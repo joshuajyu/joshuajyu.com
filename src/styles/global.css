@@ -27,8 +27,8 @@
  * Dark — "Dragon" from kanagawa.nvim (rebelot/kanagawa.nvim, MIT). Muted text
  *   is dragonAsh (#737c73) moved most of the way toward dragonWhite.
  * Text and muted text pass WCAG AA (4.5:1) on the background, cards and tag
- * chips, and over the background blobs (checked at one blob centre plus a
- * second blob at half strength).
+ * chips, and over the background blobs (checked with three overlapping: two
+ * blob centres at full strength plus a third at half).
  */
 :root {
   color-scheme: light;
@@ -56,7 +56,7 @@
   color-scheme: dark;
   --bg: #181616; /* dragonBlack3 */
   --fg: #c5c9c5; /* dragonWhite */
-  --muted: #9ea59e;
+  --muted: #adb3ad;
   --subtle: #393836; /* dragonBlack5 */
   --border: #393836; /* dragonBlack5 */
   --card: #282727; /* dragonBlack4 */
@@ -70,7 +70,7 @@
   --lava-2: #4a6295;
   --lava-3: #246c88;
   --lava-4: #5c385f;
-  --lava-opacity: 0.3;
+  --lava-opacity: 0.28;
 }
 
 /*
