@@ -14,6 +14,12 @@
   pointer-events: none;
 }
 
+/* "Dynamic background" off (appearance menu): hide the layer; the renderer
+   also stops its loop. */
+.no-lava .lava {
+  display: none;
+}
+
 /* The canvas is rendered at 1/6 resolution and stretched to the viewport;
    default (bilinear) smoothing keeps the blurry blobs smooth. */
 .lava canvas {

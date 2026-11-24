@@ -1,6 +1,9 @@
+/** Icons drawn by src/components/ContactIcon.astro. */
+export type ContactIconName = "email" | "github" | "linkedin" | "instagram";
+
 export interface ContactMethod {
   name: string;
-  emoji: string;
+  icon: ContactIconName;
   label: string;
   href: string;
   external: boolean;
@@ -9,28 +12,28 @@ export interface ContactMethod {
 export const contact: ContactMethod[] = [
   {
     name: "Email",
-    emoji: "📧",
+    icon: "email",
     label: "joshua@joshuajyu.com",
     href: "mailto:joshua@joshuajyu.com",
     external: false,
   },
   {
     name: "GitHub",
-    emoji: "💻",
+    icon: "github",
     label: "joshuajyu",
     href: "https://github.com/joshuajyu",
     external: true,
   },
   {
     name: "LinkedIn",
-    emoji: "🔗",
+    icon: "linkedin",
     label: "Joshua Yu",
     href: "https://www.linkedin.com/in/joshuajyu/",
     external: true,
   },
   {
     name: "Instagram",
-    emoji: "📸",
+    icon: "instagram",
     label: "yujun4__",
     href: "https://www.instagram.com/yujun4__/",
     external: true,
