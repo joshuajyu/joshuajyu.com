@@ -85,10 +85,23 @@ function start(canvas: HTMLCanvasElement) {
     canvas.height = off.height = H;
   };
 
+  /**
+   * Reads the palette and strength from the theme's CSS variables. Returns
+   * false if the stylesheet hasn't applied yet (variables empty) — some
+   * browsers can run this script before the CSS is ready on a cold first
+   * load, so callers keep retrying instead of trusting one early read.
+   */
+  let themeReady = false;
   const readTheme = () => {
     const cs = getComputedStyle(root);
-    palette = [1, 2, 3, 4].map((i) => hexToLab(cs.getPropertyValue(`--lava-${i}`).trim() || "#000000"));
-    strength = parseFloat(cs.getPropertyValue("--lava-opacity")) || 0;
+    const hexes = [1, 2, 3, 4].map((i) => cs.getPropertyValue(`--lava-${i}`).trim());
+    const s = parseFloat(cs.getPropertyValue("--lava-opacity"));
+    themeReady = hexes.every((h) => /^#[0-9a-f]{6}$/i.test(h)) && Number.isFinite(s);
+    if (themeReady) {
+      palette = hexes.map(hexToLab);
+      strength = s;
+    }
+    return themeReady;
   };
 
   /** "15vw" / "-6vh" / "104vmax" → canvas px. */
@@ -114,6 +127,12 @@ function start(canvas: HTMLCanvasElement) {
   };
 
   const draw = (t: number, animated: boolean) => {
+    // Self-heal: pick up the theme once the CSS has applied, and follow the
+    // viewport if it changed since the last frame (e.g. a tab opened in the
+    // background or pre-rendered at a different size).
+    if (!themeReady && !readTheme()) return;
+    if (W !== Math.max(1, Math.ceil(innerWidth / RES)) || H !== Math.max(1, Math.ceil(innerHeight / RES))) resize();
+
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, W, H);
@@ -178,9 +197,15 @@ function start(canvas: HTMLCanvasElement) {
   };
 
   resize();
-  readTheme();
+  readTheme(); // may be too early on a cold load; draw() retries until ready
   run();
 
+  // Belt and braces: by `load` every stylesheet has applied, so re-read and
+  // (for the still, reduced-motion frame, which has no loop to retry) redraw.
+  addEventListener("load", () => {
+    readTheme();
+    if (reduceMotion.matches) draw(0, false);
+  });
   addEventListener("resize", () => {
     resize();
     if (reduceMotion.matches) draw(0, false);
