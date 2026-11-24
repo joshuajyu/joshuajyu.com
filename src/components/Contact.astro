@@ -1,5 +1,6 @@
 ---
 import { contact } from "../data/contact";
+import ContactIcon from "./ContactIcon.astro";
 import ExternalIcon from "./ExternalIcon.astro";
 import Quote from "./Quote.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -16,8 +17,9 @@ import SectionHeading from "./SectionHeading.astro";
     {
       contact.map((c, i) => (
         <div class="flex items-center justify-between gap-4 px-5 py-3.5" data-reveal style={`--reveal-index: ${i + 2}`}>
-          <dt class="text-muted">
-            <span aria-hidden="true">{c.emoji}</span> {c.name}
+          <dt class="flex items-center gap-3 text-muted">
+            <ContactIcon name={c.icon} class="size-[1.125rem]" />
+            {c.name}
           </dt>
           <dd>
             {c.external ? (
