@@ -3,7 +3,8 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   // Must match the Worker name in the dashboard for Workers Builds.
-  "name": "joshuajyudotcom",
+  // (Same name as the old Pages project; Workers and Pages are separate.)
+  "name": "joshuajyu-com",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
