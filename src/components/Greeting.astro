@@ -1,8 +1,11 @@
 ---
-// "…and I hope you have a [nice] [day]!" — the adjective is a slot-machine
-// reel behind a small pane of glass (spins on arrival; click/tap/Enter to spin
-// again) and the time word follows the viewer's local time. Behaviour lives
-// in src/scripts/greeting.ts; without JavaScript it reads "a nice day".
+// "…and I hope you have a [nice] [day]!" — the adjective sits on a small
+// slot-machine reel set into the line: a faceted 3D drum in the accent colour
+// behind a cartoon glass pane. It rolls on arrival; click / tap / Enter rolls
+// it again. The time word follows the viewer's local clock. Behaviour lives
+// in src/scripts/greeting.ts (styles: "Greeting slot reel" in global.css).
+// Without JavaScript the reel simply shows "nice".
+const FACES = 10;
 ---
 
 I hope you have a <button
@@ -11,7 +14,17 @@ I hope you have a <button
   data-slot
   aria-label="nice — spin for another adjective"
   title="Spin again"
-  ><span class="slot-window" aria-hidden="true"><span class="slot-strip"><span>nice</span></span></span><svg
+  ><span class="slot-sizer" aria-hidden="true">nice</span><span class="reel" aria-hidden="true"
+    ><span class="reel-drum"
+      >{
+        Array.from({ length: FACES }, (_, i) => (
+          <span class="reel-face" style={`--i: ${i}`}>
+            {i === 0 ? "nice" : ""}
+          </span>
+        ))
+      }</span
+    ><span class="reel-glass"></span></span
+  ><svg
     class="slot-hint"
     viewBox="0 0 24 24"
     fill="none"
