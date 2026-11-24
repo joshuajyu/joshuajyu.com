@@ -73,6 +73,25 @@
   --lava-opacity: 0.3;
 }
 
+/*
+ * Frosted glass — the one place to tune it. Used (via the `glass` utility) by
+ * the desktop rail, work tiles, contact table, footer and theme toggle.
+ * Tint is the theme's --card colour so panels read as slightly raised. Text
+ * on glass is checked for 4.5:1 in both themes at the default tint (worst
+ * case: brightest blob directly behind).
+ */
+:root {
+  --glass-tint: 35%; /* how much --card covers the blurred backdrop */
+  --glass-blur: 64px;
+  --glass-saturate: 1.5;
+}
+
+@utility glass {
+  background-color: color-mix(in srgb, var(--card) var(--glass-tint), transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
 @layer base {
   body {
     @apply bg-bg text-fg font-sans antialiased;
@@ -273,10 +292,19 @@ html:has(.page) {
    * and fade back out when the page is left. Hidden state only applies once
    * the head script has added `.js`, so content is visible without JS.
    */
+  /*
+   * Elements that reveal can also have hover transitions (work tiles), so the
+   * list includes those properties with their own timings. Tiles carry
+   * data-reveal themselves rather than on a wrapper: a fading *ancestor*
+   * stops backdrop-filter (the glass) from seeing the page behind it.
+   */
   .js .page [data-reveal] {
     transition:
       opacity 300ms ease-in,
-      transform 300ms ease-in;
+      transform 300ms ease-in,
+      translate 200ms,
+      border-color 200ms,
+      box-shadow 200ms;
   }
 
   .js .page:not(.is-active) [data-reveal] {
@@ -285,10 +313,14 @@ html:has(.page) {
   }
 
   .js .page.is-active [data-reveal] {
+    --reveal-delay: calc(100ms + var(--reveal-index, 0) * 80ms);
     transition:
       opacity 650ms cubic-bezier(0.2, 0.7, 0.2, 1),
-      transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
-    transition-delay: calc(100ms + var(--reveal-index, 0) * 80ms);
+      transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      translate 200ms,
+      border-color 200ms,
+      box-shadow 200ms;
+    transition-delay: var(--reveal-delay), var(--reveal-delay), 0s, 0s, 0s;
   }
 
   .scroll-hint svg {

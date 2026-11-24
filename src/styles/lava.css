@@ -1,12 +1,12 @@
 /*
  * Ambient "lava lamp" background — see src/components/Lava.astro for the blob
- * list and how the motion is layered. Colours (--lava-1..4) and strength
- * (--lava-opacity) are theme tokens in global.css.
+ * list and the motion design (bubbling in place). Colours (--lava-1..4) and
+ * strength (--lava-opacity) are theme tokens in global.css.
  *
- * Contrast budget: every lobe in a blob is the same colour, and the blob's
- * opacity is applied once to the whole blob, so however lobes overlap a blob
- * is never stronger than --lava-opacity × --o — the bound the text contrast
- * checks in global.css assume.
+ * Contrast budget: every lobe in a blob is the same colour and the blob's
+ * opacity (≤ --lava-opacity × --o, with the bubble's breathing only ever
+ * lowering it) applies once to the whole blob, so overlapping lobes never
+ * exceed the strength the text-contrast checks in global.css assume.
  */
 
 /* Fixed layer behind everything: z-index -1 paints above the canvas/body
@@ -32,8 +32,8 @@
   opacity: 0.06;
 }
 
-/* Outer: placement, size, strength. Position/size/motion values come from
-   inline custom properties set by Lava.astro. */
+/* Outer: anchor, size, strength. Values come from inline custom properties
+   set by Lava.astro. Scale origin is the centre, so blobs swell in place. */
 .lava-blob {
   position: absolute;
   aspect-ratio: 1;
@@ -45,15 +45,8 @@
     color-mix(in srgb, var(--c) 50%, transparent) 50%,
     color-mix(in srgb, var(--c) 20%, transparent) 75%, transparent 100%;
 }
-/* Near blobs: a slightly denser core — reads as closer. */
-.lava-blob[data-near] {
-  --falloff:
-    var(--c) 0%, color-mix(in srgb, var(--c) 85%, transparent) 30%,
-    color-mix(in srgb, var(--c) 50%, transparent) 58%,
-    color-mix(in srgb, var(--c) 15%, transparent) 82%, transparent 100%;
-}
 
-/* Inner: the shape. Fills the outer box and turns inside it. */
+/* Inner: the shape. */
 .lava-blob > i {
   position: absolute;
   inset: 0;
@@ -61,48 +54,74 @@
 }
 
 /*
- * Shapes: a central body ellipse plus offset lobes/knobs of different sizes
- * and aspects. Lobe centres sit within ~16% of the body's so they always
- * merge into one lumpy mass (further apart they read as separate circles).
- * Values are % of the blob box; every lobe stays inside it (centre ± radius
- * within 0–100%) so nothing is clipped.
+ * Shapes: a central body ellipse plus close-in lobes of different sizes and
+ * aspects, so each blob is one gently irregular mass (not a circle, not a
+ * cluster). Values are % of the blob box; every lobe stays inside it.
  */
 .lava-blob[data-shape="a"] > i {
   background:
-    radial-gradient(ellipse 34% 30% at 48% 50%, var(--falloff)),
-    radial-gradient(ellipse 26% 22% at 62% 38%, var(--falloff)),
-    radial-gradient(ellipse 22% 28% at 54% 64%, var(--falloff)),
-    radial-gradient(ellipse 16% 14% at 32% 58%, var(--falloff));
+    radial-gradient(ellipse 36% 32% at 49% 50%, var(--falloff)),
+    radial-gradient(ellipse 24% 20% at 60% 40%, var(--falloff)),
+    radial-gradient(ellipse 20% 24% at 42% 60%, var(--falloff));
 }
 .lava-blob[data-shape="b"] > i {
   background:
-    radial-gradient(ellipse 38% 28% at 50% 46%, var(--falloff)),
-    radial-gradient(ellipse 24% 28% at 38% 58%, var(--falloff)),
-    radial-gradient(ellipse 22% 20% at 64% 60%, var(--falloff));
+    radial-gradient(ellipse 38% 30% at 50% 48%, var(--falloff)),
+    radial-gradient(ellipse 22% 26% at 40% 56%, var(--falloff)),
+    radial-gradient(ellipse 20% 18% at 61% 57%, var(--falloff));
 }
 .lava-blob[data-shape="c"] > i {
   background:
-    radial-gradient(ellipse 30% 32% at 48% 50%, var(--falloff)),
-    radial-gradient(ellipse 26% 18% at 62% 38%, var(--falloff)),
-    radial-gradient(ellipse 18% 22% at 36% 38%, var(--falloff)),
-    radial-gradient(ellipse 14% 12% at 64% 66%, var(--falloff));
+    radial-gradient(ellipse 32% 34% at 50% 50%, var(--falloff)),
+    radial-gradient(ellipse 24% 18% at 60% 40%, var(--falloff)),
+    radial-gradient(ellipse 16% 20% at 40% 42%, var(--falloff));
+}
+
+/* Without motion, blobs rest at a mid size. */
+.lava-blob {
+  scale: calc((var(--s-min) + var(--s-max)) / 2);
 }
 
 /* Motion — only when the visitor hasn't asked for less. Negative delays start
-   each blob mid-path so nothing is static on load. */
+   each blob mid-cycle so nothing is in sync on load. */
 @media (prefers-reduced-motion: no-preference) {
   .lava-blob {
     animation:
-      lava-drift var(--drift-s) ease-in-out var(--drift-delay) infinite alternate,
-      lava-stretch var(--stretch-s) ease-in-out var(--stretch-delay) infinite alternate;
+      lava-bubble var(--bubble-s) ease-in-out var(--bubble-delay) infinite,
+      lava-wobble var(--wobble-s) ease-in-out var(--wobble-delay) infinite alternate;
   }
   .lava-blob > i {
-    animation: lava-spin var(--spin-s) linear infinite;
+    animation:
+      lava-breathe var(--bubble-s) ease-in-out var(--bubble-delay) infinite,
+      lava-spin var(--spin-s) linear infinite;
   }
 }
 
-/* Rise/fall: mostly vertical travel with a little sideways drift. */
-@keyframes lava-drift {
+/* Swell up and sink back. Peak is slightly uneven (--aspect) so the blob
+   bulges rather than inflating uniformly. */
+@keyframes lava-bubble {
+  0%,
+  100% {
+    scale: var(--s-min);
+  }
+  50% {
+    scale: var(--s-max) calc(var(--s-max) * var(--aspect));
+  }
+}
+
+/* Brightens as it swells, fades as it recedes (in step with lava-bubble). */
+@keyframes lava-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Small drift around the anchor, mostly upward. */
+@keyframes lava-wobble {
   from {
     translate: 0 0;
   }
@@ -111,17 +130,7 @@
   }
 }
 
-/* Uneven stretch on screen axes (outside the rotation → shape morphs). */
-@keyframes lava-stretch {
-  from {
-    scale: var(--sx0) var(--sy0);
-  }
-  to {
-    scale: var(--sx1) var(--sy1);
-  }
-}
-
-/* Continuous turn from a per-blob starting angle; --turn is ±1turn. */
+/* Very slow turn from a per-blob starting angle; --turn is ±1turn. */
 @keyframes lava-spin {
   from {
     rotate: var(--r0);
