@@ -6,8 +6,8 @@ import Wordmark from "./Wordmark.astro";
 
 <!--
   ≥ lg: fixed left rail — wordmark, section stepper, theme toggle.
-  < lg: wordmark + toggle sit at the top of the first page (scrolling away
-  with it) and the stepper is pinned to the right edge as dots.
+  < lg: wordmark + toggle sit at the top of the first page and scroll away
+  with it; no stepper.
 -->
 <header
   class="absolute inset-x-0 top-0 z-40 flex h-16 items-center justify-between px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-52 lg:flex-col lg:items-start lg:border-r lg:border-border lg:px-8 lg:py-10"
@@ -15,7 +15,7 @@ import Wordmark from "./Wordmark.astro";
   <a href="#intro" class="text-2xl" aria-label="joshuajyu — back to top">
     <Wordmark />
   </a>
-  <div class="fixed top-1/2 right-0 -translate-y-1/2 lg:static lg:translate-y-0">
+  <div class="hidden lg:block">
     <Stepper />
   </div>
   <div class="lg:-ml-2">
