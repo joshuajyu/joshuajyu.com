@@ -10,8 +10,8 @@ export const contact: ContactMethod[] = [
   {
     name: "Email",
     emoji: "📧",
-    label: "jo2004yu@gmail.com",
-    href: "mailto:jo2004yu@gmail.com",
+    label: "joshua@joshuajyu.com",
+    href: "mailto:joshua@joshuajyu.com",
     external: false,
   },
   {
