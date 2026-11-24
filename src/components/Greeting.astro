@@ -5,6 +5,7 @@
 // it again. The time word follows the viewer's local clock. Behaviour lives
 // in src/scripts/greeting.ts (styles: "Greeting slot reel" in global.css).
 // Without JavaScript the reel simply shows "nice".
+import { adjectives } from "../data/greeting";
 const FACES = 10;
 ---
 
@@ -14,7 +15,7 @@ I hope you have a <button
   data-slot
   aria-label="nice — spin for another adjective"
   title="Spin again"
-  ><span class="slot-sizer" aria-hidden="true">nice</span><span class="reel" aria-hidden="true"
+  ><span class="slot-sizer" aria-hidden="true">{adjectives.map((w) => <span>{w}</span>)}</span><span class="reel" aria-hidden="true"
     ><span class="reel-drum"
       >{
         Array.from({ length: FACES }, (_, i) => (

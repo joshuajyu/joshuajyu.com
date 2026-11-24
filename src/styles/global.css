@@ -417,13 +417,14 @@ html:has(.page) {
 
 /*
  * A little slot machine set into the sentence.
- *   .slot        the button; one line tall, sitting on the text baseline via
- *                an invisible in-flow copy of the word (.slot-sizer). Its
- *                vertical margin gives the reel's line a little extra room so
- *                the bezel clears wrapped lines above/below. Width = longest
- *                adjective (set by JS), so the sentence never reflows.
- *   .reel        the window: a recessed, bezelled opening that pokes slightly
- *                into the line spacing above/below. Has the perspective.
+ *   .slot        the button; one line tall, sitting on the text baseline.
+ *   .slot-sizer  every adjective stacked invisibly in one grid cell: the
+ *                browser sizes the reel to the widest word itself (no JS
+ *                measuring, so no load-order race) and it provides the
+ *                baseline. The sentence never reflows mid-spin.
+ *   .reel        the window: a recessed, bezelled opening ~2.3 lines tall,
+ *                showing the facets above and below the current one. The
+ *                slot's vertical margin makes room for it in the line.
  *   .reel-drum   a 10-sided drum (preserve-3d), rolled by --angle. Pushed back
  *                by its radius so the front facet renders at true size.
  *   .reel-face   one facet per word, in the accent colour with a bevel.
@@ -436,9 +437,8 @@ html:has(.page) {
   --reel-bezel: color-mix(in srgb, var(--accent) 55%, black);
   position: relative;
   display: inline-block;
-  width: calc(var(--slot-text-w, 3.2em) + 1.3em);
-  margin: 0.16lh 0.2em;
-  padding: 0;
+  margin: 0.74lh 0.2em;
+  padding: 0 0.65em;
   border: 0;
   background: none;
   color: inherit;
@@ -450,16 +450,19 @@ html:has(.page) {
   cursor: pointer;
 }
 .slot-sizer {
-  display: block;
+  display: grid;
   visibility: hidden;
   white-space: nowrap;
   font-weight: 600;
 }
+.slot-sizer > span {
+  grid-area: 1 / 1;
+}
 .reel {
   position: absolute;
-  inset: -0.1lh 0;
+  inset: -0.65lh 0;
   overflow: hidden;
-  border-radius: 0.55em;
+  border-radius: 0.6em;
   background: var(--reel-bezel);
   perspective: 14lh;
   box-shadow:
@@ -499,7 +502,14 @@ html:has(.page) {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(rgb(0 0 0 / 0.6), transparent 30%, transparent 70%, rgb(0 0 0 / 0.6));
+  background: linear-gradient(
+    rgb(0 0 0 / 0.7),
+    rgb(0 0 0 / 0.25) 22%,
+    transparent 34%,
+    transparent 66%,
+    rgb(0 0 0 / 0.25) 78%,
+    rgb(0 0 0 / 0.7)
+  );
   pointer-events: none;
 }
 /* Cartoon glass pane. */
@@ -517,7 +527,7 @@ html:has(.page) {
       rgb(255 255 255 / 0.4) 66% 68.5%,
       transparent 68.5%
     ),
-    radial-gradient(130% 55% at 50% -8%, rgb(255 255 255 / 0.5) 0 60%, transparent 61%);
+    radial-gradient(130% 34% at 50% -4%, rgb(255 255 255 / 0.5) 0 60%, transparent 61%);
   box-shadow:
     inset 0 0 0 2px rgb(255 255 255 / 0.5),
     inset 0 -3px 6px rgb(0 0 0 / 0.35);
@@ -530,7 +540,7 @@ html:has(.page) {
 .slot-hint {
   position: absolute;
   z-index: 3;
-  top: calc(-0.1lh - 0.5em);
+  top: calc(-0.65lh - 0.5em);
   right: -0.55em;
   width: 1.1em;
   height: 1.1em;

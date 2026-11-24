@@ -60,21 +60,6 @@ if (slot && drum && faces.length) {
     });
   };
 
-  // Fixed width: as wide as the longest adjective (in the facet font), so the
-  // sentence never reflows mid-spin.
-  const fitWidth = () => {
-    const probe = document.createElement("span");
-    probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
-    faces[0].append(probe);
-    let max = 0;
-    for (const a of adjectives) {
-      probe.textContent = a;
-      max = Math.max(max, probe.getBoundingClientRect().width);
-    }
-    probe.remove();
-    slot.style.setProperty("--slot-text-w", `${Math.ceil(max)}px`);
-  };
-
   const spin = ({ ms, turns }: { ms: number; turns: number }) => {
     if (spinning) return;
     const target = pick(new Set([current]));
@@ -112,8 +97,6 @@ if (slot && drum && faces.length) {
   };
 
   fill(new Set([0]));
-  fitWidth();
-  addEventListener("resize", fitWidth);
   setDrum(angle, "none");
   slot.classList.add("is-ready");
   slot.addEventListener("click", () => spin(RESPIN));
