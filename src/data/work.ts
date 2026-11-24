@@ -7,12 +7,6 @@ export interface WorkItem {
 
 export const work: WorkItem[] = [
   {
-    name: "joshuajyu.com",
-    description: "My personal website — the one you're reading this on!",
-    href: "https://github.com/joshuajyu/joshuajyu.com",
-    tech: ["Astro", "TypeScript", "Tailwind CSS", "Cloudflare Workers"],
-  },
-  {
     name: "UTSCdle",
     description: "A Wordle-inspired UofT Scarborough (UTSC) daily guessing game.",
     href: "https://github.com/joshuajyu/utscdle",
@@ -31,5 +25,11 @@ export const work: WorkItem[] = [
       "A Discord bot that records, transcribes, and summarizes voice calls. Developed in 36 hours @ Hack the Valley 7.",
     href: "https://github.com/alwaysingame/discribe",
     tech: ["Python", "JavaScript", "OpenAI", "Cohere"],
+  },
+  {
+    name: "joshuajyu.com",
+    description: "My personal website — the one you're reading this on!",
+    href: "https://github.com/joshuajyu/joshuajyu.com",
+    tech: ["Astro", "TypeScript", "Tailwind CSS", "Cloudflare Workers"],
   },
 ];
