@@ -34,7 +34,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
     <!--
       Runs before first paint: applies the saved/system theme (no flash of the
-      wrong theme) and marks JS as available so scroll reveals can hide content.
+      wrong theme) and the saved "dynamic background" choice, and marks JS as
+      available so scroll reveals can hide content.
     -->
     <script is:inline>
       (() => {
@@ -43,6 +44,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         let stored = null;
         try {
           stored = localStorage.getItem("theme");
+          if (localStorage.getItem("lava") === "off") root.classList.add("no-lava");
         } catch {}
         const dark =
           stored === "dark" ||

@@ -190,8 +190,19 @@ function start(canvas: HTMLCanvasElement) {
     draw(now / 1000, true);
   };
 
+  /** "Dynamic background" switch in the appearance menu (`no-lava` on <html>). */
+  const enabled = () => !root.classList.contains("no-lava");
+  let running = false;
+
+  /** Static (reduced-motion) frame — only when the background is on. */
+  const drawStill = () => {
+    if (enabled() && reduceMotion.matches) draw(0, false);
+  };
+
   const run = () => {
     cancelAnimationFrame(raf);
+    running = enabled();
+    if (!running) return; // off: no loop at all (the layer is hidden by CSS)
     if (reduceMotion.matches) draw(0, false);
     else raf = requestAnimationFrame(frame);
   };
@@ -204,17 +215,19 @@ function start(canvas: HTMLCanvasElement) {
   // (for the still, reduced-motion frame, which has no loop to retry) redraw.
   addEventListener("load", () => {
     readTheme();
-    if (reduceMotion.matches) draw(0, false);
+    drawStill();
   });
   addEventListener("resize", () => {
     resize();
-    if (reduceMotion.matches) draw(0, false);
+    drawStill();
   });
   reduceMotion.addEventListener("change", run);
-  // Theme toggle flips `.dark` on <html>: pick up the new palette/strength.
+  // Class changes on <html>: the theme toggle (`.dark` → new palette/strength)
+  // and the dynamic-background switch (`.no-lava` → stop/resume the loop).
   new MutationObserver(() => {
     readTheme();
-    if (reduceMotion.matches) draw(0, false);
+    if (enabled() !== running) run();
+    else drawStill();
   }).observe(root, { attributes: true, attributeFilter: ["class"] });
 }
 
