@@ -26,6 +26,7 @@ import SectionHeading from "./SectionHeading.astro";
             <p class="text-sm text-muted tabular-nums">{e.years}</p>
           </div>
           <p class="mt-1 text-muted">{e.program}</p>
+          {e.minor && <p class="text-sm text-muted">{e.minor}</p>}
           {e.highlights.length > 0 && (
             <ul class="mt-4 list-disc space-y-1 pl-5 text-muted marker:text-border">
               {e.highlights.map((h) => (
