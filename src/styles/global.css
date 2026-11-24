@@ -292,7 +292,9 @@ html:has(.page) {
   /*
    * Page transitions. `src/scripts/pages.ts` marks the page in view with
    * `.is-active`; its `[data-reveal]` children stagger in (`--reveal-index`)
-   * and fade back out when the page is left. Hidden state only applies once
+   * and fade back out when the page is left — rising when scrolling down,
+   * falling and staggering bottom-up when scrolling back up into a page
+   * (`data-side`). Hidden state only applies once
    * the head script has added `.js`, so content is visible without JS.
    */
   /*
@@ -315,6 +317,12 @@ html:has(.page) {
     transform: translateY(1.5rem);
   }
 
+  /* Pages above the one in view (pages.ts sets data-side): content leaves
+     upwards, and comes back down from above when scrolling up into it. */
+  .js .page[data-side="above"]:not(.is-active) [data-reveal] {
+    transform: translateY(-1.5rem);
+  }
+
   .js .page.is-active [data-reveal] {
     --reveal-delay: calc(100ms + var(--reveal-index, 0) * 80ms);
     transition:
@@ -324,6 +332,11 @@ html:has(.page) {
       border-color 200ms,
       box-shadow 200ms;
     transition-delay: var(--reveal-delay), var(--reveal-delay), 0s, 0s, 0s;
+  }
+
+  /* Entered from above (scrolling up): stagger bottom-to-top instead. */
+  .js .page.is-active[data-side="above"] [data-reveal] {
+    --reveal-delay: calc(100ms + (var(--reveal-last, 0) - var(--reveal-index, 0)) * 80ms);
   }
 
   .scroll-hint svg {
