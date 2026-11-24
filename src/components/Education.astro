@@ -1,0 +1,44 @@
+---
+import { education } from "../data/education";
+import ExternalIcon from "./ExternalIcon.astro";
+import Quote from "./Quote.astro";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="education" aria-labelledby="education-heading" class="page">
+  <SectionHeading id="education">Education</SectionHeading>
+
+  <ul class="space-y-4">
+    {
+      education.map((e, i) => (
+        <li
+          class="glass rounded-xl border border-border p-5"
+          data-reveal
+          style={`--reveal-index: ${i + 1}`}
+        >
+          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h3 class="text-lg font-semibold">
+              <a href={e.href} class="link" target="_blank" rel="noopener noreferrer">
+                {e.school}
+                <ExternalIcon />
+              </a>
+            </h3>
+            <p class="text-sm text-muted tabular-nums">{e.years}</p>
+          </div>
+          <p class="mt-1 text-muted">{e.program}</p>
+          {e.highlights.length > 0 && (
+            <ul class="mt-4 list-disc space-y-1 pl-5 text-muted marker:text-border">
+              {e.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+
+  <Quote cite="Dr. Seuss, I Can Read With My Eyes Shut!" index={education.length + 1}>
+    “The more that you read, the more things you will know. The more that you learn, the more places you’ll go.”
+  </Quote>
+</section>
