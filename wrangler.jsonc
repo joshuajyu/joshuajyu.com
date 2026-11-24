@@ -3,7 +3,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   // Must match the Worker name in the dashboard for Workers Builds.
-  // (Same name as the old Pages project; Workers and Pages are separate.)
   "name": "joshuajyu-com",
   "compatibility_date": "2026-11-01",
   "assets": {
@@ -14,6 +13,6 @@
   // command in Workers Builds. Assets/compat settings stay at the top level.
   // https://developers.cloudflare.com/workers/previews/configuration/
   "previews": {}
-  // Cutover TODO (see README): "workers_dev": false + "preview_urls": true —
-  // test that combination (with Access) before committing it.
+  // Open (see README): the production workers.dev URL is public. Option:
+  // "workers_dev": false + "preview_urls": true — test previews still work.
 }
