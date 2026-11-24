@@ -40,14 +40,15 @@
   --card: #ecece8; /* canvasWhite6 */
   --accent: #b35b79; /* lotusPink */
 
-  /* Background blobs: one rose-mauve family — the accent and Canvas's own
-     pinks — at roughly the theme's saturation, set just below the page's
-     lightness (OKLCH L 0.85–0.89, C ≤ 0.05; source hues kept) so they read
-     as soft tone shifts and don't eat into text contrast. */
-  --lava-1: #f1c7d3; /* lotusPink (accent) */
-  --lava-2: #e0c8de; /* canvasPink1 */
-  --lava-3: #e6d4e6; /* canvasPink2 */
-  --lava-4: #d7c8d7; /* canvasPink3 */
+  /* Background blobs: cool, near-neutral tints from Canvas — its blue-violet
+     and slate (kanagawa-paper canvas palette #6a7893 / #6c828c) plus the
+     almost-grey canvasPink3 as a faint tie to the accent. Set just below the
+     page's lightness at low chroma (OKLCH L 0.84–0.88, C ≤ 0.03; source hues
+     kept) so they read as gentle cool tone shifts. */
+  --lava-1: #cad5e9; /* canvas blue-violet */
+  --lava-2: #c1d5de; /* canvas slate */
+  --lava-3: #ddd4dd; /* canvasPink3 */
+  --lava-4: #c4cbd8; /* canvas blue-violet, deeper */
   --lava-opacity: 0.65;
 }
 
@@ -61,13 +62,14 @@
   --card: #282727; /* dragonBlack4 */
   --accent: #a292a3; /* dragonPink */
 
-  /* Background blobs: Dragon's mauve-to-violet family only — dragonPink (the
-     accent) and dragonViolet, each at two depths — at about the theme's own
-     saturation (OKLCH L 0.34–0.46, C ≤ 0.05; source hues kept). */
-  --lava-1: #5b445d; /* dragonPink */
-  --lava-2: #3e475e; /* dragonViolet */
-  --lava-3: #443045; /* dragonPink, deeper */
-  --lava-4: #505869; /* dragonViolet, lighter */
+  /* Background blobs: Dragon's cool family — dragonViolet, dragonBlue2 and
+     dragonTeal (lavender-blue) — plus dragonPink as a faint tie to the
+     accent, all at low chroma (OKLCH L 0.34–0.44, C ≤ 0.035; source hues
+     kept). */
+  --lava-1: #444d61; /* dragonViolet */
+  --lava-2: #374b55; /* dragonBlue2 */
+  --lava-3: #2f384a; /* dragonTeal, deeper */
+  --lava-4: #584f59; /* dragonPink */
   --lava-opacity: 0.25;
 }
 
