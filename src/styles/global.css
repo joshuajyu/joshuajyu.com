@@ -38,7 +38,7 @@
   --fg: #414447; /* canvasGray3, darkened */
   --muted: #535453;
   --subtle: #d8d8d2; /* canvasWhite3 */
-  --border: #d1cfc5; /* canvasWhite2 */
+  --border: #a8a69d; /* canvasWhite2 → canvasGray1 blend: visible over the lava (≥ 1.6:1) */
   --card: #ecece8; /* canvasWhite6 */
   --accent: #375282; /* lotusBlue4 (#4d699b) deepened to OKLCH L 0.44 so link-hover
                         text passes 4.5:1 on the page, cards and over the lava */
