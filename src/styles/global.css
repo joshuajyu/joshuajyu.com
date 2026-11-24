@@ -41,14 +41,16 @@
   --card: #ecece8; /* canvasWhite6 */
   --accent: #b35b79; /* lotusPink */
 
-  /* Background blobs: a single cool hue — Canvas's blue-violet (#6a7893,
-     h 264°) — varied only in lightness (OKLCH L 0.83–0.89) at very low
-     chroma (≤ 0.021), so they read as cool grey tone shifts. */
-  --lava-1: #cdd4e2;
-  --lava-2: #c8ceda;
-  --lava-3: #d6dbe5;
-  --lava-4: #c2c7d2;
-  --lava-opacity: 0.65;
+  /* Background blobs (each cycles through all four): Canvas's own cool tones
+     from the kanagawa-paper canvas palette — sage-teal #5c8388, slate
+     #6c828c, blue-violet #6a7893 and mauve #947992 (a tie to the accent) —
+     lifted near the page's lightness (OKLCH L 0.84) with chroma raised to
+     0.06 (source hues kept), so they read as clear but soft colour. */
+  --lava-1: #9cd6de; /* canvas sage-teal */
+  --lava-2: #a2d3e9; /* canvas slate */
+  --lava-3: #b6cbf3; /* canvas blue-violet */
+  --lava-4: #e1bdde; /* canvas mauve (canvasPink1) */
+  --lava-opacity: 0.7;
 }
 
 :root.dark {
