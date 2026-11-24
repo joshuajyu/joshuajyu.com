@@ -9,7 +9,11 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
-  }
+  },
+  // Required (even empty) for `wrangler preview`, the non-production deploy
+  // command in Workers Builds. Assets/compat settings stay at the top level.
+  // https://developers.cloudflare.com/workers/previews/configuration/
+  "previews": {}
   // Cutover TODO (see README): "workers_dev": false + "preview_urls": true —
   // test that combination (with Access) before committing it.
 }
