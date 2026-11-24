@@ -2,8 +2,10 @@
 //
 // The first time a quote's page becomes active (`page:active` from pages.ts),
 // once the rest of the page has finished revealing, the quote is typed out
-// left to right with a blinking caret; the citation then fades in. On later
-// visits the quote is simply there.
+// left to right with a blinking caret; the citation then fades in. It only
+// types once: on later visits the quote is simply there — even if the visitor
+// left mid-quote (it's completed out of sight as the page fades). Leaving
+// before the first character doesn't count as a visit.
 //
 // How it stays solid:
 //   • Every character is laid out from the start (each in a span at opacity 0)
@@ -91,7 +93,16 @@ function setUp(figure: HTMLElement): Typer | undefined {
       timer = window.setTimeout(tick, startDelay);
     },
     stop() {
-      if (!done) reset(); // interrupted: type again from the start next time
+      if (done) return;
+      // Left before typing began (e.g. just passing through on the way to
+      // another section): it still gets typed on the first real visit.
+      if (typed === 0) return reset();
+      // Interrupted mid-quote: show it whole from now on.
+      clearTimeout(timer);
+      done = true;
+      for (const c of chars) c.classList.remove("is-caret");
+      for (const c of chars) c.classList.add("is-typed");
+      figure.classList.remove("tw-pending");
     },
   };
 }
