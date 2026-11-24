@@ -80,6 +80,9 @@
  */
 html:has(.page) {
   scroll-snap-type: y proximity;
+  /* No rubber-band bounce at the ends: it fights snapping and makes the
+     sticky header jitter when scrolling repeatedly at the top/bottom. */
+  overscroll-behavior-y: none;
 }
 
 @media (min-width: 768px) and (min-height: 640px) {
@@ -106,9 +109,24 @@ html:has(.page) {
   pointer-events: none;
 }
 
-/* Last snap point: bottom of the page, so the footer is reachable. */
+/*
+ * The footer has a fixed height and the last page is shortened by exactly that
+ * much, so "last page + footer" is one screen and the last page's snap point
+ * is the very end of the document — no extra stop for the footer.
+ */
+:root {
+  --footer-h: 7rem;
+}
+@media (min-width: 640px) {
+  :root {
+    --footer-h: 5.5rem;
+  }
+}
 .site-footer {
-  scroll-snap-align: end;
+  height: var(--footer-h);
+}
+.page-last {
+  min-height: calc(100svh - 4rem - var(--footer-h));
 }
 
 /* ---------- Motion (only when the visitor hasn't asked for less) ---------- */
