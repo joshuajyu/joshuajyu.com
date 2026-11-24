@@ -40,15 +40,13 @@
   --card: #ecece8; /* canvasWhite6 */
   --accent: #b35b79; /* lotusPink */
 
-  /* Background blobs: cool, near-neutral tints from Canvas — its blue-violet
-     and slate (kanagawa-paper canvas palette #6a7893 / #6c828c) plus the
-     almost-grey canvasPink3 as a faint tie to the accent. Set just below the
-     page's lightness at low chroma (OKLCH L 0.84–0.88, C ≤ 0.03; source hues
-     kept) so they read as gentle cool tone shifts. */
-  --lava-1: #cad5e9; /* canvas blue-violet */
-  --lava-2: #c1d5de; /* canvas slate */
-  --lava-3: #ddd4dd; /* canvasPink3 */
-  --lava-4: #c4cbd8; /* canvas blue-violet, deeper */
+  /* Background blobs: a single cool hue — Canvas's blue-violet (#6a7893,
+     h 264°) — varied only in lightness (OKLCH L 0.83–0.89) at very low
+     chroma (≤ 0.021), so they read as cool grey tone shifts. */
+  --lava-1: #cdd4e2;
+  --lava-2: #c8ceda;
+  --lava-3: #d6dbe5;
+  --lava-4: #c2c7d2;
   --lava-opacity: 0.65;
 }
 
@@ -62,14 +60,13 @@
   --card: #282727; /* dragonBlack4 */
   --accent: #a292a3; /* dragonPink */
 
-  /* Background blobs: Dragon's cool family — dragonViolet, dragonBlue2 and
-     dragonTeal (lavender-blue) — plus dragonPink as a faint tie to the
-     accent, all at low chroma (OKLCH L 0.34–0.44, C ≤ 0.035; source hues
-     kept). */
-  --lava-1: #444d61; /* dragonViolet */
-  --lava-2: #374b55; /* dragonBlue2 */
-  --lava-3: #2f384a; /* dragonTeal, deeper */
-  --lava-4: #584f59; /* dragonPink */
+  /* Background blobs: a single cool hue — dragonViolet (#8992a7, h 267°) —
+     varied only in lightness (OKLCH L 0.33–0.46) at very low chroma
+     (≤ 0.025). */
+  --lava-1: #474d5b;
+  --lava-2: #3d424e;
+  --lava-3: #303541;
+  --lava-4: #535862;
   --lava-opacity: 0.25;
 }
 
