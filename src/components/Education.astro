@@ -29,9 +29,17 @@ import SectionHeading from "./SectionHeading.astro";
           <p class="mt-3">{e.program}</p>
           {e.minor && <p class="text-muted">{e.minor}</p>}
           {e.highlights.length > 0 && (
-            <ul class="mt-4 list-disc space-y-1 pl-5 text-muted marker:text-border">
+            <ul class="mt-4 list-disc space-y-1 pl-5 text-muted marker:text-muted">
               {e.highlights.map((h) => (
-                <li>{h}</li>
+                <li>
+                  {(typeof h === "string" ? [h] : h).map((part) =>
+                    typeof part === "string" ? (
+                      part
+                    ) : (
+                      <a href={part.href} class="link" target="_blank" rel="noopener noreferrer">{part.text}<ExternalIcon /></a>
+                    ),
+                  )}
+                </li>
               ))}
             </ul>
           )}
