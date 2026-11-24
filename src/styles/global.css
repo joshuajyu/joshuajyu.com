@@ -22,7 +22,8 @@
 /*
  * Colours: Kanagawa.
  * Light — "Canvas" from kanagawa-paper (thesimonho/kanagawa-paper, MIT) with
- *   Lotus's pink accent. Text is canvasGray3 (#616569) darkened, and muted text
+ *   a deepened Lotus blue as the accent (cool, matching the light lava). Text
+ *   is canvasGray3 (#616569) darkened, and muted text
  *   sits between it and canvasGray2.
  * Dark — "Dragon" from kanagawa.nvim (rebelot/kanagawa.nvim, MIT) with
  *   dragonOrange as the accent, matching the warm background blobs. Muted
@@ -39,11 +40,12 @@
   --subtle: #d8d8d2; /* canvasWhite3 */
   --border: #d1cfc5; /* canvasWhite2 */
   --card: #ecece8; /* canvasWhite6 */
-  --accent: #b35b79; /* lotusPink */
+  --accent: #375282; /* lotusBlue4 (#4d699b) deepened to OKLCH L 0.44 so link-hover
+                        text passes 4.5:1 on the page, cards and over the lava */
 
   /* Background blobs (each cycles through all four): Canvas's own cool tones
      from the kanagawa-paper canvas palette — sage-teal #5c8388, slate
-     #6c828c, blue-violet #6a7893 and mauve #947992 (a tie to the accent) —
+     #6c828c, blue-violet #6a7893 and mauve #947992 —
      lifted near the page's lightness (OKLCH L 0.84) with chroma raised to
      0.06 (source hues kept), so they read as clear but soft colour. */
   --lava-1: #9cd6de; /* canvas sage-teal */
