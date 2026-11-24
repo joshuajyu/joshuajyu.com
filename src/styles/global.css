@@ -407,6 +407,41 @@ html:has(.page) {
   }
 }
 
+/* ---------- Typewriter quotes (src/scripts/quotes.ts) ---------- */
+
+/* Only ever applied by the script, which skips reduced motion. Characters are
+   laid out from the start and revealed one by one, so nothing reflows. */
+.tw .tw-char {
+  position: relative;
+  opacity: 0;
+}
+.tw .tw-char.is-typed {
+  opacity: 1;
+}
+.tw .tw-char.is-caret::after {
+  content: "";
+  position: absolute;
+  top: 0.12em;
+  right: -0.1em;
+  bottom: 0.08em;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+.tw figcaption {
+  transition: opacity 500ms ease-out;
+}
+.tw.tw-pending figcaption {
+  opacity: 0;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 @keyframes nudge {
   0%,
   100% {

@@ -4,11 +4,18 @@
 // children animate in — see global.css), and the section stepper moves to it
 // (step `data-state` drives the dot, line fill and blurb expansion).
 // Leaving a page removes the class so it animates again on return.
+// Each change also fires `page:active` / `page:inactive` on the section, for
+// effects that need to start on arrival (e.g. the typewriter in quotes.ts).
 const pages = [...document.querySelectorAll<HTMLElement>("section.page")];
 const steps = [...document.querySelectorAll<HTMLElement>("[data-stepper] li[data-step]")];
 
 const activate = (page: HTMLElement) => {
-  for (const p of pages) p.classList.toggle("is-active", p === page);
+  for (const p of pages) {
+    const wasActive = p.classList.contains("is-active");
+    const isActive = p === page;
+    p.classList.toggle("is-active", isActive);
+    if (wasActive !== isActive) p.dispatchEvent(new CustomEvent(isActive ? "page:active" : "page:inactive"));
+  }
 
   const current = steps.findIndex((li) => li.dataset.step === page.id);
   if (current === -1) return;
