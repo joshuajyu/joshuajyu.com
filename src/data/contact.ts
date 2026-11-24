@@ -31,7 +31,7 @@ export const contact: ContactMethod[] = [
   {
     name: "Instagram",
     emoji: "📸",
-    label: "yujun04",
+    label: "yujun4__",
     href: "https://www.instagram.com/yujun4__/",
     external: true,
   },
