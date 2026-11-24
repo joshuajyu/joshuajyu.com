@@ -35,7 +35,7 @@ src/
   layouts/Base.astro      <head>, inline theme script (no flash of wrong theme)
   pages/index.astro       the single page
   pages/404.astro         served for unknown paths (not_found_handling: "404-page")
-  components/             Header, Intro, Work, Contact, Footer, ThemeToggle, …
+  components/             Header (side rail), Stepper, Intro, Work, Contact, Footer, …
   data/work.ts            work/project cards
   data/contact.ts         contact links
   scripts/pages.ts        marks the page in view as active (animations, nav state)
@@ -48,8 +48,9 @@ wrangler.jsonc            Worker config (name must match the Worker in Cloudflar
 ### Behaviour notes
 
 - **Theme:** follows the system by default. The toggle overrides it and saves the choice to `localStorage`. Picking the theme that matches the system clears the saved choice, so the page follows the system again.
-- **Paged scrolling:** each section (`section.page`) fills the viewport below the header, and the browser scroll-snaps between them using native CSS scroll snap, not wheel hijacking, so trackpad, touch, keyboard and assistive tech still scroll normally. Snapping is `mandatory` on screens ≥ 768×640 and `proximity` on smaller ones, where a page (e.g. Work on a phone) can be taller than the screen. The footer has a fixed height (`--footer-h`) and the last page is shortened by that much, so Contact + footer share the final screen with no extra snap stop. Overscroll bounce is disabled on the home page so it doesn't fight snapping.
-- **Page animations:** `pages.ts` gives the page crossing the middle of the viewport `.is-active`. Its `data-reveal` children stagger in (`--reveal-index`) and fade out when you leave, so they animate again on return. The matching header link gets `aria-current`. The hidden state only applies when JS is running and `prefers-reduced-motion` is not `reduce`, so content is always visible otherwise. Smooth anchor scrolling has the same reduced-motion guard.
+- **Paged scrolling:** each section (`section.page`) fills the viewport, and the browser scroll-snaps between them using native CSS scroll snap, not wheel hijacking, so trackpad, touch, keyboard and assistive tech still scroll normally. Snapping is `mandatory` on screens ≥ 768×640 and `proximity` on smaller ones, where a page (e.g. Work on a phone) can be taller than the screen. The footer has a fixed height (`--footer-h`) and the last page is shortened by that much, so Contact + footer share the final screen with no extra snap stop. Overscroll bounce is disabled on the home page so it doesn't fight snapping.
+- **Navigation:** at ≥ 1024px a fixed left rail holds the wordmark, a vertical section stepper (Home → Work → Contact) and the theme toggle. Below that, the wordmark and toggle sit at the top of the first page and the stepper collapses to dots pinned to the right edge (labels stay available to screen readers). The rail is `position: fixed`, not a sticky top bar, so it isn't repositioned while the page snaps.
+- **Page animations:** `pages.ts` gives the page crossing the middle of the viewport `.is-active`. Its `data-reveal` children stagger in (`--reveal-index`) and fade out when you leave, so they animate again on return. The stepper moves to the matching step: `--step` drives the accent line fill, each step gets `data-state` (complete/current/upcoming), and the current link gets `aria-current="step"`. The hidden state only applies when JS is running and `prefers-reduced-motion` is not `reduce`, so content is always visible otherwise. Smooth anchor scrolling has the same reduced-motion guard.
 - **Fitting a page:** keep each section's content within ~650px tall so it fits a 1280×720 screen without an extra in-page scroll step.
 - **Whitespace:** `compressHTML` is off in `astro.config.mjs`. Astro 7's compiler drops line-break whitespace next to inline elements when compressing (`at <a>Ada</a>` renders as "atAda").
 

@@ -1,0 +1,39 @@
+---
+// Vertical section stepper. `src/scripts/pages.ts` keeps `--step` and each
+// step's `data-state` (complete | current | upcoming) in sync with the page in
+// view. Labels are visible on the desktop rail and screen-reader-only on
+// smaller screens, where the stepper collapses to dots on the right edge.
+const steps = [
+  { id: "intro", label: "Home" },
+  { id: "work", label: "Work" },
+  { id: "contact", label: "Contact" },
+];
+---
+
+<nav aria-label="Sections" class="stepper" data-stepper style={`--steps: ${steps.length}; --step: 0`}>
+  <div class="relative">
+    <span class="stepper-track" aria-hidden="true"></span>
+    <span class="stepper-fill" aria-hidden="true"></span>
+    <ol class="relative flex flex-col gap-3 lg:gap-9">
+      {
+        steps.map((s, i) => (
+          <li data-step={s.id} data-state={i === 0 ? "current" : "upcoming"}>
+            <a
+              href={`#${s.id}`}
+              class="stepper-link flex h-6 items-center gap-3"
+              aria-current={i === 0 ? "step" : undefined}
+            >
+              <span class="grid size-6 flex-none place-items-center" aria-hidden="true">
+                <span class="stepper-dot" />
+              </span>
+              <span class="stepper-label sr-only lg:not-sr-only">
+                <span class="stepper-num">{String(i + 1).padStart(2, "0")}</span>
+                {s.label}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>

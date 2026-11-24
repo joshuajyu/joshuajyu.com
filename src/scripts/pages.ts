@@ -1,18 +1,24 @@
 // The home page is a stack of full-screen "pages" (`section.page`) that the
 // browser scroll-snaps between. Whichever page crosses the middle of the
 // viewport is the active one: it gets `.is-active` (its `[data-reveal]`
-// children animate in — see global.css) and its header link gets
-// `aria-current`. Leaving a page removes the class so it animates again on
-// return.
+// children animate in — see global.css), and the section stepper moves to it.
+// Leaving a page removes the class so it animates again on return.
 const pages = [...document.querySelectorAll<HTMLElement>("section.page")];
-const navLinks = [...document.querySelectorAll<HTMLAnchorElement>("header nav a[href^='#']")];
+const stepper = document.querySelector<HTMLElement>("[data-stepper]");
+const steps = [...document.querySelectorAll<HTMLElement>("[data-stepper] li[data-step]")];
 
 const activate = (page: HTMLElement) => {
   for (const p of pages) p.classList.toggle("is-active", p === page);
-  for (const link of navLinks) {
-    if (link.getAttribute("href") === `#${page.id}`) link.setAttribute("aria-current", "true");
-    else link.removeAttribute("aria-current");
-  }
+
+  const current = steps.findIndex((li) => li.dataset.step === page.id);
+  if (current === -1) return;
+  stepper?.style.setProperty("--step", String(current));
+  steps.forEach((li, i) => {
+    li.dataset.state = i < current ? "complete" : i === current ? "current" : "upcoming";
+    const link = li.querySelector("a");
+    if (i === current) link?.setAttribute("aria-current", "step");
+    else link?.removeAttribute("aria-current");
+  });
 };
 
 if (!("IntersectionObserver" in window)) {

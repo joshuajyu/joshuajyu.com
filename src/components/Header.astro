@@ -1,35 +1,24 @@
 ---
+import Stepper from "./Stepper.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import Wordmark from "./Wordmark.astro";
-
-const links = [
-  { href: "#work", label: "Work" },
-  { href: "#contact", label: "Contact" },
-];
 ---
 
+<!--
+  ≥ lg: fixed left rail — wordmark, section stepper, theme toggle.
+  < lg: wordmark + toggle sit at the top of the first page (scrolling away
+  with it) and the stepper is pinned to the right edge as dots.
+-->
 <header
-  class="site-header sticky top-0 z-40 h-16 border-b border-border bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/70"
+  class="absolute inset-x-0 top-0 z-40 flex h-16 items-center justify-between px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-52 lg:flex-col lg:items-start lg:border-r lg:border-border lg:px-8 lg:py-10"
 >
-  <nav
-    class="mx-auto flex h-full max-w-3xl items-center justify-between px-6"
-    aria-label="Primary"
-  >
-    <a href="#intro" class="text-2xl" aria-label="joshuajyu — back to top">
-      <Wordmark />
-    </a>
-    <div class="flex items-center gap-1 sm:gap-3">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            class="rounded-full px-2 py-1.5 text-sm sm:px-3 text-muted transition-colors hover:bg-subtle hover:text-fg aria-[current=true]:bg-subtle aria-[current=true]:text-fg"
-          >
-            {l.label}
-          </a>
-        ))
-      }
-      <ThemeToggle />
-    </div>
-  </nav>
+  <a href="#intro" class="text-2xl" aria-label="joshuajyu — back to top">
+    <Wordmark />
+  </a>
+  <div class="fixed top-1/2 right-0 -translate-y-1/2 lg:static lg:translate-y-0">
+    <Stepper />
+  </div>
+  <div class="lg:-ml-2">
+    <ThemeToggle />
+  </div>
 </header>
