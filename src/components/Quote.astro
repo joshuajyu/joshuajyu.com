@@ -6,11 +6,13 @@ interface Props {
   cite: string;
   /** Position in the section's reveal stagger. */
   index?: number;
+  /** Extra ms before typing starts (e.g. to let the intro's slot reel finish). */
+  delay?: number;
 }
-const { cite, index = 0 } = Astro.props;
+const { cite, index = 0, delay = 0 } = Astro.props;
 ---
 
-<figure class="mt-8 border-l-2 border-border pl-6 text-muted" data-reveal data-quote style={`--reveal-index: ${index}`}>
+<figure class="mt-8 border-l-2 border-border pl-6 text-muted" data-reveal data-quote data-quote-delay={delay} style={`--reveal-index: ${index}`}>
   <blockquote class="italic"><slot /></blockquote>
   <figcaption class="mt-2 text-sm">— {cite}</figcaption>
 </figure>

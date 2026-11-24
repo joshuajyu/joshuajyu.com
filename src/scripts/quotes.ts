@@ -82,7 +82,7 @@ function setUp(figure: HTMLElement): Typer | undefined {
   // Start once the rest of the page has revealed: the figure's own reveal
   // (stagger delay + 650ms transition, see global.css) plus a beat.
   const index = parseFloat(getComputedStyle(figure).getPropertyValue("--reveal-index")) || 0;
-  const startDelay = 100 + index * 80 + 650 + 250;
+  const startDelay = 100 + index * 80 + 650 + 250 + (Number(figure.dataset.quoteDelay) || 0);
 
   return {
     start() {
