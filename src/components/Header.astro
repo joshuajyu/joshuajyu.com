@@ -5,20 +5,24 @@ import Wordmark from "./Wordmark.astro";
 ---
 
 <!--
-  ≥ lg: fixed left rail — wordmark, section stepper, theme toggle.
-  < lg: wordmark + toggle sit at the top of the first page and scroll away
-  with it; no stepper.
+  Wordmark + theme toggle share one row at the top: across the top of the
+  first page below lg (scrolling away with it), and at the top of the fixed
+  left rail at ≥ lg, where the section stepper is centred beneath them.
 -->
 <header
-  class="absolute inset-x-0 top-0 z-40 flex h-16 items-center justify-between px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-64 lg:flex-col lg:items-start lg:border-r lg:border-border lg:px-8 lg:py-10"
+  class="absolute inset-x-0 top-0 z-40 flex h-16 items-center px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-64 lg:flex-col lg:items-stretch lg:border-r lg:border-border lg:px-8 lg:py-10"
 >
-  <a href="#intro" class="text-2xl" aria-label="joshuajyu — back to top">
-    <Wordmark />
-  </a>
-  <div class="hidden lg:block">
+  <div class="flex h-9 w-full items-center justify-between">
+    <a href="#intro" class="text-2xl leading-none" aria-label="joshuajyu — back to top">
+      <Wordmark />
+    </a>
+    <div class="-mr-2">
+      <ThemeToggle />
+    </div>
+  </div>
+  <div class="hidden lg:flex lg:flex-1 lg:items-center">
     <Stepper />
   </div>
-  <div class="lg:-ml-2">
-    <ThemeToggle />
-  </div>
+  <!-- Mirrors the top row so the stepper sits at the rail's true centre. -->
+  <div class="hidden h-9 lg:block" aria-hidden="true"></div>
 </header>
