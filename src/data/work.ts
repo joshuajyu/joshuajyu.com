@@ -7,12 +7,6 @@ export interface WorkItem {
 
 export const work: WorkItem[] = [
   {
-    name: "LangChain.js",
-    description: "A Google Finance integration developed for the LangChain.js library.",
-    href: "https://github.com/langchain-ai/langchainjs/pull/7289",
-    tech: ["TypeScript", "SerpAPI"],
-  },
-  {
     name: "joshuajyu.com",
     description: "My personal website — the one you're reading this on!",
     href: "https://github.com/joshuajyu/joshuajyu.com",
