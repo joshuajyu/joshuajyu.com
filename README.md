@@ -38,7 +38,7 @@ src/
   components/             Header, Intro, Work, Contact, Footer, ThemeToggle, …
   data/work.ts            work/project cards
   data/contact.ts         contact links
-  scripts/reveal.ts       IntersectionObserver for scroll-in animations
+  scripts/pages.ts        marks the page in view as active (animations, nav state)
   styles/global.css       Tailwind, theme colours, motion
 public/
   _redirects              /work → /#work, /contact → /#contact (301)
@@ -48,7 +48,9 @@ wrangler.jsonc            Worker config (name must match the Worker in Cloudflar
 ### Behaviour notes
 
 - **Theme:** follows the system by default. The toggle overrides it and saves the choice to `localStorage`. Picking the theme that matches the system clears the saved choice, so the page follows the system again.
-- **Scroll animations:** elements with `data-reveal` fade and slide in once (`--reveal-index` staggers them). The hidden state only applies when JS is running and `prefers-reduced-motion` is not `reduce`, so content is always visible otherwise. Smooth anchor scrolling has the same reduced-motion guard.
+- **Paged scrolling:** each section (`section.page`) fills the viewport below the header, and the browser scroll-snaps between them using native CSS scroll snap, not wheel hijacking, so trackpad, touch, keyboard and assistive tech still scroll normally. Snapping is `mandatory` on screens ≥ 768×640 and `proximity` on smaller ones, where a page (e.g. Work on a phone) can be taller than the screen. The footer is the last snap point.
+- **Page animations:** `pages.ts` gives the page crossing the middle of the viewport `.is-active`. Its `data-reveal` children stagger in (`--reveal-index`) and fade out when you leave, so they animate again on return. The matching header link gets `aria-current`. The hidden state only applies when JS is running and `prefers-reduced-motion` is not `reduce`, so content is always visible otherwise. Smooth anchor scrolling has the same reduced-motion guard.
+- **Fitting a page:** keep each section's content within ~650px tall so it fits a 1280×720 screen without an extra in-page scroll step.
 - **Whitespace:** `compressHTML` is off in `astro.config.mjs`. Astro 7's compiler drops line-break whitespace next to inline elements when compressing (`at <a>Ada</a>` renders as "atAda").
 
 ## Deployment

@@ -4,13 +4,13 @@ import Quote from "./Quote.astro";
 import SectionHeading from "./SectionHeading.astro";
 ---
 
-<section id="work" aria-labelledby="work-heading" class="pt-28">
+<section id="work" aria-labelledby="work-heading" class="page">
   <SectionHeading id="work">Work</SectionHeading>
 
   <ul class="grid gap-4 sm:grid-cols-2">
     {
       work.map((item, i) => (
-        <li data-reveal style={`--reveal-index: ${i % 2}`}>
+        <li data-reveal style={`--reveal-index: ${i + 1}`}>
           <a
             href={item.href}
             target="_blank"
@@ -45,7 +45,7 @@ import SectionHeading from "./SectionHeading.astro";
     }
   </ul>
 
-  <Quote cite="Theodore Roosevelt, The Key to Success in Life">
+  <Quote cite="Theodore Roosevelt, The Key to Success in Life" index={work.length + 1}>
     “Far and away the best prize that life has to offer is the chance to work hard at work worth doing.”
   </Quote>
 </section>

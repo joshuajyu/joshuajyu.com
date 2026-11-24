@@ -1,11 +1,13 @@
 ---
 interface Props {
   cite: string;
+  /** Position in the section's reveal stagger. */
+  index?: number;
 }
-const { cite } = Astro.props;
+const { cite, index = 0 } = Astro.props;
 ---
 
-<figure class="mt-12 border-l-2 border-border pl-6 text-muted" data-reveal>
+<figure class="mt-8 border-l-2 border-border pl-6 text-muted" data-reveal style={`--reveal-index: ${index}`}>
   <blockquote class="italic"><slot /></blockquote>
   <figcaption class="mt-2 text-sm">— {cite}</figcaption>
 </figure>

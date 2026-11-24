@@ -5,17 +5,17 @@ import Quote from "./Quote.astro";
 import SectionHeading from "./SectionHeading.astro";
 ---
 
-<section id="contact" aria-labelledby="contact-heading" class="pt-28">
+<section id="contact" aria-labelledby="contact-heading" class="page">
   <SectionHeading id="contact">Contact Me</SectionHeading>
 
-  <p class="text-lg leading-relaxed" data-reveal>
+  <p class="text-lg leading-relaxed" data-reveal style="--reveal-index: 1">
     Thanks for wanting to contact me! I'll do my best to try to get back to you as soon as possible.
   </p>
 
   <dl class="mt-8 divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
     {
       contact.map((c, i) => (
-        <div class="flex items-center justify-between gap-4 px-5 py-3.5" data-reveal style={`--reveal-index: ${i}`}>
+        <div class="flex items-center justify-between gap-4 px-5 py-3.5" data-reveal style={`--reveal-index: ${i + 2}`}>
           <dt class="text-muted">
             <span aria-hidden="true">{c.emoji}</span> {c.name}
           </dt>
@@ -36,7 +36,7 @@ import SectionHeading from "./SectionHeading.astro";
     }
   </dl>
 
-  <Quote cite="Fyodor Dostoevsky, Crime and Punishment">
+  <Quote cite="Fyodor Dostoevsky, Crime and Punishment" index={contact.length + 2}>
     “Taking a new step, uttering a new word, is what people fear most.”
   </Quote>
 </section>

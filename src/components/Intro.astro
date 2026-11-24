@@ -3,7 +3,7 @@ import ExternalIcon from "./ExternalIcon.astro";
 import Quote from "./Quote.astro";
 ---
 
-<section id="intro" aria-labelledby="intro-heading" class="pt-16 sm:pt-24">
+<section id="intro" aria-labelledby="intro-heading" class="page relative">
   <h1 id="intro-heading" class="text-4xl font-semibold tracking-tight sm:text-5xl" data-reveal>
     Hello! <span aria-hidden="true">👋</span>
   </h1>
@@ -35,7 +35,15 @@ import Quote from "./Quote.astro";
     </p>
   </div>
 
-  <Quote cite="William Shakespeare, As You Like It">
+  <Quote cite="William Shakespeare, As You Like It" index={6}>
     “The fool doth think he is wise, but the wise man knows himself to be a fool.”
   </Quote>
+
+  <a
+    href="#work"
+    class="scroll-hint absolute bottom-6 left-1/2 hidden -translate-x-1/2 rounded-full p-2 text-muted transition-colors hover:text-fg md:block"
+    aria-label="Next: Work"
+  >
+    <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+  </a>
 </section>
