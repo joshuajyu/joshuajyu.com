@@ -24,8 +24,9 @@
  * Light — "Canvas" from kanagawa-paper (thesimonho/kanagawa-paper, MIT) with
  *   Lotus's pink accent. Text is canvasGray3 (#616569) darkened, and muted text
  *   sits between it and canvasGray2.
- * Dark — "Dragon" from kanagawa.nvim (rebelot/kanagawa.nvim, MIT). Muted text
- *   is dragonAsh (#737c73) moved most of the way toward dragonWhite.
+ * Dark — "Dragon" from kanagawa.nvim (rebelot/kanagawa.nvim, MIT) with
+ *   dragonOrange as the accent, matching the warm background blobs. Muted
+ *   text is dragonAsh (#737c73) moved most of the way toward dragonWhite.
  * Text and muted text pass WCAG AA (4.5:1) on the background, cards and tag
  * chips, and over the background blobs (checked with three overlapping: two
  * blob centres at full strength plus a third at half).
@@ -58,7 +59,7 @@
   --subtle: #393836; /* dragonBlack5 */
   --border: #393836; /* dragonBlack5 */
   --card: #282727; /* dragonBlack4 */
-  --accent: #a292a3; /* dragonPink */
+  --accent: #b6927b; /* dragonOrange */
 
   /* Background blobs: Dragon's warm family — dragonRed, dragonOrange2 and
      dragonOrange (hues 25–55°: brick, terracotta, amber) — deepened to

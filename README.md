@@ -12,7 +12,7 @@ v1 (Next.js on EC2) lives on the read-only [`archive-v1`](https://github.com/jos
 | Styling | Tailwind CSS 4 via `@tailwindcss/vite` |
 | Language | TypeScript |
 | Font | Doto (wordmark), self-hosted via `@fontsource/doto` |
-| Colours | [Kanagawa](https://github.com/rebelot/kanagawa.nvim) Dragon (dark) + [Kanagawa Paper](https://github.com/thesimonho/kanagawa-paper) Canvas (light), as CSS variables in `global.css` |
+| Colours | [Kanagawa](https://github.com/rebelot/kanagawa.nvim) Dragon (dark, `dragonOrange` accent) + [Kanagawa Paper](https://github.com/thesimonho/kanagawa-paper) Canvas (light, Lotus pink accent), as CSS variables in `global.css` |
 | Hosting | Cloudflare Worker `joshuajyudotcom`, static assets only, deployed by Workers Builds |
 | Tooling | Node ≥ 22.23.4 (`.nvmrc`), pnpm (pinned via `packageManager`) |
 
