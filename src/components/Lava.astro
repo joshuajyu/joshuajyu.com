@@ -1,14 +1,80 @@
 ---
-// Ambient background: six soft colour blobs (far / mid / near) rising,
-// falling and swelling slowly behind the page (see `.lava` in global.css).
-// Purely decorative.
+// Ambient "lava lamp" background: soft, lumpy colour blobs that rise/fall,
+// stretch and turn slowly behind the page. Purely decorative.
+//
+// Each blob is two nested elements:
+//   outer <span>  — position, size, opacity; animates `translate` (rise/fall)
+//                   and a non-uniform `scale` (stretch) on screen axes;
+//   inner <i>     — the shape: 3–4 overlapping soft ellipses ("lobes", see
+//                   lava.css); animates `rotate`.
+// Because the stretch is applied outside the rotation, the silhouette keeps
+// deforming instead of visibly spinning; with three unrelated periods per blob
+// the motion never settles into an obvious loop. Everything animated is a
+// transform, so it runs on the compositor. Colours (`--lava-1..4`) and overall
+// strength (`--lava-opacity`) are theme tokens in global.css.
+import "../styles/lava.css";
+
+interface Blob {
+  /** Theme colour slot (--lava-1..4). */
+  colour: 1 | 2 | 3 | 4;
+  /** Lobe layout, see `[data-shape]` in lava.css. */
+  shape: "a" | "b" | "c";
+  /** "near" blobs have denser cores and read as closer. */
+  near?: boolean;
+  /** Strength relative to --lava-opacity (≤ 1 keeps the contrast budget). */
+  o: number;
+  size: string;
+  top: string;
+  left: string;
+  /** Rise/fall: offset reached at the end of each sweep, period, phase. */
+  drift: { x: string; y: string; s: number; delay: number };
+  /** Stretch: scale X/Y at each end of the sweep, period, phase. */
+  stretch: { from: [number, number]; to: [number, number]; s: number; delay: number };
+  /** Turn: starting angle and seconds per turn (negative = anticlockwise). */
+  spin: { start: number; s: number };
+}
+
+const blobs: Blob[] = [
+  // far — huge, fainter
+  { colour: 1, shape: "a", o: 0.75, size: "85vmax", top: "30vh", left: "-30vw", drift: { x: "12vw", y: "-55vh", s: 40, delay: -14 }, stretch: { from: [0.85, 1.15], to: [1.2, 0.85], s: 23, delay: -6 }, spin: { start: 20, s: 70 } },
+  { colour: 2, shape: "b", o: 0.75, size: "80vmax", top: "-45vh", left: "55vw", drift: { x: "-10vw", y: "55vh", s: 44, delay: -30 }, stretch: { from: [1.2, 0.9], to: [0.85, 1.15], s: 19, delay: -11 }, spin: { start: 140, s: -95 } },
+  // mid
+  { colour: 3, shape: "c", o: 0.9, size: "48vmax", top: "60vh", left: "38vw", drift: { x: "-14vw", y: "-75vh", s: 32, delay: -9 }, stretch: { from: [0.75, 0.95], to: [1.25, 1.15], s: 17, delay: -3 }, spin: { start: 260, s: 55 } },
+  { colour: 4, shape: "a", o: 0.9, size: "44vmax", top: "-20vh", left: "8vw", drift: { x: "16vw", y: "70vh", s: 36, delay: -20 }, stretch: { from: [1.1, 0.8], to: [0.85, 1.25], s: 21, delay: -15 }, spin: { start: 75, s: -80 } },
+  // near — small, dense
+  { colour: 1, shape: "b", near: true, o: 1, size: "26vmax", top: "78vh", left: "66vw", drift: { x: "-22vw", y: "-95vh", s: 27, delay: -4 }, stretch: { from: [0.7, 0.85], to: [1.3, 1.1], s: 13, delay: -8 }, spin: { start: 200, s: 40 } },
+  { colour: 2, shape: "c", near: true, o: 1, size: "20vmax", top: "2vh", left: "53vw", drift: { x: "6vw", y: "80vh", s: 29, delay: -17 }, stretch: { from: [1.25, 1], to: [0.75, 0.85], s: 15, delay: -2 }, spin: { start: 320, s: -48 } },
+];
+
+const style = (b: Blob) =>
+  [
+    `--c: var(--lava-${b.colour})`,
+    `--o: ${b.o}`,
+    `width: ${b.size}`,
+    `top: ${b.top}`,
+    `left: ${b.left}`,
+    `--dx: ${b.drift.x}`,
+    `--dy: ${b.drift.y}`,
+    `--drift-s: ${b.drift.s}s`,
+    `--drift-delay: ${b.drift.delay}s`,
+    `--sx0: ${b.stretch.from[0]}`,
+    `--sy0: ${b.stretch.from[1]}`,
+    `--sx1: ${b.stretch.to[0]}`,
+    `--sy1: ${b.stretch.to[1]}`,
+    `--stretch-s: ${b.stretch.s}s`,
+    `--stretch-delay: ${b.stretch.delay}s`,
+    `--r0: ${b.spin.start}deg`,
+    `--turn: ${Math.sign(b.spin.s)}turn`,
+    `--spin-s: ${Math.abs(b.spin.s)}s`,
+  ].join("; ");
 ---
 
 <div class="lava" aria-hidden="true">
-  <span class="lava-blob lava-blob-1"></span>
-  <span class="lava-blob lava-blob-2"></span>
-  <span class="lava-blob lava-blob-3"></span>
-  <span class="lava-blob lava-blob-4"></span>
-  <span class="lava-blob lava-blob-5"></span>
-  <span class="lava-blob lava-blob-6"></span>
+  {
+    blobs.map((b) => (
+      <span class="lava-blob" data-shape={b.shape} data-near={b.near ? "" : undefined} style={style(b)}>
+        <i />
+      </span>
+    ))
+  }
 </div>

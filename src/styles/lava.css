@@ -1,0 +1,132 @@
+/*
+ * Ambient "lava lamp" background — see src/components/Lava.astro for the blob
+ * list and how the motion is layered. Colours (--lava-1..4) and strength
+ * (--lava-opacity) are theme tokens in global.css.
+ *
+ * Contrast budget: every lobe in a blob is the same colour, and the blob's
+ * opacity is applied once to the whole blob, so however lobes overlap a blob
+ * is never stronger than --lava-opacity × --o — the bound the text contrast
+ * checks in global.css assume.
+ */
+
+/* Fixed layer behind everything: z-index -1 paints above the canvas/body
+   background but below content. */
+.lava {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Static film grain on top of the blobs: dithers the 8-bit gradient steps
+   that otherwise show as faint concentric rings ("banding"). */
+.lava::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+.dark .lava::after {
+  opacity: 0.06;
+}
+
+/* Outer: placement, size, strength. Position/size/motion values come from
+   inline custom properties set by Lava.astro. */
+.lava-blob {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: calc(var(--lava-opacity) * var(--o, 1));
+
+  /* Falloff for every lobe: eased rather than linear so edges have no rim. */
+  --falloff:
+    var(--c) 0%, color-mix(in srgb, var(--c) 80%, transparent) 25%,
+    color-mix(in srgb, var(--c) 50%, transparent) 50%,
+    color-mix(in srgb, var(--c) 20%, transparent) 75%, transparent 100%;
+}
+/* Near blobs: a slightly denser core — reads as closer. */
+.lava-blob[data-near] {
+  --falloff:
+    var(--c) 0%, color-mix(in srgb, var(--c) 85%, transparent) 30%,
+    color-mix(in srgb, var(--c) 50%, transparent) 58%,
+    color-mix(in srgb, var(--c) 15%, transparent) 82%, transparent 100%;
+}
+
+/* Inner: the shape. Fills the outer box and turns inside it. */
+.lava-blob > i {
+  position: absolute;
+  inset: 0;
+  rotate: var(--r0, 0deg);
+}
+
+/*
+ * Shapes: a central body ellipse plus offset lobes/knobs of different sizes
+ * and aspects. Lobe centres sit within ~16% of the body's so they always
+ * merge into one lumpy mass (further apart they read as separate circles).
+ * Values are % of the blob box; every lobe stays inside it (centre ± radius
+ * within 0–100%) so nothing is clipped.
+ */
+.lava-blob[data-shape="a"] > i {
+  background:
+    radial-gradient(ellipse 34% 30% at 48% 50%, var(--falloff)),
+    radial-gradient(ellipse 26% 22% at 62% 38%, var(--falloff)),
+    radial-gradient(ellipse 22% 28% at 54% 64%, var(--falloff)),
+    radial-gradient(ellipse 16% 14% at 32% 58%, var(--falloff));
+}
+.lava-blob[data-shape="b"] > i {
+  background:
+    radial-gradient(ellipse 38% 28% at 50% 46%, var(--falloff)),
+    radial-gradient(ellipse 24% 28% at 38% 58%, var(--falloff)),
+    radial-gradient(ellipse 22% 20% at 64% 60%, var(--falloff));
+}
+.lava-blob[data-shape="c"] > i {
+  background:
+    radial-gradient(ellipse 30% 32% at 48% 50%, var(--falloff)),
+    radial-gradient(ellipse 26% 18% at 62% 38%, var(--falloff)),
+    radial-gradient(ellipse 18% 22% at 36% 38%, var(--falloff)),
+    radial-gradient(ellipse 14% 12% at 64% 66%, var(--falloff));
+}
+
+/* Motion — only when the visitor hasn't asked for less. Negative delays start
+   each blob mid-path so nothing is static on load. */
+@media (prefers-reduced-motion: no-preference) {
+  .lava-blob {
+    animation:
+      lava-drift var(--drift-s) ease-in-out var(--drift-delay) infinite alternate,
+      lava-stretch var(--stretch-s) ease-in-out var(--stretch-delay) infinite alternate;
+  }
+  .lava-blob > i {
+    animation: lava-spin var(--spin-s) linear infinite;
+  }
+}
+
+/* Rise/fall: mostly vertical travel with a little sideways drift. */
+@keyframes lava-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: var(--dx) var(--dy);
+  }
+}
+
+/* Uneven stretch on screen axes (outside the rotation → shape morphs). */
+@keyframes lava-stretch {
+  from {
+    scale: var(--sx0) var(--sy0);
+  }
+  to {
+    scale: var(--sx1) var(--sy1);
+  }
+}
+
+/* Continuous turn from a per-blob starting angle; --turn is ±1turn. */
+@keyframes lava-spin {
+  from {
+    rotate: var(--r0);
+  }
+  to {
+    rotate: calc(var(--r0) + var(--turn));
+  }
+}
