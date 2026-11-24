@@ -12,10 +12,10 @@
 //     the per-character spans are aria-hidden.
 //   • Reduced motion or no JavaScript: nothing is changed, the quote just shows.
 
-const MS_PER_CHAR = 38;
-const JITTER = 14; // ± ms, so it reads as typing rather than a ticker
-const PAUSE_SHORT = 170; // after , ; : —
-const PAUSE_LONG = 320; // after . ! ?
+const MS_PER_CHAR = 24;
+const JITTER = 9; // ± ms, so it reads as typing rather than a ticker
+const PAUSE_SHORT = 120; // after , ; : —
+const PAUSE_LONG = 220; // after . ! ?
 const CARET_LINGER = 1400; // caret keeps blinking this long after the last character
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
