@@ -51,9 +51,13 @@ if (slot && drum && faces.length) {
 
   const label = (word: string) => slot.setAttribute("aria-label", `${word} — spin for another adjective`);
 
-  // Fill every facet so the reel never shows blanks once JS is running.
+  /** Words currently on the given facets. */
+  const wordsOn = (indices: Iterable<number>) => new Set([...indices].map((i) => faces[i].textContent?.trim() ?? ""));
+
+  // Re-letter every facet not in `keep` with words not already on the drum,
+  // so no two facets ever show the same adjective (needs adjectives ≥ facets).
   const fill = (keep: Set<number>) => {
-    const used = new Set(faces.filter((_, i) => keep.has(i)).map((f) => f.textContent?.trim() ?? ""));
+    const used = wordsOn(keep);
     faces.forEach((f, i) => {
       if (keep.has(i)) return;
       const w = pick(used);
@@ -64,9 +68,10 @@ if (slot && drum && faces.length) {
 
   const spin = ({ ms, turns }: { ms: number; turns: number }) => {
     if (spinning) return;
-    const target = pick(new Set([current]));
 
     if (reduceMotion.matches) {
+      // Swap the front word for one that isn't on any facet.
+      const target = pick(wordsOn(faces.keys()));
       faces[front].textContent = target;
       current = target;
       label(target);
@@ -78,10 +83,13 @@ if (slot && drum && faces.length) {
     // Land a few facets on from the current one, after `turns` full turns.
     const advance = 3 + Math.floor(Math.random() * (N - 4)); // never 0 → always a different facet
     const landing = mod(front + advance, N);
-    // Re-letter the facets out of view (keep the visible front ± 1), then
-    // put the result on the landing facet.
-    fill(new Set([front, mod(front + 1, N), mod(front - 1, N)]));
+    // The visible facets (front ± 1) keep their words. Pick the result from
+    // words not on them, put it on the landing facet, then re-letter the rest
+    // around both — every facet stays unique.
+    const visible = [front, mod(front + 1, N), mod(front - 1, N)];
+    const target = pick(wordsOn(visible));
     faces[landing].textContent = target;
+    fill(new Set([...visible, landing]));
 
     angle -= turns * 360 + advance * STEP; // roll so facets move upward
     setDrum(angle, `--angle ${ms}ms cubic-bezier(0.15, 0.7, 0.22, 1.05)`);
