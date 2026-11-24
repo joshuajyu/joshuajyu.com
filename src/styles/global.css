@@ -41,12 +41,15 @@
   --accent: #b35b79; /* lotusPink */
 
   /* Background blobs: the accent plus Canvas's own magenta / cyan / blue
-     (kanagawa-paper canvas terminal palette) — one rose-to-blue family. */
-  --lava-1: #b35b79; /* lotusPink (accent) */
-  --lava-2: #6a7893; /* canvas cyan */
-  --lava-3: #947992; /* canvas magenta (canvasPink1) */
-  --lava-4: #6c828c; /* canvas blue */
-  --lava-opacity: 0.16;
+     (kanagawa-paper canvas terminal palette), each lifted to OKLCH lightness
+     0.84 — close to --bg — with chroma ×2 (hue kept). Being about as light as
+     the page, they read as colour rather than shadow and don't eat into text
+     contrast. */
+  --lava-1: #ffb1c8; /* lotusPink (accent) */
+  --lava-2: #b0cbfe; /* canvas cyan */
+  --lava-3: #eeb4eb; /* canvas magenta (canvasPink1) */
+  --lava-4: #a2d3e9; /* canvas blue */
+  --lava-opacity: 0.42;
 }
 
 :root.dark {
@@ -59,13 +62,15 @@
   --card: #282727; /* dragonBlack4 */
   --accent: #a292a3; /* dragonPink */
 
-  /* Background blobs: the accent plus Dragon's violet / teal / blue — one
-     mauve-to-blue family. */
-  --lava-1: #a292a3; /* dragonPink (accent) */
-  --lava-2: #949fb5; /* dragonTeal */
-  --lava-3: #8992a7; /* dragonViolet */
-  --lava-4: #8ba4b0; /* dragonBlue2 */
-  --lava-opacity: 0.18;
+  /* Background blobs: Dragon hues deepened and saturated (OKLCH lightness
+     0.50 / 0.40, chroma ×2.5, hue kept) so they glow as rich colour rather
+     than pale grey haze: dragonPink → plum-mauve, dragonTeal → dusk blue,
+     dragonBlue2 → deep teal-blue, dragonPink (darker) → plum. */
+  --lava-1: #79547c;
+  --lava-2: #4a6295;
+  --lava-3: #246c88;
+  --lava-4: #5c385f;
+  --lava-opacity: 0.3;
 }
 
 @layer base {
@@ -97,10 +102,16 @@
 
 /*
  * Fixed layer behind everything (z-index -1 paints above the canvas/body
- * background but below content). Each blob is a radial gradient, so the blur
- * is baked in — no `filter` — and only `transform` animates, which stays on
- * the compositor. Blobs drift over 30–45s loops; with reduced motion they
- * hold still.
+ * background but below content). Six radial-gradient blobs — blur is baked
+ * into the gradient, no `filter`:
+ *   far  (1–2): huge, very soft, a little fainter — the deep background;
+ *   mid  (3–4): medium;
+ *   near (5–6): small with a denser core — reads as closer.
+ * Each blob has two independent animations (motion section below): a slow
+ * mostly-vertical rise/fall on `translate` and a faster swell/shrink on
+ * `scale`, with different periods so the combined motion never visibly
+ * repeats. Only transforms animate, so it stays on the compositor. With
+ * reduced motion the blobs hold still.
  */
 .lava {
   position: fixed;
@@ -134,32 +145,61 @@
     color-mix(in srgb, var(--c) 20%, transparent) 75%,
     transparent 100%
   );
-  opacity: var(--lava-opacity);
+  /* --o scales each blob relative to the theme's --lava-opacity (max 1). */
+  opacity: calc(var(--lava-opacity) * var(--o, 1));
   will-change: transform;
+}
+/* Near blobs: denser core, quicker falloff. */
+.lava-blob-5,
+.lava-blob-6 {
+  background: radial-gradient(
+    closest-side,
+    var(--c) 0%,
+    color-mix(in srgb, var(--c) 90%, transparent) 30%,
+    color-mix(in srgb, var(--c) 45%, transparent) 60%,
+    color-mix(in srgb, var(--c) 10%, transparent) 85%,
+    transparent 100%
+  );
 }
 .lava-blob-1 {
   --c: var(--lava-1);
-  top: -20vmax;
-  left: -15vmax;
-  width: 60vmax;
+  --o: 0.75;
+  top: 35vh;
+  left: -25vw;
+  width: 75vmax;
 }
 .lava-blob-2 {
   --c: var(--lava-2);
-  top: 15vh;
-  right: -20vmax;
-  width: 55vmax;
+  --o: 0.75;
+  top: -40vh;
+  right: -30vw;
+  width: 70vmax;
 }
 .lava-blob-3 {
   --c: var(--lava-3);
-  bottom: -25vmax;
-  left: 10vw;
-  width: 65vmax;
+  --o: 0.9;
+  top: 65vh;
+  left: 40vw;
+  width: 42vmax;
 }
 .lava-blob-4 {
   --c: var(--lava-4);
-  top: 35vh;
-  left: 35vw;
-  width: 35vmax;
+  --o: 0.9;
+  top: -15vh;
+  left: 12vw;
+  width: 38vmax;
+}
+.lava-blob-5 {
+  --c: var(--lava-1);
+  top: 80vh;
+  left: 68vw;
+  width: 22vmax;
+}
+.lava-blob-6 {
+  --c: var(--lava-2);
+  top: 5vh;
+  left: 55vw;
+  width: 17vmax;
 }
 
 /* ---------- Paged home page ---------- */
@@ -359,18 +399,37 @@ html:has(.page) {
     animation: nudge 2s ease-in-out infinite;
   }
 
-  /* Negative delays start each blob mid-path so nothing is static on load. */
+  /* Rise/fall (translate) + swell (scale), with unrelated periods. Negative
+     delays start each blob mid-path so nothing is static on load. */
   .lava-blob-1 {
-    animation: lava-a 34s ease-in-out -8s infinite alternate;
+    animation:
+      lava-rise-1 40s ease-in-out -14s infinite alternate,
+      lava-swell-a 23s ease-in-out -6s infinite alternate;
   }
   .lava-blob-2 {
-    animation: lava-b 40s ease-in-out -18s infinite alternate;
+    animation:
+      lava-fall-2 44s ease-in-out -30s infinite alternate,
+      lava-swell-b 19s ease-in-out -11s infinite alternate;
   }
   .lava-blob-3 {
-    animation: lava-c 45s ease-in-out -3s infinite alternate;
+    animation:
+      lava-rise-3 32s ease-in-out -9s infinite alternate,
+      lava-swell-c 17s ease-in-out -3s infinite alternate;
   }
   .lava-blob-4 {
-    animation: lava-d 30s ease-in-out -12s infinite alternate;
+    animation:
+      lava-fall-4 36s ease-in-out -20s infinite alternate,
+      lava-swell-a 21s ease-in-out -15s infinite alternate;
+  }
+  .lava-blob-5 {
+    animation:
+      lava-rise-5 27s ease-in-out -4s infinite alternate,
+      lava-swell-c 13s ease-in-out -8s infinite alternate;
+  }
+  .lava-blob-6 {
+    animation:
+      lava-fall-6 29s ease-in-out -17s infinite alternate,
+      lava-swell-b 15s ease-in-out -2s infinite alternate;
   }
 
   /* Intro 👋: a quick wave, then a pause, on repeat. */
@@ -431,48 +490,78 @@ html:has(.page) {
   }
 }
 
-@keyframes lava-a {
-  0% {
-    transform: translate(0, 0) scale(1);
+/* Rise/fall paths: mostly vertical, with a little sideways drift. */
+@keyframes lava-rise-1 {
+  from {
+    translate: 0 0;
   }
-  50% {
-    transform: translate(22vw, 16vh) scale(1.18);
-  }
-  100% {
-    transform: translate(6vw, 34vh) scale(0.92);
+  to {
+    translate: 12vw -55vh;
   }
 }
-@keyframes lava-b {
-  0% {
-    transform: translate(0, 0) scale(1);
+@keyframes lava-fall-2 {
+  from {
+    translate: 0 0;
   }
-  50% {
-    transform: translate(-24vw, 18vh) scale(0.86);
-  }
-  100% {
-    transform: translate(-10vw, -16vh) scale(1.14);
+  to {
+    translate: -10vw 55vh;
   }
 }
-@keyframes lava-c {
-  0% {
-    transform: translate(0, 0) scale(1);
+@keyframes lava-rise-3 {
+  from {
+    translate: 0 0;
   }
-  50% {
-    transform: translate(26vw, -20vh) scale(1.16);
-  }
-  100% {
-    transform: translate(42vw, -6vh) scale(0.88);
+  to {
+    translate: -14vw -75vh;
   }
 }
-@keyframes lava-d {
-  0% {
-    transform: translate(0, 0) scale(1);
+@keyframes lava-fall-4 {
+  from {
+    translate: 0 0;
   }
-  50% {
-    transform: translate(-30vw, -18vh) scale(1.28);
+  to {
+    translate: 16vw 70vh;
   }
-  100% {
-    transform: translate(14vw, 12vh) scale(0.86);
+}
+@keyframes lava-rise-5 {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -22vw -95vh;
+  }
+}
+@keyframes lava-fall-6 {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 6vw 80vh;
+  }
+}
+/* Swell/shrink: blobs grow and contract as they travel. */
+@keyframes lava-swell-a {
+  from {
+    scale: 0.8;
+  }
+  to {
+    scale: 1.2;
+  }
+}
+@keyframes lava-swell-b {
+  from {
+    scale: 1.25;
+  }
+  to {
+    scale: 0.75;
+  }
+}
+@keyframes lava-swell-c {
+  from {
+    scale: 0.6;
+  }
+  to {
+    scale: 1.35;
   }
 }
 
