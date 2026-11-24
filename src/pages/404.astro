@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import Footer from "../components/Footer.astro";
+import Wordmark from "../components/Wordmark.astro";
+---
+
+<Base title="Not Found | Joshua Yu" description="This page doesn't exist.">
+  <main id="main" class="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-6 py-24">
+    <a href="/" class="mb-10 text-2xl" aria-label="joshuajyu — home"><Wordmark /></a>
+    <p class="font-wordmark text-7xl font-black text-muted">404</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight">
+      Not Found <span aria-hidden="true">😔</span>
+    </h1>
+    <p class="mt-3 text-lg text-muted">Oops! The page you're looking for doesn't exist.</p>
+    <p class="mt-8">
+      <a href="/" class="link">← Return home</a>
+    </p>
+  </main>
+  <Footer />
+</Base>

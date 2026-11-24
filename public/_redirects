@@ -1,0 +1,6 @@
+# v1 had separate /work and /contact pages; v2 is a single page.
+# Workers static assets: https://developers.cloudflare.com/workers/static-assets/redirects/
+/work       /#work     301
+/work/      /#work     301
+/contact    /#contact  301
+/contact/   /#contact  301

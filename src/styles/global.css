@@ -1,0 +1,404 @@
+@import "tailwindcss";
+@import "@fontsource/doto/latin-900.css";
+
+/* Dark mode is class-based so the toggle can override the system setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-wordmark: "Doto", ui-monospace, monospace;
+
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+}
+
+/*
+ * Colours: Kanagawa.
+ * Light — "Canvas" from kanagawa-paper (thesimonho/kanagawa-paper, MIT) with
+ *   Lotus's pink accent. Text is canvasGray3 (#616569) darkened, and muted text
+ *   sits between it and canvasGray2.
+ * Dark — "Dragon" from kanagawa.nvim (rebelot/kanagawa.nvim, MIT) with
+ *   dragonOrange as the accent, matching the warm background blobs. Muted
+ *   text is dragonAsh (#737c73) moved most of the way toward dragonWhite.
+ * Text and muted text pass WCAG AA (4.5:1) on the background, cards and tag
+ * chips, and over the background blobs (checked with three overlapping: two
+ * blob centres at full strength plus a third at half).
+ */
+:root {
+  color-scheme: light;
+  --bg: #e1e1de; /* canvasWhite4 */
+  --fg: #414447; /* canvasGray3, darkened */
+  --muted: #535453;
+  --subtle: #d8d8d2; /* canvasWhite3 */
+  --border: #d1cfc5; /* canvasWhite2 */
+  --card: #ecece8; /* canvasWhite6 */
+  --accent: #b35b79; /* lotusPink */
+
+  /* Background blobs (each cycles through all four): Canvas's own cool tones
+     from the kanagawa-paper canvas palette — sage-teal #5c8388, slate
+     #6c828c, blue-violet #6a7893 and mauve #947992 (a tie to the accent) —
+     lifted near the page's lightness (OKLCH L 0.84) with chroma raised to
+     0.06 (source hues kept), so they read as clear but soft colour. */
+  --lava-1: #9cd6de; /* canvas sage-teal */
+  --lava-2: #a2d3e9; /* canvas slate */
+  --lava-3: #b6cbf3; /* canvas blue-violet */
+  --lava-4: #e1bdde; /* canvas mauve (canvasPink1) */
+  --lava-opacity: 0.7;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --bg: #181616; /* dragonBlack3 */
+  --fg: #c5c9c5; /* dragonWhite */
+  --muted: #9ea59e;
+  --subtle: #393836; /* dragonBlack5 */
+  --border: #393836; /* dragonBlack5 */
+  --card: #282727; /* dragonBlack4 */
+  --accent: #b6927b; /* dragonOrange */
+
+  /* Background blobs: Dragon's warm family — dragonRed, dragonOrange2 and
+     dragonOrange (hues 25–55°: brick, terracotta, amber) — deepened to
+     ember browns/reds (OKLCH L 0.34–0.46, C 0.06–0.08; source hues kept).
+     They sit naturally on Dragon's warm charcoal background. */
+  --lava-1: #733a37; /* dragonRed */
+  --lava-2: #653c2a; /* dragonOrange2 */
+  --lava-3: #724f37; /* dragonOrange */
+  --lava-4: #572825; /* dragonRed, deeper */
+  --lava-opacity: 0.25;
+}
+
+/*
+ * Frosted glass — the one place to tune it. Used (via the `glass` utility) by
+ * the desktop rail, work tiles, contact table, footer and theme toggle.
+ * Tint is the theme's --card colour so panels read as slightly raised. Text
+ * on glass is checked for 4.5:1 in both themes at the default tint (worst
+ * case: brightest blob directly behind).
+ */
+:root {
+  --glass-tint: 35%; /* how much --card covers the blurred backdrop */
+  --glass-blur: 64px;
+  --glass-saturate: 1.5;
+}
+
+@utility glass {
+  background-color: color-mix(in srgb, var(--card) var(--glass-tint), transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--accent) 30%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .link {
+    @apply underline decoration-border decoration-1 underline-offset-4 transition-colors;
+  }
+  .link:hover {
+    @apply decoration-accent text-accent;
+  }
+}
+
+/* ---------- Paged home page ---------- */
+
+/*
+ * Each `section.page` fills the viewport and the browser
+ * snaps between them. Mandatory snapping only where a page reliably fits on
+ * screen; on phones / short windows pages can be taller than the viewport, so
+ * snapping is softened to `proximity` to keep everything reachable.
+ */
+html:has(.page) {
+  scroll-snap-type: y proximity;
+  /* No rubber-band bounce at the ends: it fights snapping. */
+  overscroll-behavior-y: none;
+}
+
+@media (min-width: 768px) and (min-height: 640px) {
+  html:has(.page) {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+.page {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 2rem;
+  scroll-snap-align: start;
+}
+
+/* Below lg the wordmark/toggle bar overlays the top of the first page. */
+@media (max-width: 1023.98px) {
+  .page:first-child {
+    padding-top: 5rem;
+  }
+}
+
+/* The intro's "next" arrow only shows while the intro is the active page. */
+.scroll-hint {
+  transition: opacity 300ms;
+}
+.js .page:not(.is-active) .scroll-hint {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*
+ * The footer has a fixed height and the last page is shortened by exactly that
+ * much, so "last page + footer" is one screen and the last page's snap point
+ * is the very end of the document — no extra stop for the footer.
+ */
+:root {
+  --footer-h: 7rem;
+}
+@media (min-width: 640px) {
+  :root {
+    --footer-h: 5.5rem;
+  }
+}
+.site-footer {
+  height: var(--footer-h);
+}
+.page-last {
+  min-height: calc(100svh - var(--footer-h));
+}
+
+/* ---------- Section stepper ---------- */
+
+/*
+ * Each step draws the line segment from its own dot down to the next step's
+ * dot (::before = track, ::after = accent fill), so the line stays attached
+ * while blurbs expand and collapse. Dots are 0.75rem from the top of their
+ * 1.5rem row; the segment runs from there to 0.75rem past the step's bottom.
+ */
+.stepper-step {
+  position: relative;
+}
+.stepper-step:not(:last-child) {
+  padding-bottom: 1.75rem;
+}
+.stepper-step:not(:last-child)::before,
+.stepper-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0.75rem;
+  bottom: -0.75rem;
+  left: calc(0.75rem - 1px);
+  width: 2px;
+  border-radius: 1px;
+}
+.stepper-step::before {
+  background: var(--border);
+}
+.stepper-step::after {
+  background: var(--accent);
+  transform-origin: top;
+  transform: scaleY(0);
+}
+.stepper-step[data-state="complete"]::after {
+  transform: scaleY(1);
+}
+
+.stepper-dot-box {
+  position: relative;
+  z-index: 1; /* above the line segments */
+}
+.stepper-dot {
+  display: block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 2px solid var(--border);
+  border-radius: 9999px;
+  background: var(--bg);
+}
+.stepper-link:hover .stepper-dot {
+  border-color: var(--accent);
+}
+[data-state="complete"] .stepper-dot {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+[data-state="current"] .stepper-dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 25%, transparent);
+}
+
+.stepper-label {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.stepper-num {
+  margin-right: 0.375rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+[data-state="current"] .stepper-label,
+.stepper-link:hover .stepper-label {
+  color: var(--fg);
+}
+[data-state="current"] .stepper-label {
+  font-weight: 500;
+}
+
+/* Blurb: collapsed (0fr) unless the step is current. `visibility` keeps
+   collapsed blurbs out of the accessibility tree. */
+.stepper-blurb {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+.stepper-blurb > div {
+  min-height: 0;
+  overflow: hidden;
+}
+[data-state="current"] .stepper-blurb {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---------- Motion (only when the visitor hasn't asked for less) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /*
+   * Page transitions. `src/scripts/pages.ts` marks the page in view with
+   * `.is-active`; its `[data-reveal]` children stagger in (`--reveal-index`)
+   * and fade back out when the page is left. Hidden state only applies once
+   * the head script has added `.js`, so content is visible without JS.
+   */
+  /*
+   * Elements that reveal can also have hover transitions (work tiles), so the
+   * list includes those properties with their own timings. Tiles carry
+   * data-reveal themselves rather than on a wrapper: a fading *ancestor*
+   * stops backdrop-filter (the glass) from seeing the page behind it.
+   */
+  .js .page [data-reveal] {
+    transition:
+      opacity 300ms ease-in,
+      transform 300ms ease-in,
+      translate 200ms,
+      border-color 200ms,
+      box-shadow 200ms;
+  }
+
+  .js .page:not(.is-active) [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  .js .page.is-active [data-reveal] {
+    --reveal-delay: calc(100ms + var(--reveal-index, 0) * 80ms);
+    transition:
+      opacity 650ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      translate 200ms,
+      border-color 200ms,
+      box-shadow 200ms;
+    transition-delay: var(--reveal-delay), var(--reveal-delay), 0s, 0s, 0s;
+  }
+
+  .scroll-hint svg {
+    animation: nudge 2s ease-in-out infinite;
+  }
+
+  /* Intro 👋: a quick wave, then a pause, on repeat. */
+  .wave {
+    display: inline-block;
+    transform-origin: 70% 70%;
+    animation: wave 4s ease-in-out 1s infinite;
+  }
+
+  .stepper-dot {
+    transition:
+      background-color 300ms,
+      border-color 300ms,
+      box-shadow 300ms;
+  }
+  .stepper-label {
+    transition: color 200ms;
+  }
+  .stepper-step::after {
+    transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  /* Collapse: fade out, then shrink, then hide. */
+  .stepper-blurb {
+    transition:
+      opacity 200ms ease-in,
+      grid-template-rows 400ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      visibility 0s linear 400ms;
+  }
+  /* Expand: grow, with the text fading in slightly behind it. */
+  [data-state="current"] .stepper-blurb {
+    transition:
+      grid-template-rows 450ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 350ms ease-out 150ms,
+      visibility 0s;
+  }
+}
+
+@keyframes wave {
+  0%,
+  30%,
+  100% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(14deg);
+  }
+  10% {
+    transform: rotate(-8deg);
+  }
+  15% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-4deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+
+/* Avoid transitions firing while the theme switches. */
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
+}

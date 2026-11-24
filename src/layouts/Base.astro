@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+import Lava from "../components/Lava.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Joshua Yu | SWE @ Ada",
+  description = "I'm Joshua Yu, a software engineer at Ada.",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/images/favicon-light.ico" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/images/favicon-dark.ico" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#e1e1de" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#181616" media="(prefers-color-scheme: dark)" />
+
+    <!--
+      Runs before first paint: applies the saved/system theme (no flash of the
+      wrong theme) and marks JS as available so scroll reveals can hide content.
+    -->
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add("js");
+        let stored = null;
+        try {
+          stored = localStorage.getItem("theme");
+        } catch {}
+        const dark =
+          stored === "dark" ||
+          (stored !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+        root.classList.toggle("dark", dark);
+      })();
+    </script>
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <Lava />
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2"
+      >Skip to content</a
+    >
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,29 @@
+---
+import Stepper from "./Stepper.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import Wordmark from "./Wordmark.astro";
+---
+
+<!--
+  < lg: the wordmark sits at the top of the first page (scrolling away with it).
+  ≥ lg: fixed left rail (frosted glass over the animated background) with the
+  wordmark at the top and the section stepper centred below. The theme toggle floats in the top-right corner at all sizes.
+-->
+<header
+  class="absolute inset-x-0 top-0 z-40 flex h-16 items-center px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-64 lg:flex-col lg:items-center lg:border-r lg:border-border lg:px-8 lg:py-10 lg:glass"
+>
+  <a href="#intro" class="flex h-9 items-center text-2xl leading-none" aria-label="joshuajyu — back to top">
+    <Wordmark />
+  </a>
+  <div class="hidden lg:flex lg:flex-1 lg:items-center">
+    <Stepper />
+  </div>
+  <!-- Mirrors the wordmark row so the stepper sits at the rail's true centre. -->
+  <div class="hidden h-9 lg:block" aria-hidden="true"></div>
+</header>
+
+<div
+  class="glass fixed top-3.5 right-5 z-50 rounded-full border border-border shadow-sm lg:top-10 lg:right-8"
+>
+  <ThemeToggle />
+</div>

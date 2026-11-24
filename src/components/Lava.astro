@@ -1,0 +1,17 @@
+---
+// Ambient "lava lamp" background: soft blobs that bubble in place and slowly
+// cycle through the theme's lava palette. Purely decorative.
+//   config   — src/data/lava.ts (blobs, shapes, timings, colour cycle)
+//   renderer — src/scripts/lava.ts (one low-res canvas, upscaled)
+//   colours  — --lava-1..4 / --lava-opacity in src/styles/global.css
+// Without JavaScript the canvas stays empty and the plain background shows.
+import "../styles/lava.css";
+---
+
+<div class="lava" aria-hidden="true">
+  <canvas></canvas>
+</div>
+
+<script>
+  import "../scripts/lava";
+</script>

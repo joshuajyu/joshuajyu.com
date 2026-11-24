@@ -1,0 +1,42 @@
+---
+import { contact } from "../data/contact";
+import ExternalIcon from "./ExternalIcon.astro";
+import Quote from "./Quote.astro";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="contact" aria-labelledby="contact-heading" class="page page-last">
+  <SectionHeading id="contact">Contact Me</SectionHeading>
+
+  <p class="text-lg leading-relaxed" data-reveal style="--reveal-index: 1">
+    Thanks for wanting to contact me! I'll do my best to try to get back to you as soon as possible.
+  </p>
+
+  <dl class="glass mt-8 divide-y divide-border overflow-hidden rounded-xl border border-border">
+    {
+      contact.map((c, i) => (
+        <div class="flex items-center justify-between gap-4 px-5 py-3.5" data-reveal style={`--reveal-index: ${i + 2}`}>
+          <dt class="text-muted">
+            <span aria-hidden="true">{c.emoji}</span> {c.name}
+          </dt>
+          <dd>
+            {c.external ? (
+              <a href={c.href} class="link" target="_blank" rel="noopener noreferrer">
+                {c.label}
+                <ExternalIcon />
+              </a>
+            ) : (
+              <a href={c.href} class="link">
+                {c.label}
+              </a>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <Quote cite="Fyodor Dostoevsky, Crime and Punishment" index={contact.length + 2}>
+    “Taking a new step, uttering a new word, is what people fear most.”
+  </Quote>
+</section>
