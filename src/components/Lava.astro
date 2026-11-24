@@ -1,83 +1,17 @@
 ---
-// Ambient "lava lamp" background: soft, slightly lumpy colour blobs that
-// *bubble* in place behind the page. Purely decorative.
-//
-// Blobs are large and placed so neighbours overlap. Each stays near its
-// anchor and the main motion is size: it swells from ~55–60% to full size
-// and brightens, then sinks back (`bubble`, 16–26s),
-// with staggered phases so at any moment some blobs are rising while others
-// recede. On top of that: a small wobble around the anchor (mostly upward,
-// like rising lava) and a very slow turn so the lumpy shape never reads as a
-// fixed circle.
-//
-// Markup per blob: outer <span> (position, size, strength; animates
-// `translate` wobble + `scale` bubble) → inner <i> (the lobed shape; animates
-// `opacity` in step with the bubble, plus `rotate`). Only transforms and
-// opacity animate, so it all runs on the compositor. Colours (--lava-1..4)
-// and overall strength (--lava-opacity) are theme tokens in global.css.
+// Ambient "lava lamp" background: soft blobs that bubble in place and slowly
+// cycle through the theme's lava palette. Purely decorative.
+//   config   — src/data/lava.ts (blobs, shapes, timings, colour cycle)
+//   renderer — src/scripts/lava.ts (one low-res canvas, upscaled)
+//   colours  — --lava-1..4 / --lava-opacity in src/styles/global.css
+// Without JavaScript the canvas stays empty and the plain background shows.
 import "../styles/lava.css";
-
-interface Blob {
-  /** Theme colour slot (--lava-1..4). */
-  colour: 1 | 2 | 3 | 4;
-  /** Lobe layout, see `[data-shape]` in lava.css. */
-  shape: "a" | "b" | "c";
-  /** Strength relative to --lava-opacity (≤ 1 keeps the contrast budget). */
-  o: number;
-  size: string;
-  /** Centre of the blob (it swells around this point). */
-  x: string;
-  y: string;
-  /** Swell cycle: smallest → largest scale, height/width ratio at the peak, period, phase. */
-  bubble: { min: number; max: number; aspect: number; s: number; delay: number };
-  /** Small drift around the anchor (alternating), period, phase. */
-  wobble: { x: string; y: string; s: number; delay: number };
-  /** Seconds per full turn (negative = anticlockwise); starting angle. */
-  spin: { s: number; start: number };
-}
-
-const blobs: Blob[] = [
-  // large, background
-  { colour: 1, shape: "a", o: 0.8, size: "104vmax", x: "15vw", y: "70vh", bubble: { min: 0.6, max: 1.1, aspect: 0.9, s: 24, delay: -3 }, wobble: { x: "3vw", y: "-6vh", s: 17, delay: -6 }, spin: { s: 180, start: 20 } },
-  { colour: 2, shape: "b", o: 0.8, size: "98vmax", x: "80vw", y: "25vh", bubble: { min: 0.6, max: 1.05, aspect: 1.1, s: 26, delay: -14 }, wobble: { x: "-3vw", y: "-5vh", s: 18, delay: -2 }, spin: { s: -200, start: 140 } },
-  // medium
-  { colour: 3, shape: "c", o: 0.9, size: "72vmax", x: "50vw", y: "65vh", bubble: { min: 0.55, max: 1.15, aspect: 0.85, s: 18, delay: -6 }, wobble: { x: "-2vw", y: "-7vh", s: 14, delay: -9 }, spin: { s: 150, start: 260 } },
-  { colour: 4, shape: "a", o: 0.9, size: "65vmax", x: "35vw", y: "20vh", bubble: { min: 0.6, max: 1.1, aspect: 1.15, s: 20, delay: -11 }, wobble: { x: "2vw", y: "-5vh", s: 15, delay: -3 }, spin: { s: -170, start: 75 } },
-  // small, foreground
-  { colour: 1, shape: "b", o: 1, size: "50vmax", x: "75vw", y: "80vh", bubble: { min: 0.55, max: 1.15, aspect: 0.9, s: 16, delay: -5 }, wobble: { x: "-2vw", y: "-8vh", s: 12, delay: -7 }, spin: { s: 140, start: 200 } },
-  { colour: 2, shape: "c", o: 1, size: "44vmax", x: "60vw", y: "40vh", bubble: { min: 0.55, max: 1.15, aspect: 1.1, s: 17, delay: -10 }, wobble: { x: "2vw", y: "-6vh", s: 14, delay: -5 }, spin: { s: -160, start: 320 } },
-  { colour: 3, shape: "a", o: 1, size: "52vmax", x: "10vw", y: "30vh", bubble: { min: 0.55, max: 1.15, aspect: 1, s: 22, delay: -16 }, wobble: { x: "3vw", y: "-7vh", s: 15, delay: -11 }, spin: { s: 190, start: 110 } },
-  { colour: 4, shape: "b", o: 1, size: "42vmax", x: "90vw", y: "60vh", bubble: { min: 0.55, max: 1.2, aspect: 0.95, s: 16, delay: -2 }, wobble: { x: "-2vw", y: "-6vh", s: 12, delay: -3 }, spin: { s: -150, start: 30 } },
-];
-
-const style = (b: Blob) =>
-  [
-    `--c: var(--lava-${b.colour})`,
-    `--o: ${b.o}`,
-    `--size: ${b.size}`,
-    `left: ${b.x}`,
-    `top: ${b.y}`,
-    `--s-min: ${b.bubble.min}`,
-    `--s-max: ${b.bubble.max}`,
-    `--aspect: ${b.bubble.aspect}`,
-    `--bubble-s: ${b.bubble.s}s`,
-    `--bubble-delay: ${b.bubble.delay}s`,
-    `--dx: ${b.wobble.x}`,
-    `--dy: ${b.wobble.y}`,
-    `--wobble-s: ${b.wobble.s}s`,
-    `--wobble-delay: ${b.wobble.delay}s`,
-    `--r0: ${b.spin.start}deg`,
-    `--turn: ${Math.sign(b.spin.s)}turn`,
-    `--spin-s: ${Math.abs(b.spin.s)}s`,
-  ].join("; ");
 ---
 
 <div class="lava" aria-hidden="true">
-  {
-    blobs.map((b) => (
-      <span class="lava-blob" data-shape={b.shape} style={style(b)}>
-        <i />
-      </span>
-    ))
-  }
+  <canvas></canvas>
 </div>
+
+<script>
+  import "../scripts/lava";
+</script>
