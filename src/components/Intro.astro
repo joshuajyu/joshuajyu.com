@@ -1,5 +1,6 @@
 ---
 import ExternalIcon from "./ExternalIcon.astro";
+import Greeting from "./Greeting.astro";
 import Quote from "./Quote.astro";
 ---
 
@@ -23,7 +24,7 @@ import Quote from "./Quote.astro";
       <span aria-hidden="true">📚</span>.
     </p>
     <p data-reveal style="--reveal-index: 3">
-      Thank you for visiting my website, and I hope you have a nice day!
+      Thank you for visiting my website, and <Greeting />
     </p>
     <p class="text-base text-muted" data-reveal style="--reveal-index: 4">
       P.S. If you were wondering, my middle/Chinese name is Junxiao/<span lang="zh">浚潇</span>, hence
@@ -31,7 +32,7 @@ import Quote from "./Quote.astro";
     </p>
   </div>
 
-  <Quote cite="William Shakespeare, As You Like It" index={5}>
+  <Quote cite="William Shakespeare, As You Like It" index={5} delay={1100}>
     “The fool doth think he is wise, but the wise man knows himself to be a fool.”
   </Quote>
 

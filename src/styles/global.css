@@ -330,6 +330,12 @@ html:has(.page) {
     animation: nudge 2s ease-in-out infinite;
   }
 
+  .slot-hint {
+    transition:
+      opacity 150ms,
+      transform 150ms;
+  }
+
   /* Appearance panel: quick fade/drop in and out (popover + top layer). */
   #appearance-panel {
     transition:
@@ -405,6 +411,92 @@ html:has(.page) {
   25% {
     transform: rotate(10deg);
   }
+}
+
+/* ---------- Greeting slot reel (Greeting.astro / greeting.ts) ---------- */
+
+/*
+ * A one-line "window" set into the sentence: a small pane of glass (tint +
+ * blur + hairline edge + top sheen) over a vertical strip of words. The reel
+ * is exactly one line tall and top-aligned, so its text shares the
+ * paragraph's baseline; its width is set by the script to the longest
+ * adjective so the sentence never reflows mid-spin.
+ */
+.slot {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  height: 1lh;
+  margin: 0 0.05em;
+  padding: 0 0.4em;
+  border-radius: 0.45em;
+  background-color: color-mix(in srgb, var(--card) 55%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    0 1px 2px rgb(0 0 0 / 0.06);
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  cursor: default;
+}
+.slot.is-ready {
+  cursor: pointer;
+}
+/* Glass sheen across the top of the pane. */
+.slot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.28), transparent 50%);
+  pointer-events: none;
+}
+.dark .slot::after {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.08), transparent 50%);
+}
+.slot-window {
+  display: block;
+  width: var(--slot-text-w, auto);
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  /* Soft top/bottom edges, like a reel drum. */
+  -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+}
+.slot-strip {
+  display: block;
+  will-change: transform;
+}
+.slot-strip > span {
+  display: block;
+  height: 1lh;
+  white-space: nowrap;
+}
+/* "Spin again" hint: a small accent badge on hover / keyboard focus. */
+.slot-hint {
+  position: absolute;
+  top: -0.45em;
+  right: -0.45em;
+  width: 1.05em;
+  height: 1.05em;
+  padding: 0.16em;
+  border-radius: 9999px;
+  background: var(--accent);
+  color: var(--bg);
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+.slot.is-ready:hover .slot-hint,
+.slot.is-ready:focus-visible .slot-hint {
+  opacity: 1;
+  transform: none;
+}
+.slot.is-spinning .slot-hint {
+  opacity: 0;
 }
 
 /* ---------- Typewriter quotes (src/scripts/quotes.ts) ---------- */
