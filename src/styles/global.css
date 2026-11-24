@@ -37,6 +37,15 @@
   --border: #d1cfc5; /* canvasWhite2 */
   --card: #ecece8; /* canvasWhite6 */
   --accent: #b35b79; /* lotusPink */
+
+  /* Background blobs: pastel (80% white) lotusPink / lotusTeal2 / lotusViolet2 /
+     lotusTeal3 — lighter than --bg, so they glow and never reduce text
+     contrast (muted stays ≥ 5:1 even where two blob centres overlap). */
+  --lava-1: #f0dee4;
+  --lava-2: #e0e9f2;
+  --lava-3: #e4e1e9;
+  --lava-4: #dee4e7;
+  --lava-opacity: 0.7;
 }
 
 :root.dark {
@@ -48,6 +57,14 @@
   --border: #393836; /* dragonBlack5 */
   --card: #282727; /* dragonBlack4 */
   --accent: #a292a3; /* dragonPink */
+
+  /* dragonPink / dragonBlue2 / dragonViolet / dragonRed, kept faint so muted
+     text stays ≥ 5:1 where blobs overlap. */
+  --lava-1: #a292a3;
+  --lava-2: #8ba4b0;
+  --lava-3: #8992a7;
+  --lava-4: #c4746e;
+  --lava-opacity: 0.1;
 }
 
 @layer base {
@@ -73,6 +90,75 @@
   .link:hover {
     @apply decoration-accent text-accent;
   }
+}
+
+/* ---------- Ambient "lava lamp" background ---------- */
+
+/*
+ * Fixed layer behind everything (z-index -1 paints above the canvas/body
+ * background but below content). Each blob is a radial gradient, so the blur
+ * is baked in — no `filter` — and only `transform` animates, which stays on
+ * the compositor. Blobs drift over 45–70s loops; with reduced motion they
+ * hold still.
+ */
+.lava {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Static film grain on top of the blobs: dithers the 8-bit gradient steps
+   that otherwise show as faint concentric rings ("banding"). */
+.lava::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity, 0.05);
+}
+.dark .lava::after {
+  --grain-opacity: 0.06;
+}
+.lava-blob {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Eased falloff (rather than a linear fade) so the edge has no visible rim. */
+  background: radial-gradient(
+    closest-side,
+    var(--c) 0%,
+    color-mix(in srgb, var(--c) 80%, transparent) 25%,
+    color-mix(in srgb, var(--c) 50%, transparent) 50%,
+    color-mix(in srgb, var(--c) 20%, transparent) 75%,
+    transparent 100%
+  );
+  opacity: var(--lava-opacity);
+  will-change: transform;
+}
+.lava-blob-1 {
+  --c: var(--lava-1);
+  top: -20vmax;
+  left: -15vmax;
+  width: 60vmax;
+}
+.lava-blob-2 {
+  --c: var(--lava-2);
+  top: 15vh;
+  right: -20vmax;
+  width: 55vmax;
+}
+.lava-blob-3 {
+  --c: var(--lava-3);
+  bottom: -25vmax;
+  left: 10vw;
+  width: 65vmax;
+}
+.lava-blob-4 {
+  --c: var(--lava-4);
+  top: 35vh;
+  left: 35vw;
+  width: 35vmax;
 }
 
 /* ---------- Paged home page ---------- */
@@ -272,6 +358,20 @@ html:has(.page) {
     animation: nudge 2s ease-in-out infinite;
   }
 
+  /* Negative delays start each blob mid-path so nothing is static on load. */
+  .lava-blob-1 {
+    animation: lava-a 55s ease-in-out -12s infinite alternate;
+  }
+  .lava-blob-2 {
+    animation: lava-b 65s ease-in-out -30s infinite alternate;
+  }
+  .lava-blob-3 {
+    animation: lava-c 70s ease-in-out -5s infinite alternate;
+  }
+  .lava-blob-4 {
+    animation: lava-d 45s ease-in-out -20s infinite alternate;
+  }
+
   /* Intro 👋: a quick wave, then a pause, on repeat. */
   .wave {
     display: inline-block;
@@ -327,6 +427,51 @@ html:has(.page) {
   }
   25% {
     transform: rotate(10deg);
+  }
+}
+
+@keyframes lava-a {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(14vw, 10vh) scale(1.12);
+  }
+  100% {
+    transform: translate(4vw, 24vh) scale(0.95);
+  }
+}
+@keyframes lava-b {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-16vw, 12vh) scale(0.9);
+  }
+  100% {
+    transform: translate(-6vw, -10vh) scale(1.08);
+  }
+}
+@keyframes lava-c {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(18vw, -14vh) scale(1.1);
+  }
+  100% {
+    transform: translate(30vw, -4vh) scale(0.92);
+  }
+}
+@keyframes lava-d {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-20vw, -12vh) scale(1.2);
+  }
+  100% {
+    transform: translate(10vw, 8vh) scale(0.9);
   }
 }
 

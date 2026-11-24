@@ -6,11 +6,11 @@ import Wordmark from "./Wordmark.astro";
 
 <!--
   < lg: the wordmark sits at the top of the first page (scrolling away with it).
-  ≥ lg: fixed left rail with the wordmark at the top and the section stepper
-  centred below. The theme toggle floats in the top-right corner at all sizes.
+  ≥ lg: fixed left rail (frosted glass over the animated background) with the
+  wordmark at the top and the section stepper centred below. The theme toggle floats in the top-right corner at all sizes.
 -->
 <header
-  class="absolute inset-x-0 top-0 z-40 flex h-16 items-center px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-64 lg:flex-col lg:items-center lg:border-r lg:border-border lg:px-8 lg:py-10"
+  class="absolute inset-x-0 top-0 z-40 flex h-16 items-center px-6 lg:fixed lg:inset-y-0 lg:right-auto lg:h-auto lg:w-64 lg:flex-col lg:items-center lg:border-r lg:border-border lg:bg-bg/45 lg:px-8 lg:py-10 lg:backdrop-blur-xl lg:backdrop-saturate-150"
 >
   <a href="#intro" class="flex h-9 items-center text-2xl leading-none" aria-label="joshuajyu — back to top">
     <Wordmark />
