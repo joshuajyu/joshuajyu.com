@@ -1,0 +1,51 @@
+---
+import { work } from "../data/work";
+import Quote from "./Quote.astro";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="work" aria-labelledby="work-heading" class="pt-28">
+  <SectionHeading id="work">Work</SectionHeading>
+
+  <ul class="grid gap-4 sm:grid-cols-2">
+    {
+      work.map((item, i) => (
+        <li data-reveal style={`--reveal-index: ${i % 2}`}>
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex h-full flex-col rounded-xl border border-border bg-card p-5 transition-[border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg hover:shadow-black/5"
+          >
+            <h3 class="flex items-center justify-between gap-2 text-lg font-semibold">
+              {item.name}
+              <svg
+                class="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 17 17 7M8 7h9v9" />
+              </svg>
+            </h3>
+            <p class="mt-2 flex-1 text-muted">{item.description}</p>
+            <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Built with">
+              {item.tech.map((t) => (
+                <li class="rounded-full bg-subtle px-2.5 py-0.5 text-xs text-muted">{t}</li>
+              ))}
+            </ul>
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <Quote cite="Theodore Roosevelt, The Key to Success in Life">
+    “Far and away the best prize that life has to offer is the chance to work hard at work worth doing.”
+  </Quote>
+</section>

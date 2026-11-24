@@ -1,0 +1,43 @@
+---
+import ExternalIcon from "./ExternalIcon.astro";
+import Quote from "./Quote.astro";
+---
+
+<section id="intro" aria-labelledby="intro-heading" class="pt-16 sm:pt-24">
+  <h1 id="intro-heading" class="text-4xl font-semibold tracking-tight sm:text-5xl" data-reveal>
+    Hello! <span aria-hidden="true">👋</span>
+  </h1>
+
+  <div class="mt-8 space-y-5 text-lg leading-relaxed">
+    <p data-reveal style="--reveal-index: 1">
+      Nice to meet you! My name is Josh, and I'm currently a software engineer at
+      <a href="https://www.ada.cx" class="link" target="_blank" rel="noopener noreferrer"
+        >Ada<ExternalIcon /></a
+      >.
+    </p>
+    <p data-reveal style="--reveal-index: 2">
+      When I'm not working or studying, you can find me working out
+      <span aria-hidden="true">🏋️</span>, watching basketball <span aria-hidden="true">🏀</span> (go
+      Raptors!), gaming with friends <span aria-hidden="true">🎮</span>, working on personal projects
+      <span aria-hidden="true">🛠️</span>, or (most likely) eating food
+      <span aria-hidden="true">🍜</span>.
+    </p>
+    <p data-reveal style="--reveal-index: 3">
+      I invite you to <a href="#work" class="link">look at my work</a> or
+      <a href="#contact" class="link">contact me</a>. Thank you for visiting my website, and I hope you
+      have a nice day!
+    </p>
+    <p data-reveal style="--reveal-index: 4">
+      All the best,<br />
+      Joshua Yu
+    </p>
+    <p class="text-base text-muted" data-reveal style="--reveal-index: 5">
+      P.S. If you were wondering, my middle/Chinese name is Junxiao/<span lang="zh">浚潇</span>, hence
+      the <em>j</em> in joshua<em>j</em>yu.
+    </p>
+  </div>
+
+  <Quote cite="William Shakespeare, As You Like It">
+    “The fool doth think he is wise, but the wise man knows himself to be a fool.”
+  </Quote>
+</section>

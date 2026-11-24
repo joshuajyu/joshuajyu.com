@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@import "@fontsource/doto/latin-900.css";
+
+/* Dark mode is class-based so the toggle can override the system setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-wordmark: "Doto", ui-monospace, monospace;
+
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+}
+
+:root {
+  color-scheme: light;
+  --bg: oklch(0.99 0 0);
+  --fg: oklch(0.2 0.02 265);
+  --muted: oklch(0.5 0.02 265);
+  --subtle: oklch(0.96 0.005 265);
+  --border: oklch(0.91 0.01 265);
+  --card: oklch(1 0 0);
+  --accent: oklch(0.55 0.17 255);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --bg: oklch(0.16 0.015 265);
+  --fg: oklch(0.96 0.005 265);
+  --muted: oklch(0.7 0.02 265);
+  --subtle: oklch(0.22 0.02 265);
+  --border: oklch(0.3 0.02 265);
+  --card: oklch(0.19 0.017 265);
+  --accent: oklch(0.75 0.13 250);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem; /* clear the sticky header on anchor jumps */
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--accent) 30%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .link {
+    @apply underline decoration-border decoration-1 underline-offset-4 transition-colors;
+  }
+  .link:hover {
+    @apply decoration-accent text-accent;
+  }
+}
+
+/* ---------- Motion (only when the visitor hasn't asked for less) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /*
+   * Scroll reveal. Hidden state only applies once the head script has added
+   * `.js`, so content is always visible without JavaScript.
+   * `src/scripts/reveal.ts` adds `.is-visible` when an element enters view.
+   */
+  .js [data-reveal] {
+    transition:
+      opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--reveal-index, 0) * 90ms);
+  }
+
+  .js [data-reveal]:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+
+  /* Header gains a border once the page scrolls (scroll-driven, no JS). */
+  @supports (animation-timeline: scroll()) {
+    .site-header {
+      animation: header-border linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 4rem;
+    }
+  }
+}
+
+@keyframes header-border {
+  from {
+    border-bottom-color: transparent;
+  }
+  to {
+    border-bottom-color: var(--border);
+  }
+}
+
+/* Avoid transitions firing while the theme switches. */
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
+}

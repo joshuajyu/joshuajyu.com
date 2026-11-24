@@ -1,0 +1,14 @@
+// Cloudflare Worker config — static assets only (no `main` script).
+// Docs: https://developers.cloudflare.com/workers/static-assets/
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Must match the Worker name in the dashboard for Workers Builds.
+  "name": "joshuajyudotcom",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+  // Cutover TODO (see README): "workers_dev": false + "preview_urls": true —
+  // test that combination (with Access) before committing it.
+}

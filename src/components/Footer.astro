@@ -1,0 +1,23 @@
+---
+import ExternalIcon from "./ExternalIcon.astro";
+import Wordmark from "./Wordmark.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-border">
+  <div class="mx-auto flex max-w-3xl flex-col gap-3 px-6 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+    <p>
+      © {year} <Wordmark />.
+    </p>
+    <p>
+      Source code is MIT licensed and available on
+      <a
+        href="https://github.com/joshuajyu/joshuajyu.com"
+        class="link"
+        target="_blank"
+        rel="noopener noreferrer">GitHub<ExternalIcon /></a
+      >.
+    </p>
+  </div>
+</footer>

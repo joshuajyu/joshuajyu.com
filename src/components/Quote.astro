@@ -1,0 +1,11 @@
+---
+interface Props {
+  cite: string;
+}
+const { cite } = Astro.props;
+---
+
+<figure class="mt-12 border-l-2 border-border pl-6 text-muted" data-reveal>
+  <blockquote class="italic"><slot /></blockquote>
+  <figcaption class="mt-2 text-sm">— {cite}</figcaption>
+</figure>
