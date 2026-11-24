@@ -13,7 +13,7 @@ v1 (Next.js on EC2) lives on the read-only [`archive-v1`](https://github.com/jos
 | Language | TypeScript |
 | Font | Doto (wordmark), self-hosted via `@fontsource/doto` |
 | Colours | [Kanagawa](https://github.com/rebelot/kanagawa.nvim) Dragon (dark, `dragonOrange` accent) + [Kanagawa Paper](https://github.com/thesimonho/kanagawa-paper) Canvas (light, Lotus pink accent), as CSS variables in `global.css` |
-| Hosting | Cloudflare Worker `joshuajyudotcom`, static assets only, deployed by Workers Builds |
+| Hosting | Cloudflare Worker `joshuajyu-com`, static assets only, deployed by Workers Builds |
 | Tooling | Node ≥ 22.23.4 (`.nvmrc`), pnpm (pinned via `packageManager`) |
 
 ## Development
@@ -65,21 +65,21 @@ wrangler.jsonc            Worker config (name must match the Worker in Cloudflar
 
 ## Deployment
 
-Cloudflare **Workers Builds** connects this GitHub repo to the `joshuajyudotcom` Worker:
+Cloudflare **Workers Builds** connects this GitHub repo to the `joshuajyu-com` **Worker**. The old construction page is a separate **Pages project** with the same name; the two don't clash, but take care which one you're editing or deleting.
 
 | Setting | Value |
 | --- | --- |
 | Production branch | `main` |
 | Build command | `pnpm run build` |
 | Deploy command (production) | `npx wrangler deploy` |
-| Non-production branch deploy command | `npx wrangler versions upload` |
+| Preview deploy command (non-production branches) | `npx wrangler preview` (open beta; names the preview after the git branch) |
 | Build variable | `NODE_VERSION=22.23.5` (also in `.nvmrc`; don't rely on the image default) |
 
 - A push to `main` triggers a production deploy.
-- A push to any other branch or a PR gets a preview URL aliased by branch name, e.g. `dev-joshuajyudotcom.<subdomain>.workers.dev`.
-- Work happens on `dev` and reaches `main` only via PR/merge.
+- A push to any other branch or a PR gets a Preview deployment named after the branch (e.g. `dev`).
+- Work happens on `dev` and reaches `main` as a squash merge.
 
-> **Status:** Workers Builds is **not connected yet**. `joshuajyu.com` still points at the old `joshuajyu-com` Pages project (Direct Upload, construction page). Connect Git only once `main` builds a working site.
+> **Status:** v2 is on `main` and Workers Builds is being connected. `joshuajyu.com` still points at the old `joshuajyu-com` **Pages project** (Direct Upload, construction page) until cutover.
 
 ### To verify after the first deploy
 
@@ -89,15 +89,15 @@ Cloudflare **Workers Builds** connects this GitHub repo to the `joshuajyudotcom`
 
 ### Cutover (Pages → Worker)
 
-The old `joshuajyu-com` project was created by Direct Upload and can't be switched to Git integration, so the site moves to the new Worker:
+The old `joshuajyu-com` Pages project was created by Direct Upload and can't be switched to Git integration, so the site moves to the new `joshuajyu-com` Worker:
 
 1. Verify the Worker's production deploy on its `*.workers.dev` URL, and the `dev` preview URL.
-2. Remove `joshuajyu.com` from the `joshuajyu-com` Pages project, then add it as a **Custom Domain** on the `joshuajyudotcom` Worker (Settings → Domains & Routes).
+2. Remove `joshuajyu.com` from the `joshuajyu-com` **Pages project**, then add it as a **Custom Domain** on the `joshuajyu-com` **Worker** (Settings → Domains & Routes).
 3. Lock down `workers.dev`:
    - Enable Cloudflare Access for **Preview URLs** (Settings → Domains & Routes). All Workers preview URLs on the account share the auto-created "Cloudflare Workers Preview URLs" policy.
    - Preferred: add `"workers_dev": false` **and** `"preview_urls": true` to `wrangler.jsonc`. Preview URLs follow `workers_dev` by default, and Cloudflare's docs don't confirm this combination (or its interaction with Access), so **test it first**. Fallback: keep `workers_dev` on and put it behind Access too.
-   - The `joshuajyu-com.pages.dev` Bulk Redirect can stay until the old project is deleted.
-4. Confirm `joshuajyu.com`, `www.joshuajyu.com` (an existing zone redirect rule to the apex), the `workers.dev` URL and preview URLs all behave as expected. Then delete the old `joshuajyu-com` Pages project, its Bulk Redirect entry, and the `construction-page` branch.
+   - The `joshuajyu-com.pages.dev` Bulk Redirect can stay until the old Pages project is deleted.
+4. Confirm `joshuajyu.com`, `www.joshuajyu.com` (an existing zone redirect rule to the apex), the `workers.dev` URL and preview URLs all behave as expected. Then delete the old `joshuajyu-com` **Pages project** (not the Worker of the same name), its Bulk Redirect entry, and the `construction-page` branch.
 
 Leave the zone's other DNS records alone (email routing/sending, DMARC, tunnels). They're unrelated to the site.
 
