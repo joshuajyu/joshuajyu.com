@@ -229,6 +229,13 @@ html:has(.page) {
     animation: nudge 2s ease-in-out infinite;
   }
 
+  /* Intro 👋: a quick wave, then a pause, on repeat. */
+  .wave {
+    display: inline-block;
+    transform-origin: 70% 70%;
+    animation: wave 4s ease-in-out 1s infinite;
+  }
+
   .stepper-fill {
     transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
   }
@@ -237,6 +244,29 @@ html:has(.page) {
       background-color 300ms,
       border-color 300ms,
       box-shadow 300ms;
+  }
+}
+
+@keyframes wave {
+  0%,
+  30%,
+  100% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(14deg);
+  }
+  10% {
+    transform: rotate(-8deg);
+  }
+  15% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-4deg);
+  }
+  25% {
+    transform: rotate(10deg);
   }
 }
 
