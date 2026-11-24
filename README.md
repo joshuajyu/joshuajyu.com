@@ -51,7 +51,7 @@ wrangler.jsonc            Worker config (name must match the Worker in Cloudflar
 - **Theme:** follows the system by default. The toggle overrides it and saves the choice to `localStorage`. Picking the theme that matches the system clears the saved choice, so the page follows the system again.
 - **Paged scrolling:** each section (`section.page`) fills the viewport, and the browser scroll-snaps between them using native CSS scroll snap, not wheel hijacking, so trackpad, touch, keyboard and assistive tech still scroll normally. Snapping is `mandatory` on screens ≥ 768×640 and `proximity` on smaller ones, where a page (e.g. Work on a phone) can be taller than the screen. The footer has a fixed height (`--footer-h`) and the last page is shortened by that much, so Contact + footer share the final screen with no extra snap stop. Overscroll bounce is disabled on the home page so it doesn't fight snapping.
 - **Ambient background:** `Lava.astro` holds a typed list of eight blobs, rendered in a fixed layer behind the page. All styling lives in `src/styles/lava.css`. The blobs bubble in place rather than wander:
-  - **Swell:** large blobs, positioned by their centres so neighbours overlap. Each grows from about 55–60% to full size, brightening as it grows, then sinks back and dims to 75% (9–16s cycles with staggered phases).
+  - **Swell:** large blobs, positioned by their centres so neighbours overlap. Each grows from about 55–60% to full size, brightening as it grows, then sinks back and dims to 75% (16–26s cycles with staggered phases).
   - **Wobble:** it drifts only a little around its anchor, mostly upward.
   - **Turn:** a very slow rotation keeps its gently lumpy shape (three overlapping soft ellipses) from reading as a circle.
 
