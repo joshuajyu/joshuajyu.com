@@ -36,11 +36,15 @@ src/
   layouts/Base.astro      <head>, inline theme script (no flash of wrong theme)
   pages/index.astro       the single page
   pages/404.astro         served for unknown paths (not_found_handling: "404-page")
-  components/             Header (side rail), Stepper, Intro, Work, Contact, Footer, …
-  data/work.ts            work/project cards
-  data/contact.ts         contact links
+  components/             Header (side rail), Stepper, Intro, Education, Work, Contact,
+                          Greeting (slot reel), Quote, AppearanceMenu, Lava, Footer, …
+  data/                   content and config: education, work, contact, greeting words, lava
   scripts/pages.ts        marks the page in view as active (animations, nav state)
-  styles/global.css       Tailwind, theme colours, motion
+  scripts/quotes.ts       typewriter quotes
+  scripts/greeting.ts     slot reel + part of day
+  scripts/lava.ts         ambient background renderer
+  styles/global.css       Tailwind, theme colours, glass, motion
+  styles/lava.css         background layer and grain
 public/
   _redirects              /work → /#work, /contact → /#contact (301)
 wrangler.jsonc            Worker config (name must match the Worker in Cloudflare)
@@ -63,52 +67,58 @@ wrangler.jsonc            Worker config (name must match the Worker in Cloudflar
   Colours (`--lava-1..4`) and strength (`--lava-opacity`) are read from the theme tokens in `global.css`, and are re-read when the theme changes. Each blob is drawn at full colour offscreen, then composited once at its strength, so overlapping lobes never exceed what the text-contrast checks assume (up to three blobs stacked). Rendering is capped at 30fps. With reduced motion it draws a single still frame. Without JavaScript the plain background shows.
 - **Frosted glass:** one `glass` utility in `global.css` (`--glass-tint`, `--glass-blur`, `--glass-saturate`) styles the desktop rail, work tiles, contact table, footer, and the appearance button and panel. Change those variables to change all of them. Glass elements must not sit inside an element that fades (opacity < 1), or the browser stops blurring what's behind them, which is why work tiles carry `data-reveal` themselves.
 - **Navigation:** at ≥ 1024px a fixed left rail has the wordmark centred at the top and a vertical section stepper (Intro → Education → Work → Contact; the current step expands to show a short blurb, the others collapse) centred below. Below that, the wordmark sits at the top of the first page and scrolls away with it, and there is no stepper. The appearance menu floats in the top-right corner at all sizes. The rail is `position: fixed`, not a sticky top bar, so it isn't repositioned while the page snaps.
-- **Page animations:** `pages.ts` gives the page crossing the middle of the viewport `.is-active`. Its `data-reveal` children stagger in (`--reveal-index`) and fade out when you leave, so they animate again on return. The stepper moves to the matching step: each step gets `data-state` (complete/current/upcoming), which drives the dot, the accent fill of the line segment below it, and the blurb expanding/collapsing (`grid-template-rows` 0fr ↔ 1fr). The current link gets `aria-current="step"`. The hidden state only applies when JS is running and `prefers-reduced-motion` is not `reduce`, so content is always visible otherwise. Smooth anchor scrolling has the same reduced-motion guard.
+- **Page animations:** `pages.ts` gives the page crossing the middle of the viewport `.is-active`. Its `data-reveal` children stagger in (`--reveal-index`) and fade out when you leave, so they animate again on return. The animation follows the scroll direction: every other page gets `data-side="above"` or `"below"`, and the active page keeps the side it was entered from. Scrolling down, content rises in top to bottom and the page you leave slides out upwards. Scrolling back up, it drops in from above and staggers bottom to top (`--reveal-last`, set by `pages.ts`). The stepper moves to the matching step: each step gets `data-state` (complete/current/upcoming), which drives the dot, the accent fill of the line segment below it, and the blurb expanding/collapsing (`grid-template-rows` 0fr ↔ 1fr). The current link gets `aria-current="step"`. The hidden state only applies when JS is running and `prefers-reduced-motion` is not `reduce`, so content is always visible otherwise. Smooth anchor scrolling has the same reduced-motion guard.
 - **Greeting slot reel:** in the intro's "I hope you have a [nice] [day]!", the time word follows the viewer's local clock (morning, afternoon, evening or night). The adjective sits on a small slot machine set into the line (`Greeting.astro`, `greeting.ts`, word list in `src/data/greeting.ts`, "Greeting slot reel" in `global.css`):
   - **The reel:** an 8-sided, flat-shaded 3D drum (CSS `preserve-3d`, one word per accent-coloured facet) in a bezelled window. Each facet is darkened by `1 − cos θ` of its tilt from the viewer, so it reads angular rather than bulged, with crisp seams between facets. The roll animates a registered `@property --angle`, which drives both the rotation and the shading.
   - **Spinning:** it rolls a few turns with an overshooting ease on the Intro's first arrival, and again on click, tap or Enter. Facets out of view are re-lettered first, and the result goes on the landing facet. A ↻ badge shows on hover or focus.
   - **Layout:** a ~2.3-line window shows the facets above and below the current word. Its line gets extra vertical margin to make room. Every adjective sits invisibly in one grid cell (`.slot-sizer`), so the browser sizes the reel to the widest word itself, with no JS measuring, and that cell also provides the text baseline.
 
   Adjectives all start with a consonant, so "a ___" always reads right. The Intro quote waits for the spin (`delay` prop on `Quote`). With reduced motion the word swaps instantly; without JavaScript it reads "a nice day".
-- **Typewriter quotes:** `quotes.ts` types each pull quote out left to right, with an accent-coloured caret and pauses after punctuation. It starts the first time its page becomes active (`page:active` from `pages.ts`), after the page's other reveals finish, and the citation fades in afterwards. Characters are laid out up front and revealed in turn, so nothing reflows. Screen readers get a visually hidden full copy. With reduced motion or without JavaScript, the quote just shows.
+- **Typewriter quotes:** `quotes.ts` types each pull quote out left to right, with an accent-coloured caret and pauses after punctuation. It starts the first time its page becomes active (`page:active` from `pages.ts`), after the page's other reveals finish, and the citation fades in afterwards. Each quote types only once: if the visitor leaves mid-quote, it is completed out of sight and simply shown on return. Leaving before the first character (e.g. passing through on the way to another section) doesn't count, so it still types on the first real visit. Characters are laid out up front and revealed in turn, so nothing reflows. Screen readers get a visually hidden full copy. With reduced motion or without JavaScript, the quote just shows.
 - **Fitting a page:** keep each section's content within ~650px tall so it fits a 1280×720 screen without an extra in-page scroll step.
 - **Whitespace:** `compressHTML` is off in `astro.config.mjs`. Astro 7's compiler drops line-break whitespace next to inline elements when compressing (`at <a>Ada</a>` renders as "atAda").
 
 ## Deployment
 
-Cloudflare **Workers Builds** connects this GitHub repo to the `joshuajyu-com` **Worker**. The old construction page is a separate **Pages project** with the same name; the two don't clash, but take care which one you're editing or deleting.
+Deploys are continuous: Cloudflare **Workers Builds** connects this GitHub repo to the `joshuajyu-com` **Worker**, which serves `joshuajyu.com` as a Custom Domain.
 
 | Setting | Value |
 | --- | --- |
 | Production branch | `main` |
 | Build command | `pnpm run build` |
 | Deploy command (production) | `npx wrangler deploy` |
-| Preview deploy command (non-production branches) | `npx wrangler preview` (open beta; names the preview after the git branch) |
+| Preview deploy command (other branches) | `npx wrangler preview` (open beta; needs the `previews` block in `wrangler.jsonc`) |
 | Build variable | `NODE_VERSION=22.23.5` (also in `.nvmrc`; don't rely on the image default) |
 
-- A push to `main` triggers a production deploy.
-- A push to any other branch or a PR gets a Preview deployment named after the branch (e.g. `dev`).
-- Work happens on `dev` and reaches `main` as a squash merge.
+| Branch | Deploys to |
+| --- | --- |
+| `main` | Production: [joshuajyu.com](https://joshuajyu.com) (also `joshuajyu-com.joshuajyu.workers.dev`) |
+| `dev` (or any other branch) | Preview: `https://<branch>-joshuajyu-com.joshuajyu.workers.dev`, behind Cloudflare Access |
 
-> **Status:** v2 is on `main` and Workers Builds is being connected. `joshuajyu.com` still points at the old `joshuajyu-com` **Pages project** (Direct Upload, construction page) until cutover.
+Each build reports back to GitHub as the **Workers Builds: joshuajyu-com** check on the pushed commit. Failed builds show up there and in the Worker's **Deployments** tab.
 
-### To verify after the first deploy
+### Shipping
 
-- [ ] `/work` and `/contact` redirect to `/#work` and `/#contact` **with the fragment intact** on the deployed Worker (confirmed locally with `wrangler dev`). If the fragment is dropped, remove `public/_redirects` and use Astro's `redirects` config instead, which emits meta-refresh pages.
-- [ ] Unknown paths return the custom 404 page with status 404.
-- [ ] The `dev` branch preview URL works and sits behind Cloudflare Access.
+Work happens on `dev`. Pushing `dev` updates its preview, where changes can be checked before they reach the live site. To ship, `dev` is squash-merged into `main` as one commit, with no PR, and that push deploys to production. Because `main` is checked out in a separate worktree, the squash can be done from `dev` without switching branches:
 
-### Cutover (Pages → Worker)
+```sh
+git fetch origin
+NEW=$(git commit-tree "dev^{tree}" -p origin/main -m "feat: …")
+git push origin "${NEW}:refs/heads/main"
+```
 
-The old `joshuajyu-com` Pages project was created by Direct Upload and can't be switched to Git integration, so the site moves to the new `joshuajyu-com` Worker:
+Then wait for the check to pass and confirm the change on joshuajyu.com.
 
-1. Verify the Worker's production deploy on its `*.workers.dev` URL, and the `dev` preview URL.
-2. Remove `joshuajyu.com` from the `joshuajyu-com` **Pages project**, then add it as a **Custom Domain** on the `joshuajyu-com` **Worker** (Settings → Domains & Routes).
-3. Lock down `workers.dev`:
-   - Enable Cloudflare Access for **Preview URLs** (Settings → Domains & Routes). All Workers preview URLs on the account share the auto-created "Cloudflare Workers Preview URLs" policy.
-   - Preferred: add `"workers_dev": false` **and** `"preview_urls": true` to `wrangler.jsonc`. Preview URLs follow `workers_dev` by default, and Cloudflare's docs don't confirm this combination (or its interaction with Access), so **test it first**. Fallback: keep `workers_dev` on and put it behind Access too.
-   - The `joshuajyu-com.pages.dev` Bulk Redirect can stay until the old Pages project is deleted.
-4. Confirm `joshuajyu.com`, `www.joshuajyu.com` (an existing zone redirect rule to the apex), the `workers.dev` URL and preview URLs all behave as expected. Then delete the old `joshuajyu-com` **Pages project** (not the Worker of the same name), its Bulk Redirect entry, and the `construction-page` branch.
+### Routing
+
+- `www.joshuajyu.com` redirects to the apex via a zone redirect rule.
+- `/work` and `/contact` redirect (301) to `/#work` and `/#contact` with the fragment intact (`public/_redirects`).
+- Unknown paths return the custom 404 page with status 404 (`not_found_handling: "404-page"`).
+
+### Open housekeeping
+
+- [ ] The production `workers.dev` URL is still public (only preview URLs are behind Access). Either put it behind Access too, or try `"workers_dev": false` with `"preview_urls": true` in `wrangler.jsonc`. Preview URLs follow `workers_dev` by default, so test that previews still work before keeping it.
+- [ ] Delete the `construction-page` branch (the old construction page; the Pages project it deployed to is gone).
 
 Leave the zone's other DNS records alone (email routing/sending, DMARC, tunnels). They're unrelated to the site.
 
